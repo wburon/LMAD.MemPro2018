@@ -9,8 +9,12 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import Model.Table_Client;
+
 public class PanelAccueil extends JPanel {
+	private Table_Client tClient;
 	private JTable table;
+	
 	private JButton btnRecherche;
 	private JButton btnPlanning;
 	private JTextField jtfRecherche;
@@ -19,6 +23,10 @@ public class PanelAccueil extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelAccueil() {
+		
+		tClient = new Table_Client();
+		
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorth = new JPanel();
@@ -32,11 +40,11 @@ public class PanelAccueil extends JPanel {
 				jtfRecherche.setText("");
 			}
 			});
-		panelNorth.add(jtfRecherche);
-		jtfRecherche.setColumns(10);
 		
 		btnRecherche = new JButton("Recherche");
 		panelNorth.add(btnRecherche);
+		panelNorth.add(jtfRecherche);
+		jtfRecherche.setColumns(10);
 		
 		btnPlanning = new JButton("Planning");
 		panelNorth.add(btnPlanning);
@@ -53,9 +61,8 @@ public class PanelAccueil extends JPanel {
 		JPanel panelCenter = new JPanel();
 		add(panelCenter, BorderLayout.CENTER);
 		
-		table = new JTable();
+		table = new JTable(tClient);
 		panelCenter.add(table);
-		
 		//Il me faut la liste Client, un bouton recherche, un bouton planning
 
 	}
