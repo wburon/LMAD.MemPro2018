@@ -2,13 +2,18 @@ package Interface;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class PanelAccueil extends JPanel {
 	private JTable table;
 	private JButton btnRecherche;
 	private JButton btnPlanning;
+	private JTextField jtfRecherche;
 
 	/**
 	 * Create the panel.
@@ -18,6 +23,17 @@ public class PanelAccueil extends JPanel {
 		
 		JPanel panelNorth = new JPanel();
 		add(panelNorth, BorderLayout.NORTH);
+		
+		jtfRecherche = new JTextField();
+		jtfRecherche.setText("ex : nom, pr\u00E9nom ou lieu");
+		jtfRecherche.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				jtfRecherche.setText("");
+			}
+			});
+		panelNorth.add(jtfRecherche);
+		jtfRecherche.setColumns(10);
 		
 		btnRecherche = new JButton("Recherche");
 		panelNorth.add(btnRecherche);
