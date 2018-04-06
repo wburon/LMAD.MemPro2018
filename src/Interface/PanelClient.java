@@ -19,6 +19,7 @@ import Model.Materiel;
 import Model.Client;
 
 import java.awt.FlowLayout;
+import javax.swing.JTextField;
 
 public class PanelClient extends JPanel implements ActionListener{
 
@@ -38,6 +39,19 @@ public class PanelClient extends JPanel implements ActionListener{
 	private ArrayList<Materiel> listMateriel;
 	private ClientDAO clientDAO;
 	private int indiceMat;
+	private JTextField jtfnom;
+	private JTextField jtfPrenom;
+	private JTextField jtfAdresse;
+	private JTextField jtfVille;
+	private JTextField jtfTelephone;
+	private JTextField jtfCourriel;
+	private JLabel lblTelephoneI;
+	private JLabel lblVilleI;
+	private JLabel lblMailI;
+	private JLabel lblAdresseI;
+	private JLabel lblPrenomI;
+	private JLabel lblNomI;
+	private JButton btnModification;
 
 	/**
 	 * Create the panel.
@@ -57,31 +71,73 @@ public class PanelClient extends JPanel implements ActionListener{
 		panelGButton.setPreferredSize(new Dimension(10, 60));
 		panelGauche.add(panelGButton, BorderLayout.SOUTH);
 		
-		JButton btnModification = new JButton("Modification");
+		btnModification = new JButton("Modification");
 		btnModification.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panelGButton.add(btnModification);
 		
 		JPanel panelInfoClient = new JPanel();
 		panelGauche.add(panelInfoClient, BorderLayout.CENTER);
-		panelInfoClient.setLayout(new GridLayout(6, 1, 0, 0));
+		panelInfoClient.setLayout(new GridLayout(6, 2, 0, 0));
 		
-		lblNom = new JLabel("Nom : "+client.getNom());
+		lblNom = new JLabel("Nom : ");
 		panelInfoClient.add(lblNom);
 		
-		lblPrenom = new JLabel("Pr\u00E9nom : "+client.getPrenom());
+		lblNomI = new JLabel(""+client.getNom());
+		panelInfoClient.add(lblNomI);
+		
+		jtfnom = new JTextField();
+		jtfnom.setText(""+client.getNom());
+		jtfnom.setColumns(10);
+		
+		lblPrenom = new JLabel("Pr\u00E9nom : ");
 		panelInfoClient.add(lblPrenom);
 		
-		lblAdresse = new JLabel("Adresse : "+client.getAdresse());
+		lblPrenomI = new JLabel(""+client.getPrenom());
+		panelInfoClient.add(lblPrenomI);
+		
+		jtfPrenom = new JTextField();
+		jtfPrenom.setText(""+client.getPrenom());
+		jtfPrenom.setColumns(10);
+		
+		lblAdresse = new JLabel("Adresse : ");
 		panelInfoClient.add(lblAdresse);
 		
-		lblVille = new JLabel("Ville : "+client.getVille());
+		lblAdresseI = new JLabel(""+client.getAdresse());
+		panelInfoClient.add(lblAdresseI);
+		
+		jtfAdresse = new JTextField();
+		jtfAdresse.setText(""+client.getAdresse());
+		jtfAdresse.setColumns(10);
+		
+		lblVille = new JLabel("Ville : ");
 		panelInfoClient.add(lblVille);
 		
-		lblTelephone = new JLabel("T\u00E9l\u00E9phone : "+client.getTel());
+		lblVilleI = new JLabel(""+client.getVille());
+		panelInfoClient.add(lblVilleI);
+		
+		jtfVille = new JTextField();
+		jtfVille.setText(""+client.getVille());
+		jtfVille.setColumns(10);
+		
+		lblTelephone = new JLabel("T\u00E9l\u00E9phone : ");
 		panelInfoClient.add(lblTelephone);
 		
-		lblMail = new JLabel("Courriel : "+client.getMail());
+		lblTelephoneI = new JLabel(""+client.getTel());
+		panelInfoClient.add(lblTelephoneI);
+		
+		jtfTelephone = new JTextField();
+		jtfTelephone.setText(""+client.getTel());
+		jtfTelephone.setColumns(10);
+		
+		lblMail = new JLabel("Courriel : ");
 		panelInfoClient.add(lblMail);
+		
+		lblMailI = new JLabel(""+client.getMail());
+		panelInfoClient.add(lblMailI);
+		
+		jtfCourriel = new JTextField();
+		jtfCourriel.setText(""+client.getMail());
+		jtfCourriel.setColumns(10);
 		
 		JPanel panelDescriptionClient = new JPanel();
 		panelDescriptionClient.setPreferredSize(new Dimension(10, 40));
@@ -157,10 +213,60 @@ public class PanelClient extends JPanel implements ActionListener{
 		}else if(arg0.getSource() == btnPreviousMat){
 			getIndiceMat("Prev");
 			panelMateriel.repaint();
+		}else if(arg0.getSource() == btnModification){
+			if(lblNomI.isEnabled())
+				changeVisibilityOfClient(false);
+			else
+				clientDAO.update(createClient());
+		}else if(arg0.getSource() == btnPrendreRdV){
+			// do something
 		}
 		
 	}
 	
+	/**
+	 * creation d'un objet client a partir des infos des JTextField
+	 * @return
+	 */
+	public Client createClient(){
+		Client c = new Client();
+		c.setNom(jtfnom.getText());
+		c.setPrenom(jtfPrenom.getText());
+		c.setAdresse(jtfAdresse.getText());
+		c.setVille(jtfVille.getText());
+		c.setTel(Integer.parseInt(jtfTelephone.getText()));
+		c.setMail(jtfCourriel.getText());
+		return c;
+	}
+	
+	/**
+	 * switch panel client
+	 * @param a
+	 */
+	public void changeVisibilityOfClient(boolean a){
+		lblNomI.setEnabled(a);
+		lblPrenomI.setEnabled(a);
+		lblAdresseI.setEnabled(a);
+		lblVilleI.setEnabled(a);
+		lblTelephoneI.setEnabled(a);
+		lblMailI.setEnabled(a);
+		if(a){
+			a = false;
+		}else {
+			a = true;
+		}
+		jtfnom.setEnabled(a);
+		jtfPrenom.setEnabled(a);
+		jtfAdresse.setEnabled(a);
+		jtfVille.setEnabled(a);
+		jtfTelephone.setEnabled(a);
+		jtfCourriel.setEnabled(a);
+	}
+	
+	/**
+	 * réalise le changement de materiel (panel)
+	 * @param a
+	 */
 	public void getIndiceMat(String a){
 		switch(a){
 		case "Next":
