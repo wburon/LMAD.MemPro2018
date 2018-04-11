@@ -104,6 +104,10 @@ public class ClientDAO extends DAO<Client>{
 	 * @return
 	 */
 	public ArrayList<Materiel> getListMateriel(Client client){
+		return null; // Ah bah ça avance tout ça ...
+	}
+	
+	public ArrayList<Client> getListAccueil(){
 		return null;
 	}
 }
