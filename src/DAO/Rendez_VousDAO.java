@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,10 +19,11 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Rendez_vous\"(intervention, data) values (?,?);");
+					.prepareStatement("Insert into \"Rendez_vous\"(intervention, dateDebut, dateFin) values (?,?,?);");
 
 			prepare.setInt(1, obj.getIntervention().getId_intervention());
-			prepare.setDate(2, obj.getDate());
+			prepare.setDate(2, (Date) obj.getDateDeb());
+			prepare.setDate(3, (Date) obj.getDateFin());
 			
 			prepare.executeUpdate();
 
@@ -51,10 +53,11 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous>{
 	@Override
 	public boolean update(Rendez_Vous obj) {
 		try{
-			PreparedStatement prepare=SC.prepareStatement("Update \"Rendez_vous\" set data=? where id_rdv=?");
+			PreparedStatement prepare=SC.prepareStatement("Update \"Rendez_vous\" set dateDebut=?, dateFin=? where id_rdv=?");
 			
-			prepare.setDate(1, obj.getDate());
-			prepare.setInt(2, obj.getId_rdv());
+			prepare.setDate(1, (Date) obj.getDateDeb());
+			prepare.setDate(2, (Date) obj.getDateFin());
+			prepare.setInt(3, obj.getId_rdv());
 
 			prepare.executeUpdate();
 			return true;	
@@ -76,7 +79,8 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous>{
 			if(result.first()){
 				rdv.setId_rdv(id);
 				rdv.setIntervention(interDAO.find(result.getInt("intervention")));
-				rdv.setDate(result.getDate("data"));				
+				rdv.setDateDeb(result.getDate("dateDebut"));
+				rdv.setDateFin(result.getDate("dateFin"));
 			}
 			
 		}catch(SQLException e){

@@ -9,9 +9,11 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.JTextField;
 
+import DAO.Rendez_VousDAO;
 import Model.Intervention;
 import Model.Rendez_Vous;
 
@@ -25,12 +27,14 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	private JComboBox comboBoxTI;
 	private JButton btnTerminer;
 	private PanelRDV rdv;
+	private Rendez_VousDAO rdvDAO;
 
 	/**
 	 * Create the panel.
 	 */
 	public Panel_RdvInfo(PanelRDV rdv) {
 		this.rdv = rdv;
+		rdvDAO = new Rendez_VousDAO();
 		
 		setLayout(new BorderLayout(0, 0));
 
@@ -86,15 +90,18 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if(arg0.getSource()==btnTerminer){
+			rdvDAO.create(createRdV());
+		}
 
 	}
 
 	public Rendez_Vous createRdV() {
 		Rendez_Vous r = new Rendez_Vous();
 		r.setIntervention(createIntervention());
-		// TODO IL FAUT DEUX DATES DANS LA TABLE
-		
-		return null;
+		r.setDateDeb(rdv.getDeb());
+		r.setDateFin(rdv.getFin());
+		return r;
 	}
 	
 	public Intervention createIntervention(){
