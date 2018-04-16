@@ -53,6 +53,14 @@ public class PanelClient extends JPanel implements ActionListener{
 	private JLabel lblNomI;
 	private JButton btnModification;
 
+	public Client getClient() {
+		return createClient();
+	}
+	
+	public Materiel getMateriel(){
+		return createMateriel();
+	}
+
 	/**
 	 * Create the panel.
 	 */
@@ -60,6 +68,7 @@ public class PanelClient extends JPanel implements ActionListener{
 		clientDAO = new ClientDAO();
 		listMateriel = clientDAO.getListMateriel(client);
 		indiceMat = 0;
+	
 		
 		setLayout(new GridLayout(1, 2, 0, 0));
 		
@@ -237,6 +246,14 @@ public class PanelClient extends JPanel implements ActionListener{
 		c.setTel(Integer.parseInt(jtfTelephone.getText()));
 		c.setMail(jtfCourriel.getText());
 		return c;
+	}
+	
+	public Materiel createMateriel(){
+		Materiel m = new Materiel();
+		m.setNom(listMateriel.get(indiceMat).getNom());
+		m.setNumSerie(listMateriel.get(indiceMat).getNumSerie());
+		m.setType(listMateriel.get(indiceMat).getType());
+		return m;
 	}
 	
 	/**

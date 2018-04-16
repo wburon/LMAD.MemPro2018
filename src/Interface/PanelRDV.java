@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -14,6 +15,8 @@ import java.awt.Component;
 import javax.swing.SwingConstants;
 
 import DAO.Rendez_VousDAO;
+import Model.Client;
+import Model.Materiel;
 import Model.Rendez_Vous;
 
 public class PanelRDV extends JPanel implements ActionListener{
@@ -22,13 +25,35 @@ public class PanelRDV extends JPanel implements ActionListener{
 	private JTextField jtfH1;
 	private JTextField jtfH2;
 	private JButton btnValider;
-	private Rendez_VousDAO rdvDAO;
+	private PanelClient client;
+	private Date deb, fin;
+	private JEditorPane editorPane;
+
+	public Client getClient() {
+		return client.getClient();
+	}
+
+	public Date getDeb() {
+		return deb;
+	}
+
+	public Date getFin() {
+		return fin;
+	}
+
+	public String getCommentaire() {
+		return editorPane.getText();
+	}
+	
+	public Materiel getMateriel(){
+		return client.getMateriel();
+	}
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelRDV() {
-		this.rdvDAO = new Rendez_VousDAO();
+	public PanelRDV(PanelClient client) {
+		this.client = client;
 		
 		setLayout(new GridLayout(2, 1, 0, 0));
 		
@@ -97,7 +122,7 @@ public class PanelRDV extends JPanel implements ActionListener{
 		btnValider = new JButton("Valider");
 		panel_2.add(btnValider);
 		
-		JEditorPane editorPane = new JEditorPane();
+		editorPane = new JEditorPane();
 		panelCommentaire.add(editorPane, BorderLayout.CENTER);
 
 	}
@@ -105,15 +130,9 @@ public class PanelRDV extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == btnValider){
-			rdvDAO.create(createRdV());
+			
 		}
 		
-	}
-	
-	public Rendez_Vous createRdV(){
-		
-		// il faut aussi recupérer les données de l'intervention ...
-		return null;
 	}
 
 }
