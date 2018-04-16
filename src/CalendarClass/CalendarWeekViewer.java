@@ -45,11 +45,6 @@ public class CalendarWeekViewer extends JPanel implements ActionListener {
     }
  
     private void createComponents() {
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
  
         monthLabel = new JLabel(dateFormatter.format(calendar.getTime()));
         monthLabel.setFont(new Font(null, Font.PLAIN, 36));
@@ -57,9 +52,10 @@ public class CalendarWeekViewer extends JPanel implements ActionListener {
         monthLabel.setHorizontalAlignment(JLabel.CENTER);
  
         tableModel = new CalendarWeekTableModel(calendar);
-        table = new JTable((TableModel)tableModel);
+        table = new JTable();
+        table.setModel(tableModel);
         table.setPreferredScrollableViewportSize(new Dimension(700, 600));
-        table.setDefaultRenderer(String.class, new CalendarDayRenderer());
+        table.setDefaultRenderer(String.class, new CalendarWeekRenderer());
         table.setRowHeight(200);
         TableColumnModel tableColumnModel = table.getColumnModel();
         for (int i=0; i < tableColumnModel.getColumnCount(); ++i) {
