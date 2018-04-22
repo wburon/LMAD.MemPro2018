@@ -49,6 +49,9 @@ public class PanelAccueil extends JPanel {
 		btnPlanning = new JButton("Planning");
 		panelNorth.add(btnPlanning);
 		
+		JButton btnAjoutClient = new JButton("Ajout Client");
+		panelNorth.add(btnAjoutClient);
+		
 		JPanel panelWest = new JPanel();
 		add(panelWest, BorderLayout.WEST);
 		
