@@ -7,9 +7,34 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class FrameAjoutClient extends JFrame {
+import DAO.ClientDAO;
+import Model.Client;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+public class FrameAjoutClient extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
+	private JTextField tfNom;
+	private JTextField tfPrenom;
+	private JTextField tfAdresse;
+	private JTextField tfVille;
+	private JTextField tfTlphone;
+	private JTextField tfCourriel;
+	
+	private JButton btnAjouter;
+	private JButton btnAnnuler;
+	private JButton btnQuitter;
+	
+	private Client client;
+	private ClientDAO cDAO;
 
 	/**
 	 * Launch the application.
@@ -47,11 +72,123 @@ public class FrameAjoutClient extends JFrame {
 		JPanel panelSouth = new JPanel();
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
 		
+		btnAjouter = new JButton("Ajouter");
+		panelSouth.add(btnAjouter);
+		
+		btnAnnuler = new JButton("Annuler");
+		panelSouth.add(btnAnnuler);
+		
+		btnQuitter = new JButton("Quitter");
+		panelSouth.add(btnQuitter);
+		
 		JPanel panelEast = new JPanel();
 		contentPane.add(panelEast, BorderLayout.EAST);
 		
 		JPanel panelCenter = new JPanel();
 		contentPane.add(panelCenter, BorderLayout.CENTER);
+		panelCenter.setLayout(new GridLayout(6, 2, 0, 0));
+		
+		JLabel lblNom = new JLabel("Nom");
+		panelCenter.add(lblNom);
+		
+		tfNom = new JTextField();
+		panelCenter.add(tfNom);
+		tfNom.setColumns(10);
+		
+		JLabel lblPrenom = new JLabel("Prenom");
+		panelCenter.add(lblPrenom);
+		
+		tfPrenom = new JTextField();
+		panelCenter.add(tfPrenom);
+		tfPrenom.setColumns(10);
+		
+		JLabel lblAdresse = new JLabel("Adresse");
+		panelCenter.add(lblAdresse);
+		
+		tfAdresse = new JTextField();
+		panelCenter.add(tfAdresse);
+		tfAdresse.setColumns(10);
+		
+		JLabel lblVille = new JLabel("Ville");
+		panelCenter.add(lblVille);
+		
+		tfVille = new JTextField();
+		panelCenter.add(tfVille);
+		tfVille.setColumns(10);
+		
+		JLabel lblTlphone = new JLabel("T\u00E9l\u00E9phone");
+		panelCenter.add(lblTlphone);
+		
+		tfTlphone = new JTextField();
+		panelCenter.add(tfTlphone);
+		tfTlphone.setColumns(10);
+		
+		JLabel lblCourriel = new JLabel("Courriel");
+		panelCenter.add(lblCourriel);
+		
+		tfCourriel = new JTextField();
+		panelCenter.add(tfCourriel);
+		tfCourriel.setColumns(10);
+		
+		client = new Client();
+		cDAO = new ClientDAO();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if(e.getSource() == btnAjouter){
+			String nom = tfNom.getText();
+			String prenom = tfPrenom.getText();
+			String adresse = tfAdresse.getText();
+			String ville = tfVille.getText();
+			int tel = Integer.parseInt(tfTlphone.getText());
+			String courriel = tfCourriel.getText();
+			
+			String gps = calculGPS(adresse, ville);
+			
+			boolean a = creationClient(nom, prenom, adresse, ville, tel, courriel, gps);
+			
+			if(a)
+				JOptionPane.showMessageDialog(btnAjouter, "Le client a bien été ajouté !", "Validation", JOptionPane.INFORMATION_MESSAGE);
+			else
+				JOptionPane.showMessageDialog(btnAjouter, "Le client n'a pas pu être ajouté !", "Erreur", JOptionPane.ERROR_MESSAGE);
+			
+			
+		}else if(e.getSource()==btnAnnuler){
+			clearTextField();
+		}else if(e.getSource()==btnQuitter){
+			this.dispose();
+		}
+		
+	}
+
+	private boolean creationClient(String nom, String prenom, String adresse, String ville, int tel, String courriel,
+			String gps) {
+		
+		client.setNom(nom);
+		client.setPrenom(prenom);
+		client.setAdresse(adresse);
+		client.setVille(ville);
+		client.setTel(tel);
+		client.setMail(courriel);
+		client.setGps(gps);
+		
+		boolean verif=cDAO.create(client);
+		return verif;
+	}
+	private void clearTextField(){
+		tfNom.setText("");
+		tfPrenom.setText("");
+		tfAdresse.setText("");
+		tfVille.setText("");
+		tfTlphone.setText("");
+		tfCourriel.setText("");
+	}
+
+	private String calculGPS(String adresse, String ville) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
