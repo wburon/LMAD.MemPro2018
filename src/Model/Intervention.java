@@ -4,7 +4,6 @@ public class Intervention {
 	
 	private int id_intervention;
 	private Materiel materiel;
-	private Client client;
 	private Type_Intervention type_intervention;
 	private int numFacture;
 	private int numBL;
@@ -21,12 +20,6 @@ public class Intervention {
 	}
 	public void setMateriel(Materiel materiel) {
 		this.materiel = materiel;
-	}
-	public Client getClient() {
-		return client;
-	}
-	public void setClient(Client client) {
-		this.client = client;
 	}
 	public Type_Intervention getType_intervention() {
 		return type_intervention;
