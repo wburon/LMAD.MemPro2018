@@ -39,6 +39,7 @@ public class testWilliam {
 			materiel.setNom("nom");
 			materiel.setType("type");
 			materiel.setNumSerie("numSerie");	
+			// maintenant ajouter un client
 			
 			MaterielDAO mat = new MaterielDAO();
 			mat.create(materiel);

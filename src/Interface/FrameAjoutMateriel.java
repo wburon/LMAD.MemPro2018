@@ -109,7 +109,6 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 		jtfNumSerie.setColumns(10);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == btnValider) {
 			MaterielDAO matDAO = new MaterielDAO();
