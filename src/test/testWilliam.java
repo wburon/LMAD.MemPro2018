@@ -1,6 +1,7 @@
 package test;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -12,6 +13,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Set;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import DAO.ClientDAO;
 import DAO.InterventionDAO;
@@ -24,44 +32,52 @@ import Singleton.SingletonConnection;
 
 public class testWilliam {
 
+	private static Object[] myAddress;
+
 	public static void main(String[] args) {
-		
+
 		Connection SC = SingletonConnection.getConnection();
-		
-		//testClient(SC);
-		//testMateriel(SC);
-		//testRendez_Vous(SC);
-		try {
-			String result = postURL(new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg"), "");
-			//System.out.println(result);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+
+		// testClient(SC);
+		// testMateriel(SC);
+		// testRendez_Vous(SC);
+		String adresse = "3 rue rabelais";
+		String ville = "angers";
+		String adresse_complete = adresse + " " + ville;
+		String coord = getGPSCoord(adresse_complete);
+		// try {
+		// String result = postURL(new
+		// URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg"),
+		// "");
+		// //System.out.println(result);
+		// } catch (MalformedURLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
 	}
-	
+
 	/**
 	 * materiel fonctionne zebi
+	 * 
 	 * @param SC
 	 */
 	private static void testMateriel(Connection SC) {
 		try {
 			PreparedStatement prepare = SC.prepareStatement("Select * from \"Materiel\"");
 			prepare.executeQuery();
-			
-			Materiel materiel  = new Materiel();
+
+			Materiel materiel = new Materiel();
 			materiel.setNom("nom");
 			materiel.setType("type");
-			materiel.setNumSerie("numSerie");	
+			materiel.setNumSerie("numSerie");
 			// maintenant ajouter un client
-			
+
 			MaterielDAO mat = new MaterielDAO();
 			mat.create(materiel);
 			System.out.println(mat.find(1));
 			mat.delete(materiel);
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,115 +86,139 @@ public class testWilliam {
 
 	/**
 	 * client fonctionne zebi !
+	 * 
 	 * @param SC
 	 */
-	private static void testClient(Connection SC){
+	private static void testClient(Connection SC) {
 
 		try {
 			PreparedStatement prepare = SC.prepareStatement("Select * from \"Client\"");
 			prepare.executeQuery();
-			
+
 			Client client = new Client();
 			client.setNom("nom");
 			client.setPrenom("prenom");
-			client.setAdresse("adresse");
-			client.setVille("ville");
+			String adresse = "3 rue rabelais";
+			client.setAdresse(adresse);
+			String ville = "angers";
+			client.setVille(ville);
 			client.setTel(0241);
-			client.setGps("gps");
-			client.setMail("courriel");	
-			
+			String adresse_complete = adresse + " " + ville;
+			client.setGps(getGPSCoord(adresse_complete));
+			client.setMail("courriel");
+
 			ClientDAO cl = new ClientDAO();
 			cl.create(client);
 			System.out.println(cl.find(0));
 			cl.delete(client);
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-/*
-	private static void testRendez_Vous(Connection SC){
+	/*
+	 * private static void testRendez_Vous(Connection SC){ try {
+	 * PreparedStatement prepare = SC.prepareStatement(
+	 * "Select * from \"Rendez_vous\""); prepare.executeQuery();
+	 * 
+	 * InterventionDAO interDAO = new InterventionDAO();
+	 * 
+	 * Rendez_Vous rdv = new Rendez_Vous();
+	 * rdv.setIntervention(interDAO.find(0));
+	 * rdv.setDate(java.sql.Date.valueOf("22-03-2018"));
+	 * 
+	 * Rendez_VousDAO rdvDAO = new Rendez_VousDAO(); rdvDAO.create(rdv);
+	 * System.out.println(rdvDAO.find(0)); rdvDAO.delete(rdv);
+	 * 
+	 * } catch (SQLException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } }
+	 */
+
+	private static String getGPSCoord(String adresse_complete) {
+		String result = null;
 		try {
-			PreparedStatement prepare = SC.prepareStatement("Select * from \"Rendez_vous\"");
-			prepare.executeQuery();
-			
-			InterventionDAO interDAO = new InterventionDAO();
-			
-			Rendez_Vous rdv = new Rendez_Vous();
-			rdv.setIntervention(interDAO.find(0));
-			rdv.setDate(java.sql.Date.valueOf("22-03-2018"));
-			
-			Rendez_VousDAO rdvDAO = new Rendez_VousDAO();
-			rdvDAO.create(rdv);
-			System.out.println(rdvDAO.find(0));
-			rdvDAO.delete(rdv);
-			
-		} catch (SQLException e) {
+			URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?address="
+					+ adresse_complete.replace(" ", "+") + "&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg");
+			result = postURL(url, "");
+		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
+
 	}
-*/
-	
-	
-	 
-	public static String postURL(URL a_Url, String a_sParamsToPost)
-	{
-	      StringBuilder o_oSb = new StringBuilder();
-	 
-	      //recup du saut de ligne
-	      String o_sLineSep = null;
-	      try
-	      {
-	         o_sLineSep = System.getProperty("line.separator");
-	      }
-	      catch (Exception e)
-	      {
-	         o_sLineSep = "\n";
-	      }
-	 
-	      
-		try
-	      {
-	         HttpURLConnection o_oUrlConn = (HttpURLConnection) a_Url.openConnection();
-	         o_oUrlConn.setRequestMethod("POST");
-	         o_oUrlConn.setAllowUserInteraction(false);
-	         //envoyer des params
-	         o_oUrlConn.setDoOutput(true);
-	 
-	         //poster les params
-	         PrintWriter o_oParamWriter = new PrintWriter(o_oUrlConn.getOutputStream());
-	 
-	         o_oParamWriter.print(a_sParamsToPost);
-	         //fermer le post avant de lire le resultat ... logique
-	         o_oParamWriter.flush();
-	         o_oParamWriter.close();
-	 
-	         //Lire la reponse
-	         InputStream  o_oResponse = o_oUrlConn.getInputStream();
-	         BufferedReader o_oBufReader = new BufferedReader(new InputStreamReader(o_oResponse));
-	         String sLine;
-	 
-	         while ((sLine = o_oBufReader.readLine()) != null)
-	         {
-	            o_oSb.append(sLine);
-	            o_oSb.append(o_sLineSep);
-	         }
-	         //deconnection
-	         o_oUrlConn.disconnect();
-	      }
-	      catch(ConnectException ctx)
-	      {
-	        System.out.println("Connection lost : server may be down");
-	        ctx.printStackTrace();
-	      }
-	      catch (Exception e)
-	      {
-	         System.out.println("postURL : "+e.getMessage());
-	         e.printStackTrace();
-	      }
-	      System.out.println("retour url="+o_oSb.toString());
-	      return o_oSb.toString();
-	    }
+
+	public static String postURL(URL a_Url, String a_sParamsToPost) {
+		StringBuilder o_oSb = new StringBuilder();
+
+		// recup du saut de ligne
+		String o_sLineSep = null;
+		try {
+			o_sLineSep = System.getProperty("line.separator");
+		} catch (Exception e) {
+			o_sLineSep = "\n";
+		}
+
+		try {
+			HttpURLConnection o_oUrlConn = (HttpURLConnection) a_Url.openConnection();
+			o_oUrlConn.setRequestMethod("POST");
+			o_oUrlConn.setAllowUserInteraction(false);
+			// envoyer des params
+			o_oUrlConn.setDoOutput(true);
+
+			// poster les params
+			PrintWriter o_oParamWriter = new PrintWriter(o_oUrlConn.getOutputStream());
+
+			o_oParamWriter.print(a_sParamsToPost);
+			// fermer le post avant de lire le resultat ... logique
+			o_oParamWriter.flush();
+			o_oParamWriter.close();
+
+			// Lire la reponse
+			InputStream o_oResponse = o_oUrlConn.getInputStream();
+			BufferedReader o_oBufReader = new BufferedReader(new InputStreamReader(o_oResponse));
+			String sLine;
+
+			while ((sLine = o_oBufReader.readLine()) != null) {
+				o_oSb.append(sLine);
+				o_oSb.append(o_sLineSep);
+			}
+			// deconnection
+			o_oUrlConn.disconnect();
+		} catch (ConnectException ctx) {
+			System.out.println("Connection lost : server may be down");
+			ctx.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("postURL : " + e.getMessage());
+			e.printStackTrace();
+		}
+		System.out.println("retour url=" + o_oSb.toString());
+		return o_oSb.toString();
+	}
+
+	/**
+	 * Recupère le coordonnée GPS d'une réponse JSON
+	 * @param result
+	 * @return Double[2] : {lng, lat} 
+	 */
+	private Double[] CoordAddress(InputStream result) {
+		Double lng = null, lat = null;
+		try {
+			JSONParser jsonParser = new JSONParser();
+			JSONObject myJSONResult = (JSONObject) jsonParser.parse(new InputStreamReader(result, "UTF-8"));
+			JSONArray o = (JSONArray) myJSONResult.get("results");
+			JSONObject p = (JSONObject) o.get(0);
+			JSONObject q = (JSONObject) p.get("geometry");
+			JSONObject location = (JSONObject) q.get("location");
+			lng = (Double) location.get("lng");
+			lat = (Double) location.get("lat");
+			System.out.println("lng : " + lng + " lat : " + lat);
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Double lng_lat[] = {lng,lat};
+		return lng_lat;
+	}
 }
