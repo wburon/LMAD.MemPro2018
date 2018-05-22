@@ -18,9 +18,8 @@ public class Table_Client extends AbstractTableModel{
 	
 	private final String[] entete={"nom","prenom","adresse","téléphone"}; 
 	
-	public Table_Client (){
-		ClientDAO cDAO = new ClientDAO();
-		listClient = cDAO.getListAccueil();
+	public Table_Client (ArrayList<Client> listClient){
+		this.listClient = listClient;
 	}
 
 	@Override

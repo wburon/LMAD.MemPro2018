@@ -2,29 +2,36 @@ package Interface;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import DAO.ClientDAO;
+import Model.Client;
 import Model.Table_Client;
 
-public class PanelAccueil extends JPanel {
+public class PanelAccueil extends JPanel implements ActionListener{
 	private Table_Client tClient;
 	private JTable table;
 	
 	private JButton btnRecherche;
 	private JButton btnPlanning;
 	private JTextField jtfRecherche;
+	
+	private PanelResultat panelRes;
 
+	private ClientDAO cDAO;
 	/**
 	 * Create the panel.
 	 */
 	public PanelAccueil() {
 		
-		tClient = new Table_Client();
 		
 		
 		setLayout(new BorderLayout(0, 0));
@@ -64,10 +71,37 @@ public class PanelAccueil extends JPanel {
 		JPanel panelCenter = new JPanel();
 		add(panelCenter, BorderLayout.CENTER);
 		
+
+		cDAO = new ClientDAO();
+		tClient = new Table_Client(cDAO.getListAccueil());
 		table = new JTable(tClient);
 		panelCenter.add(table);
-		//Il me faut la liste Client, un bouton recherche, un bouton planning
+		
+		
 
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if(e.getSource()==btnRecherche){
+			String recherche = jtfRecherche.getText();
+			LancerRecherche(recherche);
+		}
+		
+	}
+
+	private void LancerRecherche(String recherche) {
+		//lancer la recherche en ouvrant le panel recherche 
+		ArrayList<Client> listClient = createListClient(recherche);
+		panelRes = new PanelResultat();
+		
+	}
+
+	private ArrayList<Client> createListClient(String recherche) {
+		ArrayList<Client> listClient = new ArrayList<>();
+		return listClient;
 	}
 
 }
