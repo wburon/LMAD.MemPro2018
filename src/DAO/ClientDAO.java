@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import Singleton.SingletonConnection;
 import Model.Client;
+import Model.Materiel;
 
 public class ClientDAO extends DAO<Client>{
 	Connection SC = SingletonConnection.getConnection();
@@ -94,5 +96,18 @@ public class ClientDAO extends DAO<Client>{
 			e.printStackTrace();
 		}
 		return client;
+	}
+	
+	/**
+	 * Renvoie la liste de matériel d'un client
+	 * @param client
+	 * @return
+	 */
+	public ArrayList<Materiel> getListMateriel(Client client){
+		return null; // Ah bah ça avance tout ça ...
+	}
+	
+	public ArrayList<Client> getListAccueil(){
+		return null;
 	}
 }

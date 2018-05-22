@@ -6,7 +6,7 @@ public class Rendez_Vous {
 	
 	private int id_rdv;
 	private Intervention intervention;
-	private Date date;
+	private Date dateDeb, dateFin;
 	public int getId_rdv() {
 		return id_rdv;
 	}
@@ -19,11 +19,18 @@ public class Rendez_Vous {
 	public void setIntervention(Intervention intervention) {
 		this.intervention = intervention;
 	}
-	public Date getDate() {
-		return date;
+	public Date getDateDeb() {
+		return dateDeb;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateDeb(Date dateDeb) {
+		this.dateDeb = dateDeb;
 	}
+	public Date getDateFin() {
+		return dateFin;
+	}
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
+	}
+	
 
 }

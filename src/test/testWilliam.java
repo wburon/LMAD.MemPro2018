@@ -3,11 +3,15 @@ package test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
 import DAO.ClientDAO;
+import DAO.InterventionDAO;
 import DAO.MaterielDAO;
+import DAO.Rendez_VousDAO;
 import Model.Client;
 import Model.Materiel;
+import Model.Rendez_Vous;
 import Singleton.SingletonConnection;
 
 public class testWilliam {
@@ -18,6 +22,7 @@ public class testWilliam {
 		
 		//testClient(SC);
 		//testMateriel(SC);
+		testRendez_Vous(SC);
 		
 	}
 	
@@ -51,6 +56,7 @@ public class testWilliam {
 	 * @param SC
 	 */
 	private static void testClient(Connection SC){
+
 		try {
 			PreparedStatement prepare = SC.prepareStatement("Select * from \"Client\"");
 			prepare.executeQuery();
@@ -75,4 +81,25 @@ public class testWilliam {
 		}
 	}
 
+	private static void testRendez_Vous(Connection SC){
+		try {
+			PreparedStatement prepare = SC.prepareStatement("Select * from \"Rendez_vous\"");
+			prepare.executeQuery();
+			
+			InterventionDAO interDAO = new InterventionDAO();
+			
+			Rendez_Vous rdv = new Rendez_Vous();
+			rdv.setIntervention(interDAO.find(0));
+			rdv.setDate(java.sql.Date.valueOf("22-03-2018"));
+			
+			Rendez_VousDAO rdvDAO = new Rendez_VousDAO();
+			rdvDAO.create(rdv);
+			System.out.println(rdvDAO.find(0));
+			rdvDAO.delete(rdv);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
