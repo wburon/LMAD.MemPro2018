@@ -108,6 +108,7 @@ public class ClientDAO extends DAO<Client>{
 	}
 	
 	public ArrayList<Client> getListAccueil(){
-		return null;
+		ArrayList<Client> listClient = new ArrayList<>();
+		return listClient;
 	}
 }
