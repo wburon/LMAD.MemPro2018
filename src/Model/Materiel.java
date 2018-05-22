@@ -6,6 +6,13 @@ public class Materiel {
 	private String nom;
 	private String type;
 	private String numSerie;
+	private Client client;
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
 	public int getId_materiel() {
 		return id_materiel;
 	}

@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.Dimension;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.Font;
 import javax.swing.JLabel;
 import java.awt.Component;
@@ -52,6 +54,8 @@ public class PanelClient extends JPanel implements ActionListener{
 	private JLabel lblPrenomI;
 	private JLabel lblNomI;
 	private JButton btnModification;
+	private JButton btnAddMateriel;
+	private Client client;
 
 	public Client getClient() {
 		return createClient();
@@ -68,6 +72,7 @@ public class PanelClient extends JPanel implements ActionListener{
 		clientDAO = new ClientDAO();
 		listMateriel = clientDAO.getListMateriel(client);
 		indiceMat = 0;
+		this.client = client;
 	
 		
 		setLayout(new GridLayout(1, 2, 0, 0));
@@ -164,10 +169,15 @@ public class PanelClient extends JPanel implements ActionListener{
 		JPanel panelSudMateriel = new JPanel();
 		panelSudMateriel.setPreferredSize(new Dimension(10, 60));
 		panelDroit.add(panelSudMateriel, BorderLayout.SOUTH);
+		panelSudMateriel.setLayout(new GridLayout(1, 2, 0, 0));
 		
 		btnPrendreRdV = new JButton("Prendre rendez-vous");
 		btnPrendreRdV.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panelSudMateriel.add(btnPrendreRdV);
+		
+		btnAddMateriel = new JButton("Ajouter Mat\u00E9riel");
+		btnAddMateriel.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		panelSudMateriel.add(btnAddMateriel);
 		
 		JPanel panel_1 = new JPanel();
 		panelDroit.add(panel_1, BorderLayout.CENTER);
@@ -229,6 +239,9 @@ public class PanelClient extends JPanel implements ActionListener{
 				clientDAO.update(createClient());
 		}else if(arg0.getSource() == btnPrendreRdV){
 			// do something
+		}else if(arg0.getSource() == btnAddMateriel){
+			JFrame fenAjoutMat = new FrameAjoutMateriel(client);
+			fenAjoutMat.setVisible(true);
 		}
 		
 	}

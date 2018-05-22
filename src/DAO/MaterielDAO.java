@@ -17,11 +17,12 @@ public class MaterielDAO extends DAO<Materiel>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Materiel\"(nom,type,\"numSerie\") values (?,?,?);");
+					.prepareStatement("Insert into \"Materiel\"(nom,type,\"numSerie\",id_client) values (?,?,?,?);");
 
 			prepare.setString(1, obj.getNom());
 			prepare.setString(2, obj.getType());
 			prepare.setString(3, obj.getNumSerie());
+			prepare.setInt(4, obj.getClient().getId_client());
 			
 			prepare.executeUpdate();
 
@@ -51,12 +52,13 @@ public class MaterielDAO extends DAO<Materiel>{
 	@Override
 	public boolean update(Materiel obj) {
 		try{
-			PreparedStatement prepare=SC.prepareStatement("Update \"Materiel\" set nom=?, type=?, numSerie=? where id_materiel=?");
+			PreparedStatement prepare=SC.prepareStatement("Update \"Materiel\" set nom=?, type=?, numSerie=?, id_client=? where id_materiel=?");
 			
 			prepare.setString(1, obj.getNom());
 			prepare.setString(2, obj.getType());
 			prepare.setString(3, obj.getNumSerie());
-			prepare.setInt(4, obj.getId_materiel());
+			prepare.setInt(4, obj.getClient().getId_client());
+			prepare.setInt(5, obj.getId_materiel());
 
 			prepare.executeUpdate();
 			return true;	
@@ -69,6 +71,7 @@ public class MaterielDAO extends DAO<Materiel>{
 	@Override
 	public Materiel find(int id) {
 		Materiel mat = new Materiel();
+		ClientDAO clDAO = new ClientDAO();
 		try{
 			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Materiel\" WHERE id_materiel=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 			prepare.setInt(1, id);
@@ -78,7 +81,8 @@ public class MaterielDAO extends DAO<Materiel>{
 				mat.setId_materiel(id);
 				mat.setNom(result.getString("nom"));
 				mat.setType(result.getString("type"));
-				mat.setNumSerie(result.getString("numSerie"));					
+				mat.setNumSerie(result.getString("numSerie"));
+				mat.setClient(clDAO.find(result.getInt("id_client")));
 			}
 			
 		}catch(SQLException e){

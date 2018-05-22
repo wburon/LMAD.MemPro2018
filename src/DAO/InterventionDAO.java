@@ -17,14 +17,13 @@ public class InterventionDAO extends DAO<Intervention>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Intervention\"(materiel,client,type_intervention,\"numFacture\",\"numBL\",\"refPiece\") values (?,?,?,?,?,?);");
+					.prepareStatement("Insert into \"Intervention\"(materiel,type_intervention,\"numFacture\",\"numBL\",\"refPiece\") values (?,?,?,?,?);");
 
 			prepare.setInt(1, obj.getMateriel().getId_materiel());
-			prepare.setInt(1, obj.getClient().getId_client());
-			prepare.setInt(1, obj.getType_intervention().getId_type_intervention());
-			prepare.setInt(1, obj.getNumFacture());
-			prepare.setInt(1, obj.getNumBL());
-			prepare.setInt(1, obj.getRefPiece());
+			prepare.setInt(2, obj.getType_intervention().getId_type_intervention());
+			prepare.setInt(3, obj.getNumFacture());
+			prepare.setInt(4, obj.getNumBL());
+			prepare.setInt(5, obj.getRefPiece());
 			
 			prepare.executeUpdate();
 
@@ -54,15 +53,14 @@ public class InterventionDAO extends DAO<Intervention>{
 	@Override
 	public boolean update(Intervention obj) {
 		try{
-			PreparedStatement prepare=SC.prepareStatement("Update \"Intervention\" set materiel=?, client=?, type_intervention=?, numFacture=?, numBL=?, refPiece=? where id_intervention=?");
+			PreparedStatement prepare=SC.prepareStatement("Update \"Intervention\" set materiel=?, type_intervention=?, numFacture=?, numBL=?, refPiece=? where id_intervention=?");
 			
 			prepare.setInt(1, obj.getMateriel().getId_materiel());
-			prepare.setInt(2, obj.getClient().getId_client());
-			prepare.setInt(3, obj.getType_intervention().getId_type_intervention());
-			prepare.setInt(4, obj.getNumFacture());
-			prepare.setInt(5, obj.getNumBL());
-			prepare.setInt(6, obj.getRefPiece());
-			prepare.setInt(7, obj.getId_intervention());
+			prepare.setInt(2, obj.getType_intervention().getId_type_intervention());
+			prepare.setInt(3, obj.getNumFacture());
+			prepare.setInt(4, obj.getNumBL());
+			prepare.setInt(5, obj.getRefPiece());
+			prepare.setInt(6, obj.getId_intervention());
 
 			prepare.executeUpdate();
 			return true;	
@@ -77,7 +75,6 @@ public class InterventionDAO extends DAO<Intervention>{
 		Intervention intervention = new Intervention();
 		Type_InterventionDAO tiDAO = new Type_InterventionDAO();
 		MaterielDAO matDAO = new MaterielDAO();
-		ClientDAO clDAO = new ClientDAO();
 		try{
 			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Intervention\" WHERE id_intervention=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 			prepare.setInt(1, id);
@@ -86,7 +83,6 @@ public class InterventionDAO extends DAO<Intervention>{
 			if(result.first()){
 				intervention.setId_intervention(id);
 				intervention.setMateriel(matDAO.find(result.getInt("materiel")));
-				intervention.setClient(clDAO.find(result.getInt("client")));
 				intervention.setType_intervention(tiDAO.find(result.getInt("type_intervention")));
 				intervention.setNumFacture(result.getInt("numFacture"));
 				intervention.setNumBL(result.getInt("numBL"));
