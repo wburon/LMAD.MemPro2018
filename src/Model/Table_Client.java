@@ -25,19 +25,33 @@ public class Table_Client extends AbstractTableModel{
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return listClient.size();
 	}
 
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return entete.length;
+	}
+	public String getColumnName(int columnIndex){
+		return entete[columnIndex];
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
-		return null;
+		switch(columnIndex){
+		case 0:
+			return listClient.get(rowIndex).getNom();
+		case 1:
+			return listClient.get(rowIndex).getPrenom();
+		case 2:
+			return listClient.get(rowIndex).getAdresse();
+		case 3: 
+			return listClient.get(rowIndex).getTel();
+		default:
+			return null;
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import Singleton.SingletonConnection;
@@ -109,6 +110,20 @@ public class ClientDAO extends DAO<Client>{
 	
 	public ArrayList<Client> getListAccueil(){
 		ArrayList<Client> listClient = new ArrayList<>();
+		Statement state;
+		Client obj = new Client();
+		try{
+			state = SC.createStatement();
+			state.executeQuery("SELECT * FROM \"public\".\"Client\" ");
+			ResultSet result = state.getResultSet();
+			
+			while(result.next()){
+				obj = find(result.getInt("id_client"));
+				listClient.add(obj);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 		return listClient;
 	}
 }

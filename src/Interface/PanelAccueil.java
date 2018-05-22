@@ -1,6 +1,8 @@
 package Interface;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,9 +24,11 @@ public class PanelAccueil extends JPanel implements ActionListener{
 	
 	private JButton btnRecherche;
 	private JButton btnPlanning;
+	private JButton btnAjoutClient;
 	private JTextField jtfRecherche;
 	
 	private PanelResultat panelRes;
+	private FrameAjoutClient fAC;
 
 	private ClientDAO cDAO;
 	/**
@@ -50,14 +54,18 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		
 		btnRecherche = new JButton("Recherche");
 		panelNorth.add(btnRecherche);
+		btnRecherche.addActionListener(this);
+		
 		panelNorth.add(jtfRecherche);
 		jtfRecherche.setColumns(10);
 		
 		btnPlanning = new JButton("Planning");
 		panelNorth.add(btnPlanning);
+		btnPlanning.addActionListener(this);
 		
-		JButton btnAjoutClient = new JButton("Ajout Client");
+		btnAjoutClient = new JButton("Ajout Client");
 		panelNorth.add(btnAjoutClient);
+		btnAjoutClient.addActionListener(this);
 		
 		JPanel panelWest = new JPanel();
 		add(panelWest, BorderLayout.WEST);
@@ -75,7 +83,7 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		cDAO = new ClientDAO();
 		tClient = new Table_Client(cDAO.getListAccueil());
 		table = new JTable(tClient);
-		panelCenter.add(table);
+		panelCenter.add(new JScrollPane(table));
 		
 		
 
@@ -88,6 +96,10 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		if(e.getSource()==btnRecherche){
 			String recherche = jtfRecherche.getText();
 			LancerRecherche(recherche);
+		}
+		if(e.getSource()==btnAjoutClient){
+			fAC = new FrameAjoutClient();
+			fAC.setVisible(true);
 		}
 		
 	}

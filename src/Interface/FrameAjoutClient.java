@@ -74,12 +74,15 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 		
 		btnAjouter = new JButton("Ajouter");
 		panelSouth.add(btnAjouter);
+		btnAjouter.addActionListener(this);
 		
 		btnAnnuler = new JButton("Annuler");
 		panelSouth.add(btnAnnuler);
+		btnAnnuler.addActionListener(this);
 		
 		btnQuitter = new JButton("Quitter");
 		panelSouth.add(btnQuitter);
+		btnQuitter.addActionListener(this);
 		
 		JPanel panelEast = new JPanel();
 		contentPane.add(panelEast, BorderLayout.EAST);
@@ -155,9 +158,11 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(btnAjouter, "Le client n'a pas pu être ajouté !", "Erreur", JOptionPane.ERROR_MESSAGE);
 			
 			
-		}else if(e.getSource()==btnAnnuler){
+		}
+		if(e.getSource()==btnAnnuler){
 			clearTextField();
-		}else if(e.getSource()==btnQuitter){
+		}
+		if(e.getSource()==btnQuitter){
 			this.dispose();
 		}
 		
