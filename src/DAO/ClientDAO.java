@@ -126,4 +126,47 @@ public class ClientDAO extends DAO<Client>{
 		}
 		return listClient;
 	}
+	public ArrayList<Client> research(ArrayList<String> listMot){
+		ArrayList<Client> listClient = new ArrayList<>();
+		ArrayList<Client> listResearch = new ArrayList<>();
+		String[] champs = {"nom", "prenom", "tel", "adresse"};
+		Client obj = new Client();
+		
+		for(String s : listMot){
+			for(int i=0; i<champs.length;i++){
+				listResearch=research(s,champs[i]);
+				if(listResearch!=null)
+					listClient=append(listClient,listResearch);
+			}
+		}
+		
+		return listClient;
+		
+	}
+
+	private ArrayList<Client> append(ArrayList<Client> listClient, ArrayList<Client> listResearch) {
+		for(Client c:listResearch){
+			listClient.add(c);
+		}
+		return listClient;
+	}
+
+	private ArrayList<Client> research(String s, String champs) {
+		ArrayList<Client> listClient = new ArrayList<>();
+		Statement state;
+		Client obj = new Client();
+		try {
+			state = SC.createStatement();
+			state.executeQuery("SELECT * FROM \"public\".\"Client\" WHERE \""+champs+"\" = '"+s+"'");
+			ResultSet result = state.getResultSet();
+			while(result.next()){
+				obj=find(result.getInt("id_client"));
+				listClient.add(obj);
+			}
+		} catch (SQLException e) {
+			listClient=null;
+			e.printStackTrace();
+		}
+		return listClient;
+	}
 }
