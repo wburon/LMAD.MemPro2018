@@ -25,6 +25,7 @@ import DAO.MaterielDAO;
 import DAO.Rendez_VousDAO;
 import Model.Client;
 import Model.Materiel;
+import Model.Methode;
 import Model.Rendez_Vous;
 import Singleton.SingletonConnection;
 
@@ -108,7 +109,7 @@ public class testWilliam {
 			client.setVille(ville);
 			client.setTel(0241);
 			String adresse_complete = adresse + " " + ville;
-			String gps = getGPSCoord(adresse_complete);
+			String gps = Methode.getGPSCoord(adresse_complete);
 			System.out.println(gps);
 			client.setGps(gps);
 			client.setMail("courriel");
@@ -143,86 +144,5 @@ public class testWilliam {
 	 * e.printStackTrace(); } }
 	 */
 
-	private static String getGPSCoord(String adresse_complete) {
-		String result = null;
-		try {
-			URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?address="
-					+ adresse_complete.replace(" ", "+") + "&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg");
-			result = postURL(url, "");
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-
-	}
-
-	public static String postURL(URL a_Url, String a_sParamsToPost) {
-		StringBuilder o_oSb = new StringBuilder();
-
-		// recup du saut de ligne
-		String o_sLineSep = null;
-		try {
-			o_sLineSep = System.getProperty("line.separator");
-		} catch (Exception e) {
-			o_sLineSep = "\n";
-		}
-
-		String resultat = null;
-		try {
-			HttpURLConnection o_oUrlConn = (HttpURLConnection) a_Url.openConnection();
-			o_oUrlConn.setRequestMethod("POST");
-			o_oUrlConn.setAllowUserInteraction(false);
-			// envoyer des params
-			o_oUrlConn.setDoOutput(true);
-
-			// poster les params
-			PrintWriter o_oParamWriter = new PrintWriter(o_oUrlConn.getOutputStream());
-
-			o_oParamWriter.print(a_sParamsToPost);
-			// fermer le post avant de lire le resultat ... logique
-			o_oParamWriter.flush();
-			o_oParamWriter.close();
-
-			// Lire la reponse
-			InputStream o_oResponse = o_oUrlConn.getInputStream();
-			Double []coord = CoordAddress(o_oResponse);
-			resultat = coord[0]+","+coord[1];
-			// deconnection
-			o_oUrlConn.disconnect();
-		} catch (ConnectException ctx) {
-			System.out.println("Connection lost : server may be down");
-			ctx.printStackTrace();
-		} catch (Exception e) {
-			System.out.println("postURL : " + e.getMessage());
-			e.printStackTrace();
-		}
-		
-		return resultat;
-	}
-
-	/**
-	 * Recupère le coordonnée GPS d'une réponse JSON
-	 * @param result
-	 * @return Double[2] : {lng, lat} 
-	 */
-	private static Double[] CoordAddress(InputStream result) {
-		Double lng = null, lat = null;
-		try {
-			JSONParser jsonParser = new JSONParser();
-			JSONObject myJSONResult = (JSONObject) jsonParser.parse(new InputStreamReader(result, "UTF-8"));
-			JSONArray o = (JSONArray) myJSONResult.get("results");
-			JSONObject p = (JSONObject) o.get(0);
-			JSONObject q = (JSONObject) p.get("geometry");
-			JSONObject location = (JSONObject) q.get("location");
-			lng = (Double) location.get("lng");
-			lat = (Double) location.get("lat");
-			System.out.println("lng : " + lng + " lat : " + lat);
-		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Double lng_lat[] = {lng,lat};
-		return lng_lat;
-	}
+	
 }

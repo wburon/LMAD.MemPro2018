@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import Singleton.SingletonConnection;
 import Model.Client;
 import Model.Materiel;
+import Model.Methode;
 
 public class ClientDAO extends DAO<Client>{
 	Connection SC = SingletonConnection.getConnection();
@@ -23,9 +24,13 @@ public class ClientDAO extends DAO<Client>{
 			prepare.setInt(1, obj.getId_client());
 			prepare.setString(2, obj.getNom());
 			prepare.setString(3, obj.getPrenom());
-			prepare.setString(4, obj.getAdresse());
-			prepare.setString(5, obj.getVille());
+			String adresse = obj.getAdresse();
+			prepare.setString(4, adresse);
+			String ville = obj.getVille();
+			prepare.setString(5, ville);
 			prepare.setInt(6, obj.getTel());
+			String adresse_complete = adresse+" "+ville;
+			String gps = Methode.getGPSCoord(adresse_complete);
 			prepare.setString(7, obj.getGps());
 			prepare.setString(8, obj.getMail());
 			
