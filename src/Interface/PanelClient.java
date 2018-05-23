@@ -233,10 +233,11 @@ public class PanelClient extends JPanel implements ActionListener{
 			getIndiceMat("Prev");
 			panelMateriel.repaint();
 		}else if(arg0.getSource() == btnModification){
-			if(lblNomI.isEnabled())
+			if(lblNomI.isEnabled()){
 				changeVisibilityOfClient(false);
-			else
+			}else{
 				clientDAO.update(createClient());
+			}
 		}else if(arg0.getSource() == btnPrendreRdV){
 			// do something
 		}else if(arg0.getSource() == btnAddMateriel){
