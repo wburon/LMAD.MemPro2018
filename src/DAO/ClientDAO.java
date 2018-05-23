@@ -19,15 +19,16 @@ public class ClientDAO extends DAO<Client>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Client\"(nom,prenom,adresse,ville,tel,gps,courriel) values (?,?,?,?,?,?,?);");
+					.prepareStatement("Insert into \"Client\"(id_client,nom,prenom,adresse,ville,tel,gps,courriel) values (?,?,?,?,?,?,?,?);");
 
-			prepare.setString(1, obj.getNom());
-			prepare.setString(2, obj.getPrenom());
-			prepare.setString(3, obj.getAdresse());
-			prepare.setString(4, obj.getVille());
-			prepare.setInt(5, obj.getTel());
-			prepare.setString(6, obj.getGps());
-			prepare.setString(7, obj.getMail());
+			prepare.setInt(1, obj.getId_client());
+			prepare.setString(2, obj.getNom());
+			prepare.setString(3, obj.getPrenom());
+			prepare.setString(4, obj.getAdresse());
+			prepare.setString(5, obj.getVille());
+			prepare.setInt(6, obj.getTel());
+			prepare.setString(7, obj.getGps());
+			prepare.setString(8, obj.getMail());
 			
 			prepare.executeUpdate();
 
@@ -125,5 +126,20 @@ public class ClientDAO extends DAO<Client>{
 			e.printStackTrace();
 		}
 		return listClient;
+	}
+	
+	public int maxId() {
+		Statement state;
+		int nbRow=0;
+		try {
+			state = SC.createStatement();
+			ResultSet nbLigne = state.executeQuery("SELECT MAX(id_client) FROM \"public\".\"Client\" ");
+			nbLigne.next();
+			nbRow = nbLigne.getInt(1) + 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nbRow;
 	}
 }

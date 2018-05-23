@@ -12,9 +12,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Set;
+
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -38,13 +36,16 @@ public class testWilliam {
 
 		Connection SC = SingletonConnection.getConnection();
 
-		// testClient(SC);
+		testClient(SC);
+//SUCCESS		//testMaxId(SC);
 		// testMateriel(SC);
 		// testRendez_Vous(SC);
-		String adresse = "3 rue rabelais";
-		String ville = "angers";
-		String adresse_complete = adresse + " " + ville;
-		String coord = getGPSCoord(adresse_complete);
+		
+//		String adresse = "3 rue rabelais";
+//		String ville = "angers";
+//		String adresse_complete = adresse + " " + ville;
+//		String coord = getGPSCoord(adresse_complete);
+		
 		// try {
 		// String result = postURL(new
 		// URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg"),
@@ -55,6 +56,11 @@ public class testWilliam {
 		// e.printStackTrace();
 		// }
 
+	}
+
+	private static void testMaxId(Connection sC) {
+		ClientDAO clDAO = new ClientDAO();
+		System.out.println(clDAO.maxId());
 	}
 
 	/**
@@ -94,7 +100,7 @@ public class testWilliam {
 		try {
 			PreparedStatement prepare = SC.prepareStatement("Select * from \"Client\"");
 			prepare.executeQuery();
-
+			ClientDAO cl = new ClientDAO();
 			Client client = new Client();
 			client.setNom("nom");
 			client.setPrenom("prenom");
@@ -104,13 +110,17 @@ public class testWilliam {
 			client.setVille(ville);
 			client.setTel(0241);
 			String adresse_complete = adresse + " " + ville;
-			client.setGps(getGPSCoord(adresse_complete));
+			String gps = getGPSCoord(adresse_complete);
+			System.out.println(gps);
+			client.setGps(gps);
 			client.setMail("courriel");
+			int id = cl.maxId();
+			System.out.println(id);
+			client.setId_client(id);
 
-			ClientDAO cl = new ClientDAO();
 			cl.create(client);
-			System.out.println(cl.find(0));
-			cl.delete(client);
+//			System.out.println(cl.find(1));
+//			cl.delete(client);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -160,6 +170,7 @@ public class testWilliam {
 			o_sLineSep = "\n";
 		}
 
+		String resultat = null;
 		try {
 			HttpURLConnection o_oUrlConn = (HttpURLConnection) a_Url.openConnection();
 			o_oUrlConn.setRequestMethod("POST");
@@ -177,13 +188,8 @@ public class testWilliam {
 
 			// Lire la reponse
 			InputStream o_oResponse = o_oUrlConn.getInputStream();
-			BufferedReader o_oBufReader = new BufferedReader(new InputStreamReader(o_oResponse));
-			String sLine;
-
-			while ((sLine = o_oBufReader.readLine()) != null) {
-				o_oSb.append(sLine);
-				o_oSb.append(o_sLineSep);
-			}
+			Double []coord = CoordAddress(o_oResponse);
+			resultat = coord[0]+","+coord[1];
 			// deconnection
 			o_oUrlConn.disconnect();
 		} catch (ConnectException ctx) {
@@ -193,8 +199,8 @@ public class testWilliam {
 			System.out.println("postURL : " + e.getMessage());
 			e.printStackTrace();
 		}
-		System.out.println("retour url=" + o_oSb.toString());
-		return o_oSb.toString();
+		
+		return resultat;
 	}
 
 	/**
@@ -202,7 +208,7 @@ public class testWilliam {
 	 * @param result
 	 * @return Double[2] : {lng, lat} 
 	 */
-	private Double[] CoordAddress(InputStream result) {
+	private static Double[] CoordAddress(InputStream result) {
 		Double lng = null, lat = null;
 		try {
 			JSONParser jsonParser = new JSONParser();
