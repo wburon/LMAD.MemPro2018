@@ -53,7 +53,7 @@ public class MaterielDAO extends DAO<Materiel>{
 	@Override
 	public boolean update(Materiel obj) {
 		try{
-			PreparedStatement prepare=SC.prepareStatement("Update \"Materiel\" set nom=?, type=?, numSerie=?, id_client=? where id_materiel=?");
+			PreparedStatement prepare=SC.prepareStatement("Update \"Materiel\" set nom=?, type=?, \"numSerie\"=?, id_client=? where id_materiel=?");
 			
 			prepare.setString(1, obj.getNom());
 			prepare.setString(2, obj.getType());

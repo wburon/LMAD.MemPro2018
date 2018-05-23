@@ -4,10 +4,13 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
+import DAO.ClientDAO;
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 
 	private PanelAccueil panelAccueil;
+	private PanelClient panelClient;
 
 	/**
 	 * Launch the application.
@@ -30,7 +33,7 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		
-		panelAccueil = new PanelAccueil();
+		//panelAccueil = new PanelAccueil();
 		init();
 //		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 //		contentPane.setLayout(new BorderLayout(0, 0));
@@ -40,7 +43,10 @@ public class MainFrame extends JFrame {
 	public void init(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		setContentPane(panelAccueil);
+		
+		ClientDAO clDAO = new ClientDAO();
+		this.panelClient = new PanelClient(clDAO.find(0));
+		setContentPane(panelClient);
 	}
 
 }
