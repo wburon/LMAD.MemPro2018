@@ -29,6 +29,7 @@ public class PanelRDV extends JPanel implements ActionListener{
 	private PanelClient client;
 	private Date deb, fin;
 	private JEditorPane editorPane;
+	private JPanel panelCommentaire;
 
 	public Client getClient() {
 		return client.getClient();
@@ -48,6 +49,14 @@ public class PanelRDV extends JPanel implements ActionListener{
 	
 	public Materiel getMateriel(){
 		return client.getMateriel();
+	}
+
+	public JPanel getPanelCommentaire() {
+		return panelCommentaire;
+	}
+
+	public void setPanelCommentaire(JPanel panelCommentaire) {
+		this.panelCommentaire = panelCommentaire;
 	}
 
 	/**
@@ -112,7 +121,7 @@ public class PanelRDV extends JPanel implements ActionListener{
 		panelInfoRdV.add(jtfH2);
 		jtfH2.setColumns(10);
 		
-		JPanel panelCommentaire = new JPanel();
+		panelCommentaire = new JPanel();
 		panel_1.add(panelCommentaire);
 		panelCommentaire.setLayout(new BorderLayout(0, 0));
 		
@@ -126,6 +135,7 @@ public class PanelRDV extends JPanel implements ActionListener{
 		editorPane = new JEditorPane();
 		panelCommentaire.add(editorPane, BorderLayout.CENTER);
 
+		btnValider.addActionListener(this);
 	}
 
 	@Override
@@ -135,9 +145,25 @@ public class PanelRDV extends JPanel implements ActionListener{
 			String[] h2 = jtfH2.getText().split(":");
 			this.deb = new Date(Integer.parseInt(jtfJour.getText()),Integer.parseInt(jtfMois.getText()),Calendar.getInstance().get(Calendar.YEAR),Integer.parseInt(h1[0]),Integer.parseInt(h1[1]));
 			this.fin = new Date(Integer.parseInt(jtfJour.getText()),Integer.parseInt(jtfMois.getText()),Calendar.getInstance().get(Calendar.YEAR),Integer.parseInt(h2[0]),Integer.parseInt(h2[1]));
-			// TODO ouverture du panel
+			this.panelCommentaire = new Panel_RdvInfo(this);
+			this.panelCommentaire.repaint();
 		}
 		
+	}
+
+	public void rinitPanelCommentaire() {
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setPreferredSize(new Dimension(10, 30));
+		this.panelCommentaire.add(panel_2, BorderLayout.SOUTH);
+		
+		btnValider = new JButton("Valider");
+		panel_2.add(btnValider);
+		
+		editorPane = new JEditorPane();
+		this.panelCommentaire.add(editorPane, BorderLayout.CENTER);
+		
+		this.panelCommentaire.repaint();
 	}
 
 }

@@ -2,7 +2,7 @@ package Interface;
 
 import javax.swing.JPanel;
 
-import CalendarClass.CalendarWeekViewer;
+
 
 import java.awt.BorderLayout;
 
@@ -14,7 +14,7 @@ public class PanelPlanning extends JPanel {
 	public PanelPlanning() {
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new CalendarWeekViewer();
+		JPanel panel = new JPanel();
 		add(panel, BorderLayout.CENTER);
 
 	}

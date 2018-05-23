@@ -85,13 +85,15 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		comboBoxTI = new JComboBox();
 		comboBoxTI.setModel(new DefaultComboBoxModel(new String[] { "ENTRETIENT", "AUTRE" }));
 		panelEcriture.add(comboBoxTI);
-
+		
+		this.btnTerminer.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource()==btnTerminer){
 			rdvDAO.create(createRdV());
+			this.rdv.rinitPanelCommentaire();
 		}
 
 	}
@@ -106,7 +108,6 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	
 	public Intervention createIntervention(){
 		Intervention inter = new Intervention();
-		inter.setClient(rdv.getClient());
 		inter.setMateriel(rdv.getMateriel());
 		inter.setNumBL(Integer.parseInt(jtfNumBL.getText()));
 		inter.setNumFacture(Integer.parseInt(jtfNumFact.getText()));
