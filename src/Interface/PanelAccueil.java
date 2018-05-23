@@ -29,13 +29,14 @@ public class PanelAccueil extends JPanel implements ActionListener{
 	
 	private PanelResultat panelRes;
 	private FrameAjoutClient fAC;
+	private MainFrame mf;
 
 	private ClientDAO cDAO;
 	/**
 	 * Create the panel.
 	 */
-	public PanelAccueil() {
-		
+	public PanelAccueil(MainFrame mf) {
+		this.mf=mf;
 		
 		
 		setLayout(new BorderLayout(0, 0));
@@ -96,6 +97,10 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		if(e.getSource()==btnRecherche){
 			String recherche = jtfRecherche.getText();
 			LancerRecherche(recherche);
+			mf.setContentPane(panelRes);
+			mf.repaint();
+			mf.revalidate();
+			
 		}
 		if(e.getSource()==btnAjoutClient){
 			fAC = new FrameAjoutClient();
@@ -107,12 +112,25 @@ public class PanelAccueil extends JPanel implements ActionListener{
 	private void LancerRecherche(String recherche) {
 		//lancer la recherche en ouvrant le panel recherche 
 		ArrayList<Client> listClient = createListClient(recherche);
-		panelRes = new PanelResultat();
+		panelRes = new PanelResultat(listClient);
 		
 	}
 
 	private ArrayList<Client> createListClient(String recherche) {
 		ArrayList<Client> listClient = new ArrayList<>();
+		int k=0;
+		char c=' ';
+		String mot=null;
+		ArrayList<String> listMot=new ArrayList<>();
+		for(int i=0; i<recherche.length(); i++){
+			if(recherche.charAt(i)==c){
+				k++;
+				listMot.add(mot);
+				mot=null;
+			}
+			else
+				mot+=recherche.charAt(i);
+		}
 		return listClient;
 	}
 
