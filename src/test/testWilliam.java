@@ -30,8 +30,6 @@ import Singleton.SingletonConnection;
 
 public class testWilliam {
 
-	private static Object[] myAddress;
-
 	public static void main(String[] args) {
 
 		Connection SC = SingletonConnection.getConnection();
