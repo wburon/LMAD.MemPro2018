@@ -107,21 +107,32 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 		jtfNumSerie = new JTextField();
 		panel_center.add(jtfNumSerie);
 		jtfNumSerie.setColumns(10);
+		
+		btnValider.addActionListener(this);
+		btnAnnuler.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == btnValider) {
 			MaterielDAO matDAO = new MaterielDAO();
 			Materiel mat = new Materiel();
+			mat.setId_materiel(matDAO.maxId());
 			mat.setClient(this.client);
 			mat.setNom(this.jtfNom.getText());
 			mat.setNumSerie(this.jtfNumSerie.getText());
 			mat.setType(this.jtfType.getText());
 			matDAO.create(mat);
+			clear();
 		}else if(arg0.getSource() == btnAnnuler) {
 			this.dispose();
 		}
 		
+	}
+
+	private void clear() {
+		this.jtfNom.setText("");
+		this.jtfNumSerie.setText("");
+		this.jtfType.setText("");
 	}
 
 }

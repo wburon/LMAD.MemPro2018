@@ -18,12 +18,12 @@ public class MaterielDAO extends DAO<Materiel>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Materiel\"(nom,type,\"numSerie\",id_client) values (?,?,?,?);");
-
-			prepare.setString(1, obj.getNom());
-			prepare.setString(2, obj.getType());
-			prepare.setString(3, obj.getNumSerie());
-			prepare.setInt(4, obj.getClient().getId_client());
+					.prepareStatement("Insert into \"Materiel\"(id_materiel,nom,type,\"numSerie\",id_client) values (?,?,?,?,?);");
+			prepare.setInt(1, obj.getId_materiel());
+			prepare.setString(2, obj.getNom());
+			prepare.setString(3, obj.getType());
+			prepare.setString(4, obj.getNumSerie());
+			prepare.setInt(5, obj.getClient().getId_client());
 			
 			prepare.executeUpdate();
 
