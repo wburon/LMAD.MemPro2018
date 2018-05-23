@@ -29,13 +29,14 @@ public class PanelAccueil extends JPanel implements ActionListener{
 	
 	private PanelResultat panelRes;
 	private FrameAjoutClient fAC;
+	private MainFrame mf;
 
 	private ClientDAO cDAO;
 	/**
 	 * Create the panel.
 	 */
-	public PanelAccueil() {
-		
+	public PanelAccueil(MainFrame mf) {
+		this.mf=mf;
 		
 		
 		setLayout(new BorderLayout(0, 0));
@@ -96,6 +97,10 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		if(e.getSource()==btnRecherche){
 			String recherche = jtfRecherche.getText();
 			LancerRecherche(recherche);
+			mf.setContentPane(panelRes);
+			mf.repaint();
+			mf.revalidate();
+			
 		}
 		if(e.getSource()==btnAjoutClient){
 			fAC = new FrameAjoutClient();
