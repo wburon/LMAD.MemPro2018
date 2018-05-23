@@ -110,7 +110,21 @@ public class ClientDAO extends DAO<Client>{
 	 * @return
 	 */
 	public ArrayList<Materiel> getListMateriel(Client client){
-		return null; // Ah bah ça avance tout ça ...
+		int id = client.getId_client();
+		ArrayList<Materiel> listMat = new ArrayList<>();
+		try {
+			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Materiel\" WHERE id_client = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			prepare.setInt(1, id);
+			ResultSet result = prepare.executeQuery();
+			
+			while(result.next()){
+				listMat.add(Methode.formulateMateriel(result));
+			}
+					
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return listMat;
 	}
 	
 	public ArrayList<Client> getListAccueil(){

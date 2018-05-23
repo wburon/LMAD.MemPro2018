@@ -8,14 +8,18 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import DAO.ClientDAO;
+
 public class Methode {
-	
+
 	public static String getGPSCoord(String adresse_complete) {
 		String result = null;
 		try {
@@ -59,8 +63,8 @@ public class Methode {
 
 			// Lire la reponse
 			InputStream Response = UrlConn.getInputStream();
-			Double []coord = CoordAddress(Response);
-			resultat = coord[0]+","+coord[1];
+			Double[] coord = CoordAddress(Response);
+			resultat = coord[0] + "," + coord[1];
 			// deconnection
 			UrlConn.disconnect();
 		} catch (ConnectException ctx) {
@@ -70,14 +74,15 @@ public class Methode {
 			System.out.println("postURL : " + e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		return resultat;
 	}
 
 	/**
 	 * Recupère le coordonnée GPS d'une réponse JSON
+	 * 
 	 * @param result
-	 * @return Double[2] : {lng, lat} 
+	 * @return Double[2] : {lng, lat}
 	 */
 	private static Double[] CoordAddress(InputStream result) {
 		Double lng = null, lat = null;
@@ -95,8 +100,23 @@ public class Methode {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Double lng_lat[] = {lng,lat};
+		Double lng_lat[] = { lng, lat };
 		return lng_lat;
+	}
+
+	public static Materiel formulateMateriel(ResultSet result) {
+		Materiel mat = new Materiel();
+		ClientDAO clDAO = new ClientDAO();
+		try {
+			mat.setId_materiel(result.getInt("id_materiel"));
+			mat.setNom(result.getString("nom"));
+			mat.setType(result.getString("type"));
+			mat.setNumSerie(result.getString("numSerie"));
+			mat.setClient(clDAO.find(result.getInt("id_client")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mat;
 	}
 
 }
