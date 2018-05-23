@@ -165,7 +165,8 @@ public class ClientDAO extends DAO<Client>{
 
 	private ArrayList<Client> append(ArrayList<Client> listClient, ArrayList<Client> listResearch) {
 		for(Client c:listResearch){
-			listClient.add(c);
+			if(!listClient.contains(c))
+				listClient.add(c);
 		}
 		return listClient;
 	}
@@ -185,7 +186,8 @@ public class ClientDAO extends DAO<Client>{
 			ResultSet result = state.getResultSet();
 			while(result.next()){
 				obj=find(result.getInt("id_client"));
-				listClient.add(obj);
+				if(!listClient.contains(obj))
+					listClient.add(obj);
 			}
 		} catch (SQLException e) {
 			listClient=null;

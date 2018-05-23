@@ -117,21 +117,23 @@ public class PanelAccueil extends JPanel implements ActionListener{
 	}
 
 	private ArrayList<Client> createListClient(String recherche) {
-		ArrayList<Client> listClient = new ArrayList<>();
-		int k=0;
+		int len=recherche.length();
 		char c=' ';
-		String mot=null;
+		String mot="";
 		ArrayList<String> listMot=new ArrayList<>();
-		for(int i=0; i<recherche.length(); i++){
+		for(int i=0; i<len; i++){
 			if(recherche.charAt(i)==c){
-				k++;
 				listMot.add(mot);
-				mot=null;
+				mot="";
+			}
+			else if(i==len-1){
+				mot+=recherche.charAt(i);
+				listMot.add(mot);
 			}
 			else
 				mot+=recherche.charAt(i);
 		}
-		return listClient;
+		return cDAO.research(listMot);
 	}
 
 }
