@@ -145,6 +145,12 @@ public class ClientDAO extends DAO<Client>{
 		}
 		return listClient;
 	}
+	
+	/**
+	 * méthode pour rechercher la correspondance d'une liste de mot dans la base de données
+	 * @param listMot une ArrayList de String avec les mots qu'on veut rechercher
+	 * @return listClient une ArrayList de clients
+	 */
 	public ArrayList<Client> research(ArrayList<String> listMot){
 		ArrayList<Client> listClient = new ArrayList<>();
 		ArrayList<Client> listResearch = new ArrayList<>();
@@ -154,7 +160,8 @@ public class ClientDAO extends DAO<Client>{
 		for(String s : listMot){
 			for(int i=0; i<champs.length;i++){
 				listResearch=research(s,champs[i]);
-				if(listResearch!=null)
+				System.out.println(champs[i]);
+				if(!listResearch.isEmpty())
 					listClient=append(listClient,listResearch);
 			}
 		}
@@ -171,6 +178,12 @@ public class ClientDAO extends DAO<Client>{
 		return listClient;
 	}
 
+	/**
+	 * Méthode appeler par research(ArrayList<String> listMot)
+	 * @param s le mot qu'on recherche
+	 * @param champs la colonne où on veut chercher s
+	 * @return la liste des résultats obtenus
+	 */
 	private ArrayList<Client> research(String s, String champs) {
 		ArrayList<Client> listClient = new ArrayList<>();
 		Statement state;
@@ -182,7 +195,7 @@ public class ClientDAO extends DAO<Client>{
 			else if (champs != "tel")
 				state.executeQuery("SELECT * FROM \"public\".\"Client\" WHERE \""+champs+"\" = '"+s+"'");
 			else 
-				return null;
+				return listClient;
 			ResultSet result = state.getResultSet();
 			while(result.next()){
 				obj=find(result.getInt("id_client"));
@@ -196,6 +209,11 @@ public class ClientDAO extends DAO<Client>{
 		return listClient;
 	}
 	
+	/**
+	 * méthode récursive pour vérifier que la chaine de caractère est un entier
+	 * @param s la chaine de caractère
+	 * @return boolean
+	 */
 	public static boolean isInteger(String s) {
 	    return isInteger(s,10);
 	}
