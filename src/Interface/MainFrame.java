@@ -33,7 +33,7 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		
-		//panelAccueil = new PanelAccueil();
+		panelAccueil = new PanelAccueil(this);
 		init();
 //		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 //		contentPane.setLayout(new BorderLayout(0, 0));
@@ -44,9 +44,9 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
-		ClientDAO clDAO = new ClientDAO();
-		this.panelClient = new PanelClient(clDAO.find(0));
-		setContentPane(panelClient);
+//		ClientDAO clDAO = new ClientDAO();
+//		this.panelClient = new PanelClient(clDAO.find(0));
+		setContentPane(panelAccueil);
 	}
 
 }
