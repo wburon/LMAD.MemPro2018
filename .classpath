@@ -8,7 +8,10 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="postgresql-42.1.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="google-maps-services-java-master.zip"/>
 	<classpathentry kind="lib" path="json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-calendar-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-client-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-core-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/212414/Desktop/guava-r07.jar/guava-r07.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

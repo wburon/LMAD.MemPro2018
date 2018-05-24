@@ -31,21 +31,17 @@ import Singleton.SingletonConnection;
 import java.net.*;
 import java.io.*;
 
-import com.google.gdata.client.*;
 import com.google.gdata.client.calendar.*;
-import com.google.gdata.data.*;
-import com.google.gdata.data.acl.*;
 import com.google.gdata.data.calendar.*;
-import com.google.gdata.data.extensions.*;
 import com.google.gdata.util.*;
 
-import sample.util.*;
+
 
 public class testWilliam {
 
 	public static void main(String[] args) {
 
-		Connection SC = SingletonConnection.getConnection();
+		//Connection SC = SingletonConnection.getConnection();
 
 		// SUCCESS testClient(SC);
 		// SUCCESS //testMaxId(SC);
@@ -68,17 +64,23 @@ public class testWilliam {
 		// }
 
 		try {
-			CalendarService myService = new CalendarService("exampleCo-exampleApp-1.0");
-			myService.setUserCredentials("myaccount@gmail.com", "mypass");
-			URL feedUrl = new URL("http://www.google.com/calendar/feeds/default/allcalendars/full");
-			CalendarFeed resultFeed = myService.getFeed(feedUrl, CalendarFeed.class);
-			System.out.println("Your calendars:");
-			System.out.println();
-			for (int i = 0; i < resultFeed.getEntries().size(); i++) {
-				CalendarEntry entry = resultFeed.getEntries().get(i);
-				System.out.println("\t" + entry.getTitle().getPlainText());
-			}
-		} catch (Exception e) {
+		CalendarService myService = new CalendarService("exampleCo-exampleApp-1.0");
+        
+			myService.setUserCredentials("root@gmail.com", "pa$$word");
+		
+
+        URL feedUrl = new URL("http://www.google.com/calendar/feeds/default/allcalendars/full");
+        CalendarFeed resultFeed = myService.getFeed(feedUrl, CalendarFeed.class);
+
+        System.out.println("Your calendars:");
+        System.out.println();
+
+        for (int i = 0; i < resultFeed.getEntries().size(); i++) {
+          CalendarEntry entry = resultFeed.getEntries().get(i);
+          System.out.println("\t" + entry.getTitle().getPlainText());
+        }
+		} catch (IOException | ServiceException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
