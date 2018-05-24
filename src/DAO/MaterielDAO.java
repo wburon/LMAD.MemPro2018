@@ -19,7 +19,7 @@ public class MaterielDAO extends DAO<Materiel>{
 
 			PreparedStatement prepare = SC
 					.prepareStatement("Insert into \"Materiel\"(id_materiel,nom,type,\"numSerie\",id_client) values (?,?,?,?,?);");
-			prepare.setInt(1, obj.getId_materiel());
+			prepare.setInt(1, maxId());
 			prepare.setString(2, obj.getNom());
 			prepare.setString(3, obj.getType());
 			prepare.setString(4, obj.getNumSerie());

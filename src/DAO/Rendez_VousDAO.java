@@ -19,7 +19,7 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Rendez_vous\"(intervention, dateDebut, dateFin) values (?,?,?);");
+					.prepareStatement("Insert into \"Rendez_vous\"(id_intervention, dateDebut, dateFin) values (?,?,?);");
 
 			prepare.setInt(1, obj.getIntervention().getId_intervention());
 			prepare.setDate(2, (Date) obj.getDateDeb());

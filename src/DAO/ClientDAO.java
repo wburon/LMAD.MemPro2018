@@ -21,7 +21,7 @@ public class ClientDAO extends DAO<Client>{
 
 			PreparedStatement prepare = SC
 					.prepareStatement("Insert into \"Client\"(id_client,nom,prenom,adresse,ville,tel,gps,courriel) values (?,?,?,?,?,?,?);");
-			prepare.setInt(1, obj.getId_client());
+			prepare.setInt(1, maxId());
 			prepare.setString(2, obj.getNom());
 			prepare.setString(3, obj.getPrenom());
 			String adresse = obj.getAdresse();
@@ -31,7 +31,7 @@ public class ClientDAO extends DAO<Client>{
 			prepare.setInt(6, obj.getTel());
 			String adresse_complete = adresse+" "+ville;
 			String gps = Methode.getGPSCoord(adresse_complete);
-			prepare.setString(7, obj.getGps());
+			prepare.setString(7, gps);
 			prepare.setString(8, obj.getMail());
 			
 			prepare.executeUpdate();

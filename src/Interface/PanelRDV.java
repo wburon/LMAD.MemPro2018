@@ -141,8 +141,8 @@ public class PanelRDV extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == btnValider){
-			String[] h1 = jtfH1.getText().split(":");
-			String[] h2 = jtfH2.getText().split(":");
+			String[] h1 = jtfH1.getText().split("h");
+			String[] h2 = jtfH2.getText().split("h");
 			this.deb = new Date(Integer.parseInt(jtfJour.getText()),Integer.parseInt(jtfMois.getText()),Calendar.getInstance().get(Calendar.YEAR),Integer.parseInt(h1[0]),Integer.parseInt(h1[1]));
 			this.fin = new Date(Integer.parseInt(jtfJour.getText()),Integer.parseInt(jtfMois.getText()),Calendar.getInstance().get(Calendar.YEAR),Integer.parseInt(h2[0]),Integer.parseInt(h2[1]));
 			this.panelCommentaire = new Panel_RdvInfo(this);
