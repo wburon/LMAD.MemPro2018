@@ -58,5 +58,11 @@ public class Client {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	public boolean equals(Client c){
+		if (id_client == c.getId_client())
+			return true;
+		else
+			return false;
+	}
 
 }
