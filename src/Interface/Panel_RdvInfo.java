@@ -28,6 +28,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	private JButton btnTerminer;
 	private PanelRDV rdv;
 	private Rendez_VousDAO rdvDAO;
+	private JButton btnAnnuler;
 
 	/**
 	 * Create the panel.
@@ -53,6 +54,10 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		btnTerminer = new JButton("TERMINER");
 		btnTerminer.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panelBoutton.add(btnTerminer);
+		
+		btnAnnuler = new JButton("ANNULER");
+		btnAnnuler.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panelBoutton.add(btnAnnuler);
 
 		JPanel panelEcriture = new JPanel();
 		add(panelEcriture, BorderLayout.CENTER);
@@ -87,6 +92,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		panelEcriture.add(comboBoxTI);
 		
 		this.btnTerminer.addActionListener(this);
+		this.btnAnnuler.addActionListener(this);
 	}
 
 	@Override
@@ -94,6 +100,8 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		if(arg0.getSource()==btnTerminer){
 			rdvDAO.create(createRdV());
 			this.rdv.rinitPanelCommentaire();
+		}else if(arg0.getSource() == btnAnnuler){
+			// TODO
 		}
 
 	}

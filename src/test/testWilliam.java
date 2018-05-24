@@ -35,18 +35,16 @@ import com.google.gdata.client.calendar.*;
 import com.google.gdata.data.calendar.*;
 import com.google.gdata.util.*;
 
-
-
 public class testWilliam {
 
 	public static void main(String[] args) {
 
-		//Connection SC = SingletonConnection.getConnection();
+		 Connection SC = SingletonConnection.getConnection();
 
 		// SUCCESS testClient(SC);
 		// SUCCESS //testMaxId(SC);
 		// testMateriel(SC);
-		// testRendez_Vous(SC);
+		testRendez_Vous(SC);
 
 		// String adresse = "3 rue rabelais";
 		// String ville = "angers";
@@ -63,26 +61,29 @@ public class testWilliam {
 		// e.printStackTrace();
 		// }
 
-		try {
-		CalendarService myService = new CalendarService("exampleCo-exampleApp-1.0");
-        
-			myService.setUserCredentials("root@gmail.com", "pa$$word");
-		
-
-        URL feedUrl = new URL("http://www.google.com/calendar/feeds/default/allcalendars/full");
-        CalendarFeed resultFeed = myService.getFeed(feedUrl, CalendarFeed.class);
-
-        System.out.println("Your calendars:");
-        System.out.println();
-
-        for (int i = 0; i < resultFeed.getEntries().size(); i++) {
-          CalendarEntry entry = resultFeed.getEntries().get(i);
-          System.out.println("\t" + entry.getTitle().getPlainText());
-        }
-		} catch (IOException | ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// CalendarService myService = new
+		// CalendarService("exampleCo-exampleApp-1.0");
+		//
+		// myService.setUserCredentials("root@gmail.com", "pa$$word");
+		//
+		//
+		// URL feedUrl = new
+		// URL("http://www.google.com/calendar/feeds/default/allcalendars/full");
+		// CalendarFeed resultFeed = myService.getFeed(feedUrl,
+		// CalendarFeed.class);
+		//
+		// System.out.println("Your calendars:");
+		// System.out.println();
+		//
+		// for (int i = 0; i < resultFeed.getEntries().size(); i++) {
+		// CalendarEntry entry = resultFeed.getEntries().get(i);
+		// System.out.println("\t" + entry.getTitle().getPlainText());
+		// }
+		// } catch (IOException | ServiceException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 	}
 
@@ -155,22 +156,26 @@ public class testWilliam {
 			e.printStackTrace();
 		}
 	}
-	/*
-	 * private static void testRendez_Vous(Connection SC){ try {
-	 * PreparedStatement prepare = SC.prepareStatement(
-	 * "Select * from \"Rendez_vous\""); prepare.executeQuery();
-	 * 
-	 * InterventionDAO interDAO = new InterventionDAO();
-	 * 
-	 * Rendez_Vous rdv = new Rendez_Vous();
-	 * rdv.setIntervention(interDAO.find(0));
-	 * rdv.setDate(java.sql.Date.valueOf("22-03-2018"));
-	 * 
-	 * Rendez_VousDAO rdvDAO = new Rendez_VousDAO(); rdvDAO.create(rdv);
-	 * System.out.println(rdvDAO.find(0)); rdvDAO.delete(rdv);
-	 * 
-	 * } catch (SQLException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); } }
-	 */
+
+	private static void testRendez_Vous(Connection SC) {
+		try {
+			PreparedStatement prepare = SC.prepareStatement("Select * from \"Rendez_vous\"");
+			prepare.executeQuery();
+
+			InterventionDAO interDAO = new InterventionDAO();
+
+			Rendez_Vous rdv = new Rendez_Vous();
+			rdv.setIntervention(interDAO.find(0));
+			rdv.setDateDeb(java.sql.Date.valueOf("22-03-2018, 10:00"));
+
+			Rendez_VousDAO rdvDAO = new Rendez_VousDAO();
+			rdvDAO.create(rdv);
+			System.out.println(rdvDAO.find(0));
+			rdvDAO.delete(rdv);
+
+		} catch (SQLException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

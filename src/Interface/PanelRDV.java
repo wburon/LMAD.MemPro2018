@@ -30,6 +30,7 @@ public class PanelRDV extends JPanel implements ActionListener{
 	private Date deb, fin;
 	private JEditorPane editorPane;
 	private JPanel panelCommentaire;
+	private JButton btnAnnuler;
 
 	public Client getClient() {
 		return client.getClient();
@@ -132,10 +133,14 @@ public class PanelRDV extends JPanel implements ActionListener{
 		btnValider = new JButton("Valider");
 		panel_2.add(btnValider);
 		
+		btnAnnuler = new JButton("Annuler");
+		panel_2.add(btnAnnuler);
+		
 		editorPane = new JEditorPane();
 		panelCommentaire.add(editorPane, BorderLayout.CENTER);
 
 		btnValider.addActionListener(this);
+		btnAnnuler.addActionListener(this);
 	}
 
 	@Override
@@ -147,6 +152,8 @@ public class PanelRDV extends JPanel implements ActionListener{
 			this.fin = new Date(Integer.parseInt(jtfJour.getText()),Integer.parseInt(jtfMois.getText()),Calendar.getInstance().get(Calendar.YEAR),Integer.parseInt(h2[0]),Integer.parseInt(h2[1]));
 			this.panelCommentaire = new Panel_RdvInfo(this);
 			this.panelCommentaire.repaint();
+		}else if(arg0.getSource() == btnAnnuler){
+			// TODO
 		}
 		
 	}
