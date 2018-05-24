@@ -22,6 +22,11 @@ import DAO.ClientDAO;
 
 public class Methode {
 
+	/**
+	 * Crée la requete HTTPS et la lance
+	 * @param adresse_complete
+	 * @return les coordonnées GPS correspondant à l'adresse complete
+	 */
 	public static String getGPSCoord(String adresse_complete) {
 		String result = null;
 		try {
@@ -36,6 +41,12 @@ public class Methode {
 
 	}
 
+	/**
+	 * Recupère les coordonnées GPS d'une adresse complete (adresse + ville)
+	 * @param url
+	 * @param sParamsToPost
+	 * @return les coordonnées GPS au format text, separateur : ","
+	 */
 	public static String postURL(URL url, String sParamsToPost) {
 		StringBuilder Sb = new StringBuilder();
 
@@ -76,7 +87,6 @@ public class Methode {
 			System.out.println("postURL : " + e.getMessage());
 			e.printStackTrace();
 		}
-
 		return resultat;
 	}
 
@@ -106,6 +116,11 @@ public class Methode {
 		return lng_lat;
 	}
 
+	/**
+	 * Forme un object Materiel à partir d'un ResultSet
+	 * @param result
+	 * @return Materiel
+	 */
 	public static Materiel formulateMateriel(ResultSet result) {
 		Materiel mat = new Materiel();
 		ClientDAO clDAO = new ClientDAO();
@@ -121,9 +136,8 @@ public class Methode {
 		return mat;
 	}
 
-	public static void sauvegarde(JFrame frame) {
-		
-		
+	public static void sauvegarde(JFrame frame) throws IOException {
+		CSVFileWriter.launch();
 		frame.dispose();
 	}
 
