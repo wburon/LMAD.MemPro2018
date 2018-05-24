@@ -10,11 +10,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 public class TestFrame extends JFrame implements MouseListener{
 
 	private JPanel contentPane;
 	private JTable table;
+	private JTextArea textArea;
 
 	private String[] entete = {"Col1", "Col2", "Col3"};
 	
@@ -58,41 +60,46 @@ public class TestFrame extends JFrame implements MouseListener{
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3, BorderLayout.SOUTH);
 		
+		textArea = new JTextArea();
+		panel_3.add(textArea);
+		
 		JPanel panel_4 = new JPanel();
 		contentPane.add(panel_4, BorderLayout.CENTER);
 		
 		
 		table = new JTable(data, entete);
 		panel_4.add(new JScrollPane(table));
+		
+		table.addMouseListener(this);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		textArea.setText("(mouseClic) nombre de clique : "+e.getClickCount()); 
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		textArea.setText("(mousePressed) nombre de clique : "+e.getClickCount());
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		textArea.setText("chiffre sélectionné : "+data[table.getSelectedRow()][0]+", "+data[table.getSelectedRow()][1]+", "+data[table.getSelectedRow()][2]);
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		textArea.setText("(mouseEntered) nombre de clique : "+e.getClickCount());
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		textArea.setText("(mouseExited) nombre de clique : "+e.getClickCount());
 		
 	}
 
