@@ -3,14 +3,32 @@ package Interface;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import DAO.ClientDAO;
+import Model.Client;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 
-	private PanelAccueil panelAccueil;
-	private PanelClient panelClient;
+	private Client client;
+	private JPanel activePanel;
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public JPanel getActivePanel() {
+		return activePanel;
+	}
+
+	public void setActivePanel(JPanel activePanel) {
+		this.activePanel = activePanel;
+	}
 
 	/**
 	 * Launch the application.
@@ -32,8 +50,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		
-		panelAccueil = new PanelAccueil(this);
+		this.activePanel = new PanelAccueil(this);
 		init();
 //		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 //		contentPane.setLayout(new BorderLayout(0, 0));
@@ -46,7 +63,7 @@ public class MainFrame extends JFrame {
 		
 //		ClientDAO clDAO = new ClientDAO();
 //		this.panelClient = new PanelClient(clDAO.find(0));
-		setContentPane(panelAccueil);
+		setContentPane(this.activePanel);
 	}
 
 }
