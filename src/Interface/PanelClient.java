@@ -68,11 +68,12 @@ public class PanelClient extends JPanel implements ActionListener{
 	 */
 	public PanelClient(MainFrame mf) {
 		this.mf = mf;
+		this.client = mf.getClient();
 		clientDAO = new ClientDAO();
 		materielDAO = new MaterielDAO();
 		listMateriel = clientDAO.getListMateriel(client);
 		indiceMat = 0;
-		this.client = mf.getClient();
+		
 	
 		
 		setLayout(new GridLayout(1, 2, 0, 0));
