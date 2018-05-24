@@ -8,12 +8,19 @@ import Model.Client;
 import Model.Table_Client;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
 
-public class PanelResultat extends JPanel{
+@SuppressWarnings("serial")
+public class PanelResultat extends JPanel implements ActionListener, MouseListener{
 	
 	private Table_Client tClient;
 	private JTable table;
+	private JButton btnRetour;
 	
 	public PanelResultat(ArrayList<Client> listClient) {
 		
@@ -29,6 +36,9 @@ public class PanelResultat extends JPanel{
 		JPanel panel_south = new JPanel();
 		add(panel_south, BorderLayout.SOUTH);
 		
+		btnRetour = new JButton("Retour");
+		panel_south.add(btnRetour);
+		
 		JPanel panel_east = new JPanel();
 		add(panel_east, BorderLayout.EAST);
 		
@@ -38,6 +48,43 @@ public class PanelResultat extends JPanel{
 		tClient = new Table_Client(listClient);
 		table = new JTable(tClient);
 		panel_center.add(new JScrollPane(table));
+		table.addMouseListener(this);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==btnRetour);
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

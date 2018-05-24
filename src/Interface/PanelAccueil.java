@@ -28,6 +28,7 @@ public class PanelAccueil extends JPanel implements ActionListener{
 	private JTextField jtfRecherche;
 	
 	private PanelResultat panelRes;
+	private PanelPlanning panelPlan;
 	private FrameAjoutClient fAC;
 	private MainFrame mf;
 
@@ -105,6 +106,12 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		if(e.getSource()==btnAjoutClient){
 			fAC = new FrameAjoutClient();
 			fAC.setVisible(true);
+		}
+		if(e.getSource()==btnPlanning){
+			panelPlan = new PanelPlanning();
+			mf.setContentPane(panelPlan);
+			mf.repaint();
+			mf.revalidate();
 		}
 		
 	}
