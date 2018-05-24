@@ -11,6 +11,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JFrame;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -117,6 +119,12 @@ public class Methode {
 			e.printStackTrace();
 		}
 		return mat;
+	}
+
+	public static void sauvegarde(JFrame frame) {
+		
+		
+		frame.dispose();
 	}
 
 }
