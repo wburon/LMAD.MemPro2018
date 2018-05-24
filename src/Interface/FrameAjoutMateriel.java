@@ -129,6 +129,9 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 		
 	}
 
+	/**
+	 * vide les jtfs
+	 */
 	private void clear() {
 		this.jtfNom.setText("");
 		this.jtfNumSerie.setText("");

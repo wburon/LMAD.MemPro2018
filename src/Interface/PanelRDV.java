@@ -158,6 +158,9 @@ public class PanelRDV extends JPanel implements ActionListener{
 		
 	}
 
+	/**
+	 * Repaint la partit RDV pour reafficher l'editor pane de commentaire
+	 */
 	public void rinitPanelCommentaire() {
 		
 		JPanel panel_2 = new JPanel();
