@@ -21,9 +21,11 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 	private Table_Client tClient;
 	private JTable table;
 	private JButton btnRetour;
+	private MainFrame mf;
 	
-	public PanelResultat(ArrayList<Client> listClient) {
+	public PanelResultat(ArrayList<Client> listClient, MainFrame mf) {
 		
+		this.mf = mf;
 		
 		setLayout(new BorderLayout(0, 0));
 		
@@ -54,7 +56,11 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==btnRetour);
+		if(e.getSource()==btnRetour){
+			mf.setContentPane(mf.getPanelAccueil());
+			mf.repaint();
+			mf.revalidate();
+		}
 		
 	}
 
@@ -72,7 +78,13 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getClickCount()==2){
+			mf.setClient(tClient.getClient(table.getSelectedRow()));
+			System.out.println(mf.getClient().getNom());
+			mf.setContentPane(new PanelClient(mf));
+			mf.repaint();
+			mf.revalidate();
+		}
 		
 	}
 

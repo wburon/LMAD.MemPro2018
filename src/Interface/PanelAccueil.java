@@ -119,7 +119,7 @@ public class PanelAccueil extends JPanel implements ActionListener{
 	private void LancerRecherche(String recherche) {
 		//lancer la recherche en ouvrant le panel recherche 
 		ArrayList<Client> listClient = createListClient(recherche);
-		panelRes = new PanelResultat(listClient);
+		panelRes = new PanelResultat(listClient, mf);
 		
 	}
 

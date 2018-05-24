@@ -53,5 +53,8 @@ public class Table_Client extends AbstractTableModel{
 			return null;
 		}
 	}
+	public Client getClient(int i){
+		return listClient.get(i);
+	}
 
 }
