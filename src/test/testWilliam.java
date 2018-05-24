@@ -13,7 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,22 +28,35 @@ import Model.Methode;
 import Model.Rendez_Vous;
 import Singleton.SingletonConnection;
 
+import java.net.*;
+import java.io.*;
+
+import com.google.gdata.client.*;
+import com.google.gdata.client.calendar.*;
+import com.google.gdata.data.*;
+import com.google.gdata.data.acl.*;
+import com.google.gdata.data.calendar.*;
+import com.google.gdata.data.extensions.*;
+import com.google.gdata.util.*;
+
+import sample.util.*;
+
 public class testWilliam {
 
 	public static void main(String[] args) {
 
 		Connection SC = SingletonConnection.getConnection();
 
-		testClient(SC);
-//SUCCESS		//testMaxId(SC);
+		// SUCCESS testClient(SC);
+		// SUCCESS //testMaxId(SC);
 		// testMateriel(SC);
 		// testRendez_Vous(SC);
-		
-//		String adresse = "3 rue rabelais";
-//		String ville = "angers";
-//		String adresse_complete = adresse + " " + ville;
-//		String coord = getGPSCoord(adresse_complete);
-		
+
+		// String adresse = "3 rue rabelais";
+		// String ville = "angers";
+		// String adresse_complete = adresse + " " + ville;
+		// String coord = getGPSCoord(adresse_complete);
+
 		// try {
 		// String result = postURL(new
 		// URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg"),
@@ -54,6 +66,21 @@ public class testWilliam {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
+
+		try {
+			CalendarService myService = new CalendarService("exampleCo-exampleApp-1.0");
+			myService.setUserCredentials("myaccount@gmail.com", "mypass");
+			URL feedUrl = new URL("http://www.google.com/calendar/feeds/default/allcalendars/full");
+			CalendarFeed resultFeed = myService.getFeed(feedUrl, CalendarFeed.class);
+			System.out.println("Your calendars:");
+			System.out.println();
+			for (int i = 0; i < resultFeed.getEntries().size(); i++) {
+				CalendarEntry entry = resultFeed.getEntries().get(i);
+				System.out.println("\t" + entry.getTitle().getPlainText());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -118,8 +145,8 @@ public class testWilliam {
 			client.setId_client(id);
 
 			cl.create(client);
-//			System.out.println(cl.find(1));
-//			cl.delete(client);
+			// System.out.println(cl.find(1));
+			// cl.delete(client);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -144,5 +171,4 @@ public class testWilliam {
 	 * e.printStackTrace(); } }
 	 */
 
-	
 }
