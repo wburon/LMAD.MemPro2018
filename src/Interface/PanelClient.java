@@ -21,7 +21,6 @@ import Model.Materiel;
 
 import Model.Client;
 
-import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -29,55 +28,29 @@ import java.awt.Insets;
 
 public class PanelClient extends JPanel implements ActionListener{
 
-	private JLabel lblNom;
-	private JLabel lblPrenom;
-	private JLabel lblAdresse;
-	private JLabel lblVille;
-	private JLabel lblTelephone;
-	private JLabel lblMail;
-	private JButton btnPrendreRdV;
-	private JButton btnPreviousMat;
-	private JButton btnNextMat;
-	private JLabel lblNomMat;
-	private JLabel lblTypeMat;
-	private JLabel lblNumSerieMat;
-	private JPanel panelMateriel;
-	private ArrayList<Materiel> listMateriel;
-	private ClientDAO clientDAO;
-	private int indiceMat;
-	private JTextField jtfnom;
-	private JTextField jtfPrenom;
-	private JTextField jtfAdresse;
-	private JTextField jtfVille;
-	private JTextField jtfTelephone;
-	private JTextField jtfCourriel;
-	private JLabel lblTelephoneI;
-	private JLabel lblVilleI;
-	private JLabel lblMailI;
-	private JLabel lblAdresseI;
-	private JLabel lblPrenomI;
-	private JLabel lblNomI;
-	private JButton btnModification;
-	private JButton btnAddMateriel;
-	private Client client;
+	// Champ de construction client
+	private JLabel lblNom, lblPrenom, lblAdresse, lblVille, lblTelephone, lblMail;
+	private JTextField jtfnom, jtfPrenom, jtfAdresse, jtfVille, jtfTelephone, jtfCourriel;
+	private JLabel lblNomI, lblPrenomI, lblAdresseI, lblVilleI, lblTelephoneI, lblMailI;
 	private JPanel panelInfoClient;
-	private GridBagConstraints gbc_lblNomI;
-	private GridBagConstraints gbc_lblPrenomI;
-	private GridBagConstraints gbc_lblAdresseI;
-	private GridBagConstraints gbc_lblVilleI;
-	private GridBagConstraints gbc_lblTelephoneI;
-	private GridBagConstraints gbc_lblMailI;
-	private JButton btnModifierCeMateriel;
-	private JLabel lblNomMatI;
-	private JLabel lblTypeMatI;
-	private JLabel lblNumSerieI;
-	private JTextField jtfNomMat;
-	private JTextField jtfTypeMat;
-	private JTextField jtfNumSerieMat;
+	private GridBagConstraints gbc_lblNomI, gbc_lblPrenomI, gbc_lblAdresseI, gbc_lblVilleI, gbc_lblTelephoneI, gbc_lblMailI;
+	
+	// Champ de construction matériel
+	private JLabel lblNomMat, lblTypeMat, lblNumSerieMat;
+	private JPanel panelMateriel;
+	private JLabel lblNomMatI, lblTypeMatI, lblNumSerieI;
+	private JTextField jtfNomMat, jtfTypeMat, jtfNumSerieMat;
+	private GridBagConstraints gbc_lblNomMatI, gbc_lblTypeMatI, gbc_lblNumSerieI;
+	
+	// Button
+	private JButton btnPrendreRdV, btnPreviousMat, btnNextMat, btnModification, btnAddMateriel, btnModifierCeMateriel;
+	
+	// Autres champs
+	private ArrayList<Materiel> listMateriel;
+	private int indiceMat;
+	private ClientDAO clientDAO;
+	private Client client;
 	private MaterielDAO materielDAO;
-	private GridBagConstraints gbc_lblNomMatI;
-	private GridBagConstraints gbc_lblTypeMatI;
-	private GridBagConstraints gbc_lblNumSerieI;
 	private Materiel materiel;
 
 	public Client getClient() {
@@ -85,7 +58,7 @@ public class PanelClient extends JPanel implements ActionListener{
 	}
 	
 	public Materiel getMateriel(){
-		return createMateriel();
+		return this.listMateriel.get(this.indiceMat);
 	}
 
 	/**
@@ -416,6 +389,9 @@ public class PanelClient extends JPanel implements ActionListener{
 		
 	}
 
+	/**
+	 * Met a jour les labels informatifs du matériel à partir de listMateriel et indiceMat
+	 */
 	private void updateMateriel() {
 		this.listMateriel = clientDAO.getListMateriel(client);
 		lblNomMatI.setText(listMateriel.get(indiceMat).getNom());
@@ -424,12 +400,18 @@ public class PanelClient extends JPanel implements ActionListener{
 		this.materiel = listMateriel.get(indiceMat);
 	}
 
+	/**
+	 * Met à jour les labels informatifs du matériel lors qu'il y a eut une modification
+	 */
 	private void updatelblMateriel() {
 		lblNomMatI.setText(jtfNomMat.getText());
 		lblTypeMatI.setText(jtfTypeMat.getText());
 		lblNumSerieI.setText(jtfNumSerieMat.getText());
 	}
 
+	/**
+	 * Met à jour les labels informatifs du client lors qu'il y a eut une modification
+	 */
 	private void updatelblClient() {
 		lblNomI.setText(jtfnom.getText());
 		lblPrenomI.setText(jtfPrenom.getText());
@@ -441,7 +423,7 @@ public class PanelClient extends JPanel implements ActionListener{
 
 	/**
 	 * creation d'un objet client a partir des infos des JTextField
-	 * @return
+	 * @return c : Client
 	 */
 	public Client createClient(){
 		Client c = new Client();
@@ -454,6 +436,11 @@ public class PanelClient extends JPanel implements ActionListener{
 		c.setMail(jtfCourriel.getText());
 		return c;
 	}
+	
+	/**
+	 * création d'un object Materiel à partir des JTextField
+	 * @return mat : Materiel
+	 */
 	private Materiel createMaterielbyJtf() {
 		Materiel mat = new Materiel();
 		mat.setId_materiel(listMateriel.get(indiceMat).getId_materiel());
@@ -462,16 +449,6 @@ public class PanelClient extends JPanel implements ActionListener{
 		mat.setType(jtfTypeMat.getText());
 		mat.setClient(this.client);
 		return mat;
-	}
-	
-	public Materiel createMateriel(){
-		Materiel m = new Materiel();
-		m.setId_materiel(listMateriel.get(indiceMat).getId_materiel());
-		m.setNom(listMateriel.get(indiceMat).getNom());
-		m.setNumSerie(listMateriel.get(indiceMat).getNumSerie());
-		m.setType(listMateriel.get(indiceMat).getType());
-		m.setClient(this.client);
-		return m;
 	}
 	
 	/**
@@ -505,6 +482,10 @@ public class PanelClient extends JPanel implements ActionListener{
 		
 	}
 	
+	/**
+	 * switch panel materiel
+	 * @param b
+	 */
 	private void changeVisibilityOfMateriel(boolean b) {
 		lblNomMatI.setVisible(b);
 		lblTypeMatI.setVisible(b);
@@ -544,7 +525,5 @@ public class PanelClient extends JPanel implements ActionListener{
 			System.out.println("Erreur : il n'est pas possible d'arrivé ici !");
 		}
 	}
-	
-	
 
 }
