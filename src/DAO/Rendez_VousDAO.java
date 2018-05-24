@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import Model.Client;
 import Model.Rendez_Vous;
@@ -19,11 +20,11 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Rendez_vous\"(id_intervention, dateDebut, dateFin) values (?,?,?);");
-
-			prepare.setInt(1, obj.getIntervention().getId_intervention());
-			prepare.setDate(2, (Date) obj.getDateDeb());
-			prepare.setDate(3, (Date) obj.getDateFin());
+					.prepareStatement("Insert into \"Rendez_vous\"(id_rdv, id_intervention, dateDebut, dateFin) values (?,?,?,?);");
+			prepare.setInt(1, maxId());
+			prepare.setInt(2, obj.getIntervention().getId_intervention());
+			prepare.setDate(3, (Date) obj.getDateDeb());
+			prepare.setDate(4, (Date) obj.getDateFin());
 			
 			prepare.executeUpdate();
 
@@ -87,6 +88,21 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous>{
 			e.printStackTrace();
 		}
 		return rdv;
+	}
+	
+	public int maxId() {
+		Statement state;
+		int nbRow=0;
+		try {
+			state = SC.createStatement();
+			ResultSet nbLigne = state.executeQuery("SELECT MAX(id_materiel) FROM \"public\".\"Rendez_vous\" ");
+			nbLigne.next();
+			nbRow = nbLigne.getInt(1) + 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nbRow;
 	}
 
 }

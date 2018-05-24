@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import Model.Intervention;
 import Singleton.SingletonConnection;
@@ -17,13 +18,13 @@ public class InterventionDAO extends DAO<Intervention>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Intervention\"(materiel,type_intervention,\"numFacture\",\"numBL\",\"refPiece\") values (?,?,?,?,?);");
-
-			prepare.setInt(1, obj.getMateriel().getId_materiel());
-			prepare.setInt(2, obj.getType_intervention().getId_type_intervention());
-			prepare.setInt(3, obj.getNumFacture());
-			prepare.setInt(4, obj.getNumBL());
-			prepare.setInt(5, obj.getRefPiece());
+					.prepareStatement("Insert into \"Intervention\"(id_intervention, materiel,type_intervention,\"numFacture\",\"numBL\",\"refPiece\") values (?,?,?,?,?,?);");
+			prepare.setInt(1, maxId());
+			prepare.setInt(2, obj.getMateriel().getId_materiel());
+			prepare.setInt(3, obj.getType_intervention().getId_type_intervention());
+			prepare.setInt(4, obj.getNumFacture());
+			prepare.setInt(5, obj.getNumBL());
+			prepare.setInt(6, obj.getRefPiece());
 			
 			prepare.executeUpdate();
 
@@ -93,6 +94,21 @@ public class InterventionDAO extends DAO<Intervention>{
 			e.printStackTrace();
 		}
 		return intervention;
+	}
+	
+	public int maxId() {
+		Statement state;
+		int nbRow=0;
+		try {
+			state = SC.createStatement();
+			ResultSet nbLigne = state.executeQuery("SELECT MAX(id_materiel) FROM \"public\".\"Intervention\" ");
+			nbLigne.next();
+			nbRow = nbLigne.getInt(1) + 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nbRow;
 	}
 
 }
