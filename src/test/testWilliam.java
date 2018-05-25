@@ -28,12 +28,7 @@ import Model.Methode;
 import Model.Rendez_Vous;
 import Singleton.SingletonConnection;
 
-import java.net.*;
-import java.io.*;
 
-import com.google.gdata.client.calendar.*;
-import com.google.gdata.data.calendar.*;
-import com.google.gdata.util.*;
 
 public class testWilliam {
 
@@ -44,7 +39,7 @@ public class testWilliam {
 		// SUCCESS testClient(SC);
 		// SUCCESS //testMaxId(SC);
 		// testMateriel(SC);
-		testRendez_Vous(SC);
+		// testRendez_Vous(SC);
 
 		// String adresse = "3 rue rabelais";
 		// String ville = "angers";
@@ -61,29 +56,7 @@ public class testWilliam {
 		// e.printStackTrace();
 		// }
 
-		// try {
-		// CalendarService myService = new
-		// CalendarService("exampleCo-exampleApp-1.0");
-		//
-		// myService.setUserCredentials("root@gmail.com", "pa$$word");
-		//
-		//
-		// URL feedUrl = new
-		// URL("http://www.google.com/calendar/feeds/default/allcalendars/full");
-		// CalendarFeed resultFeed = myService.getFeed(feedUrl,
-		// CalendarFeed.class);
-		//
-		// System.out.println("Your calendars:");
-		// System.out.println();
-		//
-		// for (int i = 0; i < resultFeed.getEntries().size(); i++) {
-		// CalendarEntry entry = resultFeed.getEntries().get(i);
-		// System.out.println("\t" + entry.getTitle().getPlainText());
-		// }
-		// } catch (IOException | ServiceException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+		
 
 	}
 
