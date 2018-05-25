@@ -143,7 +143,7 @@ public class CSVFileWriter {
 	public void launch() throws IOException {
 		// Param
 		final List<Map<String, String>> data = createMap();
-		final List<String> listTitles = Arrays.asList( "Nom", "Prénom", "Adresse", "Ville", "Telephone", "Courriel");
+		final List<String> listTitles = new ArrayList<>(Arrays.asList( "Nom", "Prénom", "Adresse", "Ville", "Telephone", "Courriel"));
 		int nbMaterielMaximum = Methode.getPlusLongue(data);
 		final String[] titles = Methode.convertListWithNMat(listTitles, nbMaterielMaximum);
 
