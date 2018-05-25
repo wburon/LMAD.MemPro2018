@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
@@ -18,7 +20,7 @@ import DAO.ClientDAO;
 import Model.Client;
 import Model.Table_Client;
 
-public class PanelAccueil extends JPanel implements ActionListener{
+public class PanelAccueil extends JPanel implements ActionListener, MouseListener{
 	private Table_Client tClient;
 	private JTable table;
 	
@@ -86,7 +88,7 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		tClient = new Table_Client(cDAO.getListAccueil());
 		table = new JTable(tClient);
 		panelCenter.add(new JScrollPane(table));
-		
+		table.addMouseListener(this);
 		
 
 		
@@ -98,9 +100,11 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		if(e.getSource()==btnRecherche){
 			String recherche = jtfRecherche.getText();
 			LancerRecherche(recherche);
-			mf.setContentPane(panelRes);
-			mf.repaint();
-			mf.revalidate();
+//			mf.setActivePanel(panelRes);
+//			mf.setContentPane(panelRes);
+//			mf.repaint();
+//			mf.revalidate();
+			mf.changePanel(panelRes);
 			
 		}
 		if(e.getSource()==btnAjoutClient){
@@ -109,9 +113,10 @@ public class PanelAccueil extends JPanel implements ActionListener{
 		}
 		if(e.getSource()==btnPlanning){
 			panelPlan = new PanelPlanning();
-			mf.setContentPane(panelPlan);
-			mf.repaint();
-			mf.revalidate();
+//			mf.setContentPane(panelPlan);
+//			mf.repaint();
+//			mf.revalidate();
+			mf.changePanel(panelPlan);
 		}
 		
 	}
@@ -141,6 +146,39 @@ public class PanelAccueil extends JPanel implements ActionListener{
 				mot+=recherche.charAt(i);
 		}
 		return cDAO.research(listMot);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if(e.getClickCount()==2){
+			mf.setClient(tClient.getClient(table.getSelectedRow()));
+			System.out.println(mf.getClient().getNom());
+			mf.changePanel(new PanelClient(mf));
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

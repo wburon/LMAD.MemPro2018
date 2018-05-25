@@ -40,6 +40,7 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 		
 		btnRetour = new JButton("Retour");
 		panel_south.add(btnRetour);
+		btnRetour.addActionListener(this);
 		
 		JPanel panel_east = new JPanel();
 		add(panel_east, BorderLayout.EAST);
@@ -57,9 +58,10 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==btnRetour){
-			mf.setContentPane(mf.getPanelAccueil());
-			mf.repaint();
-			mf.revalidate();
+//			mf.setContentPane(mf.getPanelAccueil());
+//			mf.repaint();
+//			mf.revalidate();
+			mf.changePanel(mf.getPanelAccueil());
 		}
 		
 	}
@@ -81,9 +83,7 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 		if(e.getClickCount()==2){
 			mf.setClient(tClient.getClient(table.getSelectedRow()));
 			System.out.println(mf.getClient().getNom());
-			mf.setContentPane(new PanelClient(mf));
-			mf.repaint();
-			mf.revalidate();
+			mf.changePanel(new PanelClient(mf));
 		}
 		
 	}

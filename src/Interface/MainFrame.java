@@ -91,6 +91,12 @@ public class MainFrame extends JFrame {
 	public PanelAccueil getPanelAccueil(){
 		return panelAccueil;
 	}
+	public void changePanel(JPanel newPanel){
+		setContentPane(newPanel);
+		repaint();
+		revalidate();
+		setActivePanel(newPanel);
+	}
 	
 	public void init(){
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
