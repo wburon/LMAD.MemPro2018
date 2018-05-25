@@ -30,8 +30,25 @@ public class MainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame frame = new MainFrame();
+					final MainFrame frame = new MainFrame();
 					frame.setVisible(true);
+					frame.addWindowListener(new WindowAdapter(){
+			            public void windowClosing(WindowEvent e){
+			                  int reponse = JOptionPane.showConfirmDialog(frame,
+			                                       "Voulez-vous quitter l'application ?",
+			                                       "Confirmation",
+			                                       JOptionPane.YES_NO_OPTION,
+			                                       JOptionPane.QUESTION_MESSAGE);
+			                  if (reponse==JOptionPane.YES_OPTION){
+			                          try {
+										Methode.sauvegarde();
+									} catch (IOException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+			                  }
+			            }
+					});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,24 +63,8 @@ public class MainFrame extends JFrame {
 		panelAccueil = new PanelAccueil(this);
 		this.activePanel = panelAccueil;
 		
-		JFrame frame = this;
-		frame.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e){
-                  int reponse = JOptionPane.showConfirmDialog(frame,
-                                       "Voulez-vous quitter l'application ?",
-                                       "Confirmation",
-                                       JOptionPane.YES_NO_OPTION,
-                                       JOptionPane.QUESTION_MESSAGE);
-                  if (reponse==JOptionPane.YES_OPTION){
-                          try {
-							Methode.sauvegarde(frame);
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-                  }
-            }
-		});
+		
+		
 		
 		init();
 //		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

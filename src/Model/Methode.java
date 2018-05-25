@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,6 +11,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFrame;
 
@@ -136,9 +140,35 @@ public class Methode {
 		return mat;
 	}
 
-	public static void sauvegarde(JFrame frame) throws IOException {
-		CSVFileWriter.launch();
-		frame.dispose();
+	public static void sauvegarde() throws IOException {
+		CSVFileWriter csvFileWriter = new CSVFileWriter(new File("sauvegardeDataClient.csv"));
+		csvFileWriter.launch();
+		System.exit(0);
+	}
+
+	public static int getPlusLongue(List<Map<String, String>> mappedData) {
+		int tailleMax = 0;
+		for(Map<String, String> map : mappedData){
+			int sizeMap = map.size();
+			if(sizeMap > tailleMax){
+				tailleMax = sizeMap;
+			}
+		}
+		return (tailleMax - 5)/3;
+	}
+
+	public static String[] convertListWithNMat(List<String> listTitles, int nbMaterielMaximum) {
+		for(int i=1; i<=nbMaterielMaximum; i++){
+			
+			listTitles.add("Nom Materiel "+i);
+			listTitles.add("Type Materiel "+i);
+			listTitles.add("Numéro de série Materiel "+i);
+		}
+		String[] titlesTab = new String[listTitles.size()];
+		for(int i=0; i<listTitles.size();i++){
+			titlesTab[i] = listTitles.get(i);
+		}
+		return titlesTab;
 	}
 
 }
