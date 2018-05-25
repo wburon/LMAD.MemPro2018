@@ -19,7 +19,9 @@ import javax.swing.JTextField;
 import DAO.ClientDAO;
 import Model.Client;
 import Model.Table_Client;
+import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 public class PanelAccueil extends JPanel implements ActionListener, MouseListener{
 	private Table_Client tClient;
 	private JTable table;
@@ -77,6 +79,9 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		JPanel panelSouth = new JPanel();
 		add(panelSouth, BorderLayout.SOUTH);
 		
+		JLabel lblConsigne = new JLabel("Vous voici sur la page d'accueil du logiciel \" \" \n si vous souhaitez voir client pr\u00E9sent dans la liste double-cliquez dessus.");
+		panelSouth.add(lblConsigne);
+		
 		JPanel panelEast = new JPanel();
 		add(panelEast, BorderLayout.EAST);
 		
@@ -99,11 +104,8 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 
 		if(e.getSource()==btnRecherche){
 			String recherche = jtfRecherche.getText();
-			LancerRecherche(recherche);
-//			mf.setActivePanel(panelRes);
-//			mf.setContentPane(panelRes);
-//			mf.repaint();
-//			mf.revalidate();
+			ArrayList<Client> listClient = createListClient(recherche);
+			panelRes = new PanelResultat(listClient, mf);
 			mf.changePanel(panelRes);
 			
 		}
@@ -113,21 +115,17 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		}
 		if(e.getSource()==btnPlanning){
 			panelPlan = new PanelPlanning();
-//			mf.setContentPane(panelPlan);
-//			mf.repaint();
-//			mf.revalidate();
 			mf.changePanel(panelPlan);
 		}
 		
 	}
 
-	private void LancerRecherche(String recherche) {
-		//lancer la recherche en ouvrant le panel recherche 
-		ArrayList<Client> listClient = createListClient(recherche);
-		panelRes = new PanelResultat(listClient, mf);
-		
-	}
-
+	/**
+	 * Cette méthode est appelé lorsqu'on appuie sur le bouton recherche,
+	 * pour créer la liste de client susceptible de répondre aux critères recherchés
+	 * @param recherche un String regroupant tout les éléments taper dans la barre de recherche
+	 * @return la liste de client qui ont une correspondance avec la recherche
+	 */
 	private ArrayList<Client> createListClient(String recherche) {
 		int len=recherche.length();
 		char c=' ';
