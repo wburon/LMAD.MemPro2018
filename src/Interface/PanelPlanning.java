@@ -7,16 +7,35 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Set;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import Model.Methode;
+
 import javax.swing.JButton;
 
 public class PanelPlanning extends JPanel {
+	
+	private HashMap<Date, Date[]> neinCurrentWeek;
+	private Date[] currentWeek;
+	private Date[] neinCurrentMonday;
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelPlanning() {
+		neinCurrentWeek = Methode.findCurrentWeekInit();
+		neinCurrentMonday = (Date[]) neinCurrentWeek.keySet().toArray();
+		// TODO
+		//neinCurrentMonday.sort();
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -32,31 +51,31 @@ public class PanelPlanning extends JPanel {
 		btnPreviousWeek.setPreferredSize(new Dimension(30, 23));
 		panel_2.add(btnPreviousWeek);
 		
-		JButton btnWeek1 = new JButton("New button");
+		JButton btnWeek1 = new JButton(Methode.toString(neinCurrentMonday[0]));
 		panel_2.add(btnWeek1);
 		
-		JButton btnWeek2 = new JButton("New button");
+		JButton btnWeek2 = new JButton(Methode.toString(neinCurrentMonday[1]));
 		panel_2.add(btnWeek2);
 		
-		JButton btnWeek3 = new JButton("New button");
+		JButton btnWeek3 = new JButton(Methode.toString(neinCurrentMonday[2]));
 		panel_2.add(btnWeek3);
 		
-		JButton btnWeek4 = new JButton("New button");
+		JButton btnWeek4 = new JButton(Methode.toString(neinCurrentMonday[3]));
 		panel_2.add(btnWeek4);
 		
-		JButton btnWeek5 = new JButton("New button");
+		JButton btnWeek5 = new JButton(Methode.toString(neinCurrentMonday[4]));
 		panel_2.add(btnWeek5);
 		
-		JButton btnWeek6 = new JButton("New button");
+		JButton btnWeek6 = new JButton(Methode.toString(neinCurrentMonday[5]));
 		panel_2.add(btnWeek6);
 		
-		JButton btnWeek7 = new JButton("New button");
+		JButton btnWeek7 = new JButton(Methode.toString(neinCurrentMonday[6]));
 		panel_2.add(btnWeek7);
 		
-		JButton btnWeek8 = new JButton("New button");
+		JButton btnWeek8 = new JButton(Methode.toString(neinCurrentMonday[7]));
 		panel_2.add(btnWeek8);
 		
-		JButton btnWeek9 = new JButton("New button");
+		JButton btnWeek9 = new JButton(Methode.toString(neinCurrentMonday[8]));
 		panel_2.add(btnWeek9);
 		
 		JButton btnNextWeek = new JButton(">");
@@ -70,7 +89,7 @@ public class PanelPlanning extends JPanel {
 		panel_3.add(panel_Lundi);
 		panel_Lundi.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblLundi = new JLabel("Lundi");
+		JLabel lblLundi = new JLabel("Lundi ");
 		lblLundi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Lundi.add(lblLundi, BorderLayout.NORTH);
 		

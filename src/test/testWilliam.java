@@ -12,6 +12,12 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -33,8 +39,11 @@ import Singleton.SingletonConnection;
 public class testWilliam {
 
 	public static void main(String[] args) {
+		
+		
+        
 
-		 Connection SC = SingletonConnection.getConnection();
+//		 Connection SC = SingletonConnection.getConnection();
 
 		// SUCCESS testClient(SC);
 		// SUCCESS //testMaxId(SC);

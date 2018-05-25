@@ -12,7 +12,12 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -28,6 +33,7 @@ public class Methode {
 
 	/**
 	 * Crée la requete HTTPS et la lance
+	 * 
 	 * @param adresse_complete
 	 * @return les coordonnées GPS correspondant à l'adresse complete
 	 */
@@ -47,6 +53,7 @@ public class Methode {
 
 	/**
 	 * Recupère les coordonnées GPS d'une adresse complete (adresse + ville)
+	 * 
 	 * @param url
 	 * @param sParamsToPost
 	 * @return les coordonnées GPS au format text, separateur : ","
@@ -122,6 +129,7 @@ public class Methode {
 
 	/**
 	 * Forme un object Materiel à partir d'un ResultSet
+	 * 
 	 * @param result
 	 * @return Materiel
 	 */
@@ -148,27 +156,56 @@ public class Methode {
 
 	public static int getPlusLongue(List<Map<String, String>> mappedData) {
 		int tailleMax = 0;
-		for(Map<String, String> map : mappedData){
+		for (Map<String, String> map : mappedData) {
 			int sizeMap = map.size();
-			if(sizeMap > tailleMax){
+			if (sizeMap > tailleMax) {
 				tailleMax = sizeMap;
 			}
 		}
-		return (tailleMax - 5)/3;
+		return (tailleMax - 5) / 3;
 	}
 
 	public static String[] convertListWithNMat(List<String> listTitles, int nbMaterielMaximum) {
-		for(int i=1; i<=nbMaterielMaximum; i++){
-			
-			listTitles.add("Nom Materiel "+i);
-			listTitles.add("Type Materiel "+i);
-			listTitles.add("Numéro de série Materiel "+i);
+		for (int i = 1; i <= nbMaterielMaximum; i++) {
+
+			listTitles.add("Nom Materiel " + i);
+			listTitles.add("Type Materiel " + i);
+			listTitles.add("Numéro de série Materiel " + i);
 		}
 		String[] titlesTab = new String[listTitles.size()];
-		for(int i=0; i<listTitles.size();i++){
+		for (int i = 0; i < listTitles.size(); i++) {
 			titlesTab[i] = listTitles.get(i);
 		}
 		return titlesTab;
+	}
+
+	public static HashMap<Date, Date[]> findCurrentWeekInit() {
+		Calendar calendar = new GregorianCalendar(Locale.FRANCE);
+		HashMap<Date, Date[]> list = new HashMap<>();
+		
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		list.put(calendar.getTime(), getDateOfWeek(calendar));
+		
+		for (int i = 1; i <= 8; i++) {
+			do {
+			    calendar.add(Calendar.DATE, 1);
+			}while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY);
+			list.put(calendar.getTime(), getDateOfWeek(calendar));
+		}
+		return list;
+	}
+	
+	private static Date[] getDateOfWeek(Calendar calendar) {
+		Date[] dateOfWeek = new Date[6];
+		for(int i=0; i<dateOfWeek.length; i++){
+			calendar.add(Calendar.DATE, 1);
+			dateOfWeek[i] = calendar.getTime();
+		}
+		return dateOfWeek;
+	}
+
+	public static String toString(Date date){
+		return date.getDate()+"/"+date.getMonth()+"/"+(date.getYear()+1900);
 	}
 
 }
