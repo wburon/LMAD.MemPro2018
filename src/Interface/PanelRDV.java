@@ -49,7 +49,9 @@ public class PanelRDV extends JPanel implements ActionListener{
 	}
 	
 	public Materiel getMateriel(){
-		return client.getMateriel();
+		return null;
+		// TODO ATTENTION, il faut trouver qqchose pour la selection du materiel
+		//return client.getMateriel();
 	}
 
 	public JPanel getPanelCommentaire() {

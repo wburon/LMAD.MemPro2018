@@ -61,7 +61,8 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		panelAccueil = new PanelAccueil(this);
-		this.activePanel = panelAccueil;
+		panelClient = new PanelClient(this);
+		this.activePanel = panelClient;
 		
 		
 		

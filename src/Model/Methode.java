@@ -208,4 +208,14 @@ public class Methode {
 		return date.getDate()+"/"+date.getMonth()+"/"+(date.getYear()+1900);
 	}
 
+	/**
+	 * Met en forme les 3 premières lignes de la liste (le trois dernière interventions)
+	 * @param listIntervention
+	 * @return
+	 */
+	public static String toString3(ArrayList<Intervention> listIntervention) {
+		//TODO
+		return null;
+	}
+
 }

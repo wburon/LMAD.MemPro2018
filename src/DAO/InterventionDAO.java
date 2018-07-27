@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import Model.Intervention;
 import Singleton.SingletonConnection;
@@ -109,6 +110,39 @@ public class InterventionDAO extends DAO<Intervention>{
 			e.printStackTrace();
 		}
 		return nbRow;
+	}
+
+	/**
+	 * Méthode qui retourne la liste des interventions d'un matériels précis dans l'ordre décroissant des dates d'intervention
+	 * @param id_materiel
+	 * @return
+	 */
+	public ArrayList<Intervention> getListIntervention(int id_materiel) {
+		ArrayList<Intervention> historiqueIntervention = new ArrayList<>();
+		Type_InterventionDAO tiDAO = new Type_InterventionDAO();
+		MaterielDAO matDAO = new MaterielDAO();
+		try{
+			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Intervention\" WHERE materiel=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			prepare.setInt(1, id_materiel);
+			ResultSet result=prepare.executeQuery();
+			
+			while(result.next()){
+				Intervention intervention = new Intervention();
+				intervention.setId_intervention(result.getInt("id_intervention"));
+				intervention.setMateriel(matDAO.find(id_materiel));
+				intervention.setType_intervention(tiDAO.find(result.getInt("type_intervention")));
+				intervention.setNumFacture(result.getInt("numFacture"));
+				intervention.setNumBL(result.getInt("numBL"));
+				intervention.setRefPiece(result.getInt("refPiece"));
+				// TODO : il faut regrouper Intervention et Rendez-vous pour ensuite faire le tri de la liste dans l'ordre décroissant des dates
+				
+				historiqueIntervention.add(intervention);
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return historiqueIntervention;
 	}
 
 }
