@@ -61,7 +61,10 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		panelAccueil = new PanelAccueil(this);
+		ClientDAO cDAO = new ClientDAO();
+		this.setClient(cDAO.find(1));
 		panelClient = new PanelClient(this);
+		
 		this.activePanel = panelClient;
 		
 		

@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Date;
+
 public class Intervention {
 	
 	private int id_intervention;
@@ -8,7 +10,21 @@ public class Intervention {
 	private int numFacture;
 	private int numBL;
 	private int refPiece;
+	private String commentaire;
+	private Date date;
 	
+	public String getCommentaire() {
+		return commentaire;
+	}
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	public int getId_intervention() {
 		return id_intervention;
 	}

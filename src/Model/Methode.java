@@ -214,8 +214,21 @@ public class Methode {
 	 * @return
 	 */
 	public static String toString3(ArrayList<Intervention> listIntervention) {
-		//TODO
-		return null;
+		int sizeList = listIntervention.size();
+		ArrayList<Intervention> list3 = new ArrayList<>();
+		list3.add(listIntervention.get(sizeList-1));
+		list3.add(listIntervention.get(sizeList-2));
+		list3.add(listIntervention.get(sizeList-3));
+		
+		return toStringInterventionList(list3);
+	}
+
+	private static String toStringInterventionList(ArrayList<Intervention> list) {
+		String toString = "";
+		for(Intervention i : list){
+			toString += i.getDate().toString()+ i.getCommentaire() +System.getProperty("line.separator");
+		}
+		return toString;
 	}
 
 }

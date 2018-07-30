@@ -265,6 +265,8 @@ public class PanelClient extends JPanel implements ActionListener {
 		gbl_panelMateriel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panelMateriel.setLayout(gbl_panelMateriel);
 
+
+		btnVoirPlus = new JButton("Voir plus");
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
 
 			lblNomMat = new JLabel("Nom : ");
@@ -322,8 +324,6 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblHistorique.gridy = i;
 			panelMateriel.add(lblHistoriqueIntervention, gbc_lblHistorique);
 			
-			// TODO améliorer la complexite en sortant le boutton de la boucle
-			btnVoirPlus = new JButton("Voir plus");
 			gbc_btnVP = new GridBagConstraints();
 			gbc_btnVP.fill = GridBagConstraints.BOTH;
 			gbc_btnVP.gridx = 7;
@@ -360,6 +360,14 @@ public class PanelClient extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if(arg0.getSource() == btnModification){
+			if(jtfnom.isVisible()){
+				clientDAO.update(createClient());
+				updatelblClient();
+				changeVisibilityOfClient(true);
+			}else
+				changeVisibilityOfClient(false);
+		}
 
 	}
 
