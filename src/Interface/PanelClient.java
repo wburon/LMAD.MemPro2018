@@ -60,7 +60,7 @@ public class PanelClient extends JPanel implements ActionListener {
 	private JLabel lblHistoriqueIntervention;
 	private GridBagConstraints gbc_lblHistorique;
 	private JButton btnVoirPlus;
-	private GridBagConstraints gbc_btnVP;
+	
 
 	public Client getClient() {
 		return createClient();
@@ -324,7 +324,8 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblHistorique.gridy = i;
 			panelMateriel.add(lblHistoriqueIntervention, gbc_lblHistorique);
 			
-			gbc_btnVP = new GridBagConstraints();
+			
+			GridBagConstraints gbc_btnVP = new GridBagConstraints();
 			gbc_btnVP.fill = GridBagConstraints.BOTH;
 			gbc_btnVP.gridx = 7;
 			gbc_btnVP.gridy = i;
@@ -367,6 +368,17 @@ public class PanelClient extends JPanel implements ActionListener {
 				changeVisibilityOfClient(true);
 			}else
 				changeVisibilityOfClient(false);
+		}else if(arg0.getSource() == btnAddMateriel){
+			FrameAjoutMateriel frame = new FrameAjoutMateriel(this.client);
+			frame.setVisible(true);
+		}
+		else if(arg0.getSource() == btnVoirPlus){
+			// TODO recupérer quel bouton a été cliqué et affcihé la liste en popo-up
+			//btnVoirPlus.getY()
+		}
+		else if(arg0.getSource() == btnPrendreRdV){
+			this.mf.setActivePanel(new PanelRDV(this));
+			this.mf.repaint();
 		}
 
 	}

@@ -50,10 +50,10 @@ public class testWilliam {
 		// testMateriel(SC);
 		// testRendez_Vous(SC);
 
-		// String adresse = "3 rue rabelais";
-		// String ville = "angers";
-		// String adresse_complete = adresse + " " + ville;
-		// String coord = getGPSCoord(adresse_complete);
+//		 String adresse = "3 rue rabelais";
+//		 String ville = "angers";
+//		 String adresse_complete = adresse + " " + ville;
+//		 String coord = getGPSCoord(adresse_complete);
 
 		// try {
 		// String result = postURL(new

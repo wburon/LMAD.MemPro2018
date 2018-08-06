@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.SwingConstants;
@@ -18,6 +19,7 @@ import javax.swing.SwingConstants;
 import DAO.Rendez_VousDAO;
 import Model.Client;
 import Model.Materiel;
+import Model.Methode;
 import Model.Rendez_Vous;
 
 public class PanelRDV extends JPanel implements ActionListener{
@@ -31,6 +33,7 @@ public class PanelRDV extends JPanel implements ActionListener{
 	private JEditorPane editorPane;
 	private JPanel panelCommentaire;
 	private JButton btnAnnuler;
+	private JButton btnOptimiser;
 
 	public Client getClient() {
 		return client.getClient();
@@ -80,6 +83,9 @@ public class PanelRDV extends JPanel implements ActionListener{
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(10, 30));
 		panelSud.add(panel, BorderLayout.NORTH);
+		
+		btnOptimiser = new JButton("Optimiser");
+		panel.add(btnOptimiser);
 		
 		JPanel panel_1 = new JPanel();
 		panelSud.add(panel_1, BorderLayout.CENTER);
@@ -155,7 +161,12 @@ public class PanelRDV extends JPanel implements ActionListener{
 			this.panelCommentaire = new Panel_RdvInfo(this);
 			this.panelCommentaire.repaint();
 		}else if(arg0.getSource() == btnAnnuler){
-			// TODO
+			//TODO
+		}else if(arg0.getSource() == btnOptimiser){
+			String positionClient = this.client.getClient().getGps();
+			// TODO trouve les trois rendez-vous déjà prit les plus proche de ce client, les affiche en pop-up avec la distance en km et temps
+			String troisClient = Methode.composeTroisClient(positionClient);
+			JOptionPane.showMessageDialog(this, troisClient);
 		}
 		
 	}

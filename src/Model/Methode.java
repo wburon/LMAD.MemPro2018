@@ -13,12 +13,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 
@@ -28,6 +30,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import DAO.ClientDAO;
+import DAO.Rendez_VousDAO;
 
 public class Methode {
 
@@ -182,53 +185,86 @@ public class Methode {
 	public static HashMap<Date, Date[]> findCurrentWeekInit() {
 		Calendar calendar = new GregorianCalendar(Locale.FRANCE);
 		HashMap<Date, Date[]> list = new HashMap<>();
-		
+
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		list.put(calendar.getTime(), getDateOfWeek(calendar));
-		
+
 		for (int i = 1; i <= 8; i++) {
 			do {
-			    calendar.add(Calendar.DATE, 1);
-			}while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY);
+				calendar.add(Calendar.DATE, 1);
+			} while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY);
 			list.put(calendar.getTime(), getDateOfWeek(calendar));
 		}
 		return list;
 	}
-	
+
 	private static Date[] getDateOfWeek(Calendar calendar) {
 		Date[] dateOfWeek = new Date[6];
-		for(int i=0; i<dateOfWeek.length; i++){
+		for (int i = 0; i < dateOfWeek.length; i++) {
 			calendar.add(Calendar.DATE, 1);
 			dateOfWeek[i] = calendar.getTime();
 		}
 		return dateOfWeek;
 	}
 
-	public static String toString(Date date){
-		return date.getDate()+"/"+date.getMonth()+"/"+(date.getYear()+1900);
+	public static String toString(Date date) {
+		return date.getDate() + "/" + date.getMonth() + "/" + (date.getYear() + 1900);
 	}
 
 	/**
-	 * Met en forme les 3 premières lignes de la liste (le trois dernière interventions)
+	 * Met en forme les 3 premières lignes de la liste (le trois dernière
+	 * interventions)
+	 * 
 	 * @param listIntervention
 	 * @return
 	 */
 	public static String toString3(ArrayList<Intervention> listIntervention) {
 		int sizeList = listIntervention.size();
 		ArrayList<Intervention> list3 = new ArrayList<>();
-		list3.add(listIntervention.get(sizeList-1));
-		list3.add(listIntervention.get(sizeList-2));
-		list3.add(listIntervention.get(sizeList-3));
-		
+		list3.add(listIntervention.get(sizeList - 1));
+		list3.add(listIntervention.get(sizeList - 2));
+		list3.add(listIntervention.get(sizeList - 3));
+
 		return toStringInterventionList(list3);
 	}
 
 	private static String toStringInterventionList(ArrayList<Intervention> list) {
 		String toString = "";
-		for(Intervention i : list){
-			toString += i.getDate().toString()+ i.getCommentaire() +System.getProperty("line.separator");
+		for (Intervention i : list) {
+			toString += i.getDate().toString() + i.getCommentaire() + System.getProperty("line.separator");
 		}
 		return toString;
 	}
 
+	public static String composeTroisClient(String positionClient) {
+		// TODO a partir de l'agenda et de la positionClient trouve les trois rendez-vous les plus proche et génère un string
+		Rendez_VousDAO rdvDAO = new Rendez_VousDAO();
+		ArrayList<Rendez_Vous> list3Client = new ArrayList<>();
+		HashMap<Integer, Double> map = new HashMap<>();
+		ValueComparator comparateur = new ValueComparator(map);
+		TreeMap<Integer,Double> mapTriee = new TreeMap<>(comparateur);
+		for( Rendez_Vous rdv : rdvDAO.getListRdv()){
+			Double d = getDistance(rdv.getIntervention().getMateriel().getClient().getGps(),positionClient);
+			map.put(rdv.getIntervention().getMateriel().getClient().getId_client(), d);
+		}
+		mapTriee.putAll(map);
+		// TODO recupérer les trois premiers
+		return null;
+	}
+
+	class ValueComparator implements Comparator<Integer> {
+		Map<Integer, Double> base;
+
+		public ValueComparator(Map<Integer, Double> base) {
+			this.base = base;
+		}
+
+		public int compare(Integer a, Integer b) {
+			if (base.get(a) >= base.get(b)) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
+	}
 }
