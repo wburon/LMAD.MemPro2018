@@ -1,5 +1,6 @@
 package test;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,15 +56,36 @@ public class testWilliam {
 //		 String adresse_complete = adresse + " " + ville;
 //		 String coord = getGPSCoord(adresse_complete);
 
-		// try {
-		// String result = postURL(new
-		// URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg"),
-		// "");
-		// //System.out.println(result);
-		// } catch (MalformedURLException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+//		 try {
+//		 double result = Methode.postURLDistance(new
+//		 URL("https://www.viamichelin.fr/web/Itineraires?departure=3%20Rue%20Rabelais%2C%2049000%20Angers%2C%20France&arrival=20%20Rue%20Saint-L%C3%A9onard%2C%2049000%20Angers%2C%20France&index=0&vehicle=0&type=0&distance=km&currency=EUR&highway=false&toll=false&vignette=false&orc=false&crossing=true&caravan=false&shouldUseTraffic=false&withBreaks=false&break_frequency=7200&coffee_duration=1200&lunch_duration=3600&diner_duration=3600&night_duration=32400&car=hatchback&fuel=petrol&fuelCost=1.546&allowance=0&corridor=&departureDate=&arrivalDate=&fuelConsumption="),
+//		 "");
+//		 //System.out.println(result);
+//		 } catch (MalformedURLException e) {
+//		 // TODO Auto-generated catch block
+//		 e.printStackTrace();
+//		 }
+		 
+		 HttpURLConnection conn;
+		try {
+			conn = (HttpURLConnection) new URL("https://www.viamichelin.fr/web/Itineraires?departure=3%20Rue%20Rabelais%2C%2049000%20Angers%2C%20France&arrival=20%20Rue%20Saint-L%C3%A9onard%2C%2049000%20Angers%2C%20France&index=0&vehicle=0&type=0&distance=km&currency=EUR&highway=false&toll=false&vignette=false&orc=false&crossing=true&caravan=false&shouldUseTraffic=false&withBreaks=false&break_frequency=7200&coffee_duration=1200&lunch_duration=3600&diner_duration=3600&night_duration=32400&car=hatchback&fuel=petrol&fuelCost=1.546&allowance=0&corridor=&departureDate=&arrivalDate=&fuelConsumption=").openConnection();
+		
+	        conn.connect();
+	 
+	        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+	 
+	        byte[] bytes = new byte[1024];
+	        int tmp ;
+	        while( (tmp = bis.read(bytes) ) != -1 ) {
+	            String chaine = new String(bytes,0,tmp);
+	            System.out.print(chaine);
+	        }
+	         
+	        conn.disconnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		
 

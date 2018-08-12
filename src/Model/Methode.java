@@ -252,6 +252,82 @@ public class Methode {
 		return null;
 	}
 
+	private static Double getDistance(String gps, String positionClient) {
+		Double result = null;
+		try {
+			URL url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+gps+"&destinations="+positionClient
+					+ "&units=metric&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg");
+			result = postURLDistance(url, "");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static Double postURLDistance(URL url, String sParamsToPost) {
+		StringBuilder Sb = new StringBuilder();
+
+		// recup du saut de ligne
+		String LineSep = null;
+		try {
+			LineSep = System.getProperty("line.separator");
+		} catch (Exception e) {
+			LineSep = "\n";
+		}
+
+		Double resultat = 0.0;
+		try {
+			HttpURLConnection UrlConn = (HttpURLConnection) url.openConnection();
+			UrlConn.setRequestMethod("POST");
+			UrlConn.setAllowUserInteraction(false);
+			// envoyer des params
+			UrlConn.setDoOutput(true);
+
+			// poster les params
+			PrintWriter ParamWriter = new PrintWriter(UrlConn.getOutputStream());
+
+			ParamWriter.print(sParamsToPost);
+			// fermer le post avant de lire le resultat ... logique
+			ParamWriter.flush();
+			ParamWriter.close();
+
+			// Lire la reponse
+			InputStream Response = UrlConn.getInputStream();
+			resultat = distance(Response);
+			// deconnection
+			UrlConn.disconnect();
+		} catch (ConnectException ctx) {
+			System.out.println("Connection lost : server may be down");
+			ctx.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("postURL : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return resultat;
+	}
+	
+	private static Double distance(InputStream result) {
+		Double lng = null, lat = null;
+		try {
+			JSONParser jsonParser = new JSONParser();
+			JSONObject myJSONResult = (JSONObject) jsonParser.parse(new InputStreamReader(result, "UTF-8"));
+			JSONArray o = (JSONArray) myJSONResult.get("results");
+			JSONObject p = (JSONObject) o.get(0);
+			JSONObject q = (JSONObject) p.get("geometry");
+			JSONObject location = (JSONObject) q.get("location");
+			lng = (Double) location.get("lng");
+			lat = (Double) location.get("lat");
+			System.out.println("lng : " + lng + " lat : " + lat);
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Double d = 0.0;
+		return d;
+	}
+
+
 	class ValueComparator implements Comparator<Integer> {
 		Map<Integer, Double> base;
 
