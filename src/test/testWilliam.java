@@ -10,6 +10,7 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,6 +25,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import DAO.ClientDAO;
 import DAO.InterventionDAO;
@@ -56,36 +61,44 @@ public class testWilliam {
 //		 String adresse_complete = adresse + " " + ville;
 //		 String coord = getGPSCoord(adresse_complete);
 
-//		 try {
-//		 double result = Methode.postURLDistance(new
-//		 URL("https://www.viamichelin.fr/web/Itineraires?departure=3%20Rue%20Rabelais%2C%2049000%20Angers%2C%20France&arrival=20%20Rue%20Saint-L%C3%A9onard%2C%2049000%20Angers%2C%20France&index=0&vehicle=0&type=0&distance=km&currency=EUR&highway=false&toll=false&vignette=false&orc=false&crossing=true&caravan=false&shouldUseTraffic=false&withBreaks=false&break_frequency=7200&coffee_duration=1200&lunch_duration=3600&diner_duration=3600&night_duration=32400&car=hatchback&fuel=petrol&fuelCost=1.546&allowance=0&corridor=&departureDate=&arrivalDate=&fuelConsumption="),
-//		 "");
-//		 //System.out.println(result);
-//		 } catch (MalformedURLException e) {
-//		 // TODO Auto-generated catch block
-//		 e.printStackTrace();
-//		 }
-		 
-		 HttpURLConnection conn;
-		try {
-			conn = (HttpURLConnection) new URL("https://www.viamichelin.fr/web/Itineraires?departure=3%20Rue%20Rabelais%2C%2049000%20Angers%2C%20France&arrival=20%20Rue%20Saint-L%C3%A9onard%2C%2049000%20Angers%2C%20France&index=0&vehicle=0&type=0&distance=km&currency=EUR&highway=false&toll=false&vignette=false&orc=false&crossing=true&caravan=false&shouldUseTraffic=false&withBreaks=false&break_frequency=7200&coffee_duration=1200&lunch_duration=3600&diner_duration=3600&night_duration=32400&car=hatchback&fuel=petrol&fuelCost=1.546&allowance=0&corridor=&departureDate=&arrivalDate=&fuelConsumption=").openConnection();
 		
-	        conn.connect();
-	 
-	        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-	 
-	        byte[] bytes = new byte[1024];
-	        int tmp ;
-	        while( (tmp = bis.read(bytes) ) != -1 ) {
-	            String chaine = new String(bytes,0,tmp);
-	            System.out.print(chaine);
-	        }
-	         
-	        conn.disconnect();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 try {
+//			    URL url = new URL("https://www.viamichelin.fr/web/Itineraires?departure=20+Rue+Saint-L%C3%A9onard+49000+Angers+France&arrival=3+Rue+Rabelais+49000+Angers+France&index=0&vehicle=0&type=0&distance=km&currency=EUR&highway=false&toll=false&vignette=false&orc=false&crossing=true&caravan=false&shouldUseTraffic=false&withBreaks=false&break_frequency=7200&coffee_duration=1200&lunch_duration=3600&diner_duration=3600&night_duration=32400&car=hatchback&fuel=petrol&fuelCost=1.546&allowance=0&corridor=&departureDate=&arrivalDate=&fuelConsumption=");
+
+//			    URLConnection urlConn = url.openConnection();
+//			    urlConn.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+//
+//			    String contentType = urlConn.getContentType();
+//
+//			    System.out.println("contentType:" + contentType);
+//
+//			    InputStream is = urlConn.getInputStream();
+			    Document doc = Jsoup.connect("https://fr.mappy.com/itineraire#/M2/TItinerary/IFR3+Rue+Rabelais+49000+Angers|TO20+Rue+Saint-Leonard+49000+Angers|MOvoiture|PRcar/").get();
+	            Elements km = doc.getElementsByClass("MultipathTabRoadbookView");
+	            System.out.println(km);
+		 }catch(IOException e){
+			 
+		 }
+//		 HttpURLConnection conn;
+//		try {
+//			conn = (HttpURLConnection) new URL("https://www.viamichelin.fr/web/Itineraires?departure=20+Rue+Saint-L%C3%A9onard+49000+Angers+France&arrival=3+Rue+Rabelais+49000+Angers+France&index=0&vehicle=0&type=0&distance=km&currency=EUR&highway=false&toll=false&vignette=false&orc=false&crossing=true&caravan=false&shouldUseTraffic=false&withBreaks=false&break_frequency=7200&coffee_duration=1200&lunch_duration=3600&diner_duration=3600&night_duration=32400&car=hatchback&fuel=petrol&fuelCost=1.546&allowance=0&corridor=&departureDate=&arrivalDate=&fuelConsumption=").openConnection();
+//		
+//	        conn.connect();
+//	 
+//	        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+//	 
+//	        byte[] bytes = new byte[1024];
+//	        int tmp ;
+//	        while( (tmp = bis.read(bytes) ) != -1 ) {
+//	            String chaine = new String(bytes,0,tmp);
+//	            System.out.print(chaine);
+//	        }
+//	         
+//	        conn.disconnect();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		
 

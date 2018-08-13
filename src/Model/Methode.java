@@ -279,7 +279,8 @@ public class Methode {
 		Double resultat = 0.0;
 		try {
 			HttpURLConnection UrlConn = (HttpURLConnection) url.openConnection();
-			UrlConn.setRequestMethod("POST");
+			System.setProperty("http.agent", "Chrome");
+			//UrlConn.setRequestMethod("POST");
 			UrlConn.setAllowUserInteraction(false);
 			// envoyer des params
 			UrlConn.setDoOutput(true);
