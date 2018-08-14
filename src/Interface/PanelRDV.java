@@ -34,6 +34,7 @@ public class PanelRDV extends JPanel implements ActionListener{
 	private JPanel panelCommentaire;
 	private JButton btnAnnuler;
 	private JButton btnOptimiser;
+	private JPanel panel_1;
 
 	public Client getClient() {
 		return client.getClient();
@@ -87,7 +88,7 @@ public class PanelRDV extends JPanel implements ActionListener{
 		btnOptimiser = new JButton("Optimiser");
 		panel.add(btnOptimiser);
 		
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panelSud.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(1, 2, 0, 0));
 		
@@ -158,8 +159,8 @@ public class PanelRDV extends JPanel implements ActionListener{
 			String[] h2 = jtfH2.getText().split("h");
 			this.deb = new Date(Integer.parseInt(jtfJour.getText()),Integer.parseInt(jtfMois.getText()),Calendar.getInstance().get(Calendar.YEAR),Integer.parseInt(h1[0]),Integer.parseInt(h1[1]));
 			this.fin = new Date(Integer.parseInt(jtfJour.getText()),Integer.parseInt(jtfMois.getText()),Calendar.getInstance().get(Calendar.YEAR),Integer.parseInt(h2[0]),Integer.parseInt(h2[1]));
-			this.panelCommentaire = new Panel_RdvInfo(this);
-			this.panelCommentaire.repaint();
+			this.panel_1 = new Panel_RdvInfo(this);
+			this.panel_1.repaint();
 		}else if(arg0.getSource() == btnAnnuler){
 			//TODO
 		}else if(arg0.getSource() == btnOptimiser){

@@ -9,10 +9,12 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JTextField;
 
+import DAO.InterventionDAO;
 import DAO.Rendez_VousDAO;
 import Model.Intervention;
 import Model.Rendez_Vous;
@@ -29,6 +31,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	private PanelRDV rdv;
 	private Rendez_VousDAO rdvDAO;
 	private JButton btnAnnuler;
+	private InterventionDAO interDAO;
 
 	/**
 	 * Create the panel.
@@ -88,7 +91,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		panelEcriture.add(lblTypeIntervention);
 
 		comboBoxTI = new JComboBox();
-		comboBoxTI.setModel(new DefaultComboBoxModel(new String[] { "ENTRETIENT", "AUTRE" }));
+		comboBoxTI.setModel(new DefaultComboBoxModel(new String[] {"ENTRETIENT", "OCCASIONNEL"}));
 		panelEcriture.add(comboBoxTI);
 		
 		this.btnTerminer.addActionListener(this);
@@ -120,7 +123,10 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		inter.setNumBL(Integer.parseInt(jtfNumBL.getText()));
 		inter.setNumFacture(Integer.parseInt(jtfNumFact.getText()));
 		inter.setRefPiece(Integer.parseInt(jtfRefPiece.getText()));
+		inter.setCommentaire(rdv.getCommentaire());
+		inter.setDate(rdv.getDeb());
 		inter.setType_intervention(null); //TODO A VOIR SI LE TYPE PASSE EN ENUM
+		interDAO.create(inter);
 		return inter;
 	}
 
