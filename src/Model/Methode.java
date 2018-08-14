@@ -241,7 +241,8 @@ public class Methode {
 		Rendez_VousDAO rdvDAO = new Rendez_VousDAO();
 		ArrayList<Rendez_Vous> list3Client = new ArrayList<>();
 		HashMap<Integer, Double> map = new HashMap<>();
-		ValueComparator comparateur = new ValueComparator(map);
+		Methode methode = new Methode();
+		ValueComparator comparateur = methode.new ValueComparator(map);
 		TreeMap<Integer,Double> mapTriee = new TreeMap<>(comparateur);
 		for( Rendez_Vous rdv : rdvDAO.getListRdv()){
 			Double d = getDistance(rdv.getIntervention().getMateriel().getClient().getGps(),positionClient);

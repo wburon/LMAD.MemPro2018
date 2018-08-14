@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import Model.Client;
 import Model.Rendez_Vous;
@@ -103,6 +104,11 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous>{
 			e.printStackTrace();
 		}
 		return nbRow;
+	}
+
+	public ArrayList<Rendez_Vous> getListRdv() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
