@@ -145,6 +145,7 @@ public class Methode {
 			mat.setType(result.getString("type"));
 			mat.setNumSerie(result.getString("numSerie"));
 			mat.setClient(clDAO.find(result.getInt("id_client")));
+			mat.setMarque(result.getString("marque"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -174,6 +175,7 @@ public class Methode {
 			listTitles.add("Nom Materiel " + i);
 			listTitles.add("Type Materiel " + i);
 			listTitles.add("Numéro de série Materiel " + i);
+			listTitles.add("Marque Materiel" + i);
 		}
 		String[] titlesTab = new String[listTitles.size()];
 		for (int i = 0; i < listTitles.size(); i++) {

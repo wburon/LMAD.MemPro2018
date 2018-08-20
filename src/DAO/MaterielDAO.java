@@ -18,12 +18,13 @@ public class MaterielDAO extends DAO<Materiel>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Materiel\"(id_materiel,nom,type,\"numSerie\",id_client) values (?,?,?,?,?);");
+					.prepareStatement("Insert into \"Materiel\"(id_materiel,nom,type,\"numSerie\",id_client,marque) values (?,?,?,?,?,?);");
 			prepare.setInt(1, maxId());
 			prepare.setString(2, obj.getNom());
 			prepare.setString(3, obj.getType());
 			prepare.setString(4, obj.getNumSerie());
 			prepare.setInt(5, obj.getClient().getId_client());
+			prepare.setString(6, obj.getMarque());
 			
 			prepare.executeUpdate();
 
@@ -53,13 +54,14 @@ public class MaterielDAO extends DAO<Materiel>{
 	@Override
 	public boolean update(Materiel obj) {
 		try{
-			PreparedStatement prepare=SC.prepareStatement("Update \"Materiel\" set nom=?, type=?, \"numSerie\"=?, id_client=? where id_materiel=?");
+			PreparedStatement prepare=SC.prepareStatement("Update \"Materiel\" set nom=?, type=?, \"numSerie\"=?, id_client=?, marque = ? where id_materiel=?");
 			
 			prepare.setString(1, obj.getNom());
 			prepare.setString(2, obj.getType());
 			prepare.setString(3, obj.getNumSerie());
 			prepare.setInt(4, obj.getClient().getId_client());
-			prepare.setInt(5, obj.getId_materiel());
+			prepare.setString(5, obj.getMarque());
+			prepare.setInt(6, obj.getId_materiel());
 
 			prepare.executeUpdate();
 			return true;	
@@ -84,6 +86,7 @@ public class MaterielDAO extends DAO<Materiel>{
 				mat.setType(result.getString("type"));
 				mat.setNumSerie(result.getString("numSerie"));
 				mat.setClient(clDAO.find(result.getInt("id_client")));
+				mat.setMarque(result.getString("marque"));
 			}
 			
 		}catch(SQLException e){

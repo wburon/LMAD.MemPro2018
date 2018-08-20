@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.Dimension;
+
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -60,6 +62,10 @@ public class PanelClient extends JPanel implements ActionListener {
 	private JLabel lblHistoriqueIntervention;
 	private GridBagConstraints gbc_lblHistorique;
 	private JButton btnVoirPlus;
+	private JLabel lblMarqueMat;
+	private JLabel lblMarqueMatI;
+	private GridBagConstraints gbc_lblMarqueMatI;
+	private AbstractButton jtfMarqueMat;
 	
 
 	public Client getClient() {
@@ -316,11 +322,26 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblNumSerieI.gridy = i;
 			panelMateriel.add(lblNumSerieI, gbc_lblNumSerieI);
 			
+			lblMarqueMat = new JLabel("Marque : ");
+			GridBagConstraints gbc_lblMarqueMat = new GridBagConstraints();
+			gbc_lblMarqueMat.fill = GridBagConstraints.BOTH;
+			gbc_lblMarqueMat.insets = new Insets(0, 0, 0, 5);
+			gbc_lblMarqueMat.gridx = 6;
+			gbc_lblMarqueMat.gridy = i;
+			panelMateriel.add(lblMarqueMat, gbc_lblMarqueMat);
+
+			lblMarqueMatI = new JLabel(listMateriel.get(i).getMarque());
+			gbc_lblMarqueMatI = new GridBagConstraints();
+			gbc_lblMarqueMatI.fill = GridBagConstraints.BOTH;
+			gbc_lblMarqueMatI.gridx = 7;
+			gbc_lblMarqueMatI.gridy = i;
+			panelMateriel.add(lblMarqueMatI, gbc_lblMarqueMatI);
+			
 			String historique = Methode.toString3(interventionDAO.getListIntervention(listMateriel.get(i).getId_materiel()));
 			lblHistoriqueIntervention = new JLabel(historique);
 			gbc_lblHistorique = new GridBagConstraints();
 			gbc_lblHistorique.fill = GridBagConstraints.BOTH;
-			gbc_lblHistorique.gridx = 6;
+			gbc_lblHistorique.gridx = 8;
 			gbc_lblHistorique.gridy = i;
 			panelMateriel.add(lblHistoriqueIntervention, gbc_lblHistorique);
 			
@@ -403,6 +424,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblNomMatI.setText(jtfNomMat.getText());
 		lblTypeMatI.setText(jtfTypeMat.getText());
 		lblNumSerieI.setText(jtfNumSerieMat.getText());
+		lblMarqueMatI.setText(jtfMarqueMat.getText());
 	}
 
 	/**
@@ -502,6 +524,8 @@ public class PanelClient extends JPanel implements ActionListener {
 		panelMateriel.add(jtfTypeMat, gbc_lblTypeMatI);
 		jtfNumSerieMat.setVisible(b);
 		panelMateriel.add(jtfNumSerieMat, gbc_lblNumSerieI);
+		jtfMarqueMat.setVisible(b);
+		panelMateriel.add(jtfMarqueMat, gbc_lblMarqueMatI);
 	}
 
 	

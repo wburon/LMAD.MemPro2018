@@ -7,6 +7,14 @@ public class Materiel {
 	private String type;
 	private String numSerie;
 	private Client client;
+	private String marque;
+	
+	public String getMarque() {
+		return marque;
+	}
+	public void setMarque(String marque) {
+		this.marque = marque;
+	}
 	public Client getClient() {
 		return client;
 	}

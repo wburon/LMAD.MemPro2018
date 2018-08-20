@@ -31,6 +31,7 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 	private JButton btnAnnuler;
 	private JButton btnValider;
 	private Client client;
+	private JTextField jtfMarque;
 
 	/**
 	 * Launch the application.
@@ -85,7 +86,7 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 		
 		JPanel panel_center = new JPanel();
 		contentPane.add(panel_center, BorderLayout.CENTER);
-		panel_center.setLayout(new GridLayout(3, 2, 0, 0));
+		panel_center.setLayout(new GridLayout(4, 2, 0, 0));
 		
 		JLabel lblNom = new JLabel("Nom");
 		panel_center.add(lblNom);
@@ -108,6 +109,13 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 		panel_center.add(jtfNumSerie);
 		jtfNumSerie.setColumns(10);
 		
+		JLabel lblMarque = new JLabel("Marque");
+		panel_center.add(lblMarque);
+		
+		jtfMarque = new JTextField();
+		panel_center.add(jtfMarque);
+		jtfMarque.setColumns(10);
+		
 		btnValider.addActionListener(this);
 		btnAnnuler.addActionListener(this);
 	}
@@ -121,6 +129,7 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 			mat.setNom(this.jtfNom.getText());
 			mat.setNumSerie(this.jtfNumSerie.getText());
 			mat.setType(this.jtfType.getText());
+			mat.setMarque(this.jtfMarque.getText());
 			matDAO.create(mat);
 			clear();
 		}else if(arg0.getSource() == btnAnnuler) {

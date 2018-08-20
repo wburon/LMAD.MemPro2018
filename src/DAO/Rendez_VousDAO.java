@@ -100,7 +100,7 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		int nbRow = 0;
 		try {
 			state = SC.createStatement();
-			ResultSet nbLigne = state.executeQuery("SELECT MAX(id_materiel) FROM \"public\".\"Rendez_vous\" ");
+			ResultSet nbLigne = state.executeQuery("SELECT MAX(id_rdv) FROM \"public\".\"Rendez_vous\" ");
 			nbLigne.next();
 			nbRow = nbLigne.getInt(1) + 1;
 		} catch (SQLException e) {

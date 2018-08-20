@@ -111,7 +111,7 @@ public class InterventionDAO extends DAO<Intervention>{
 		int nbRow=0;
 		try {
 			state = SC.createStatement();
-			ResultSet nbLigne = state.executeQuery("SELECT MAX(id_materiel) FROM \"public\".\"Intervention\" ");
+			ResultSet nbLigne = state.executeQuery("SELECT MAX(id_intervention) FROM \"public\".\"Intervention\" ");
 			nbLigne.next();
 			nbRow = nbLigne.getInt(1) + 1;
 		} catch (SQLException e) {

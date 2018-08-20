@@ -133,6 +133,7 @@ public class CSVFileWriter {
 				oneData.put("Nom Materiel " + i, m.getNom());
 				oneData.put("Type Materiel " + i, m.getType());
 				oneData.put("Numéro de série Materiel " + i, m.getNumSerie());
+				oneData.put("Marque Materiel" + i, m.getMarque());
 				i++;
 			}
 			data.add(oneData);
