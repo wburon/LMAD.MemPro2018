@@ -11,6 +11,7 @@ import Singleton.SingletonConnection;
 import Model.Client;
 import Model.Materiel;
 import Model.Methode;
+import Model.Resultat;
 
 public class ClientDAO extends DAO<Client>{
 	Connection SC = SingletonConnection.getConnection();
@@ -151,7 +152,7 @@ public class ClientDAO extends DAO<Client>{
 	 * @param listMot une ArrayList de String avec les mots qu'on veut rechercher
 	 * @return listClient une ArrayList de clients
 	 */
-	public ArrayList<Client> research(ArrayList<String> listMot){
+	/*public ArrayList<Client> research(ArrayList<String> listMot){
 		ArrayList<Client> listClient = new ArrayList<>();
 		ArrayList<Client> listResearch = new ArrayList<>();
 		String[] champs = {"nom", "prenom", "tel", "adresse"};
@@ -169,6 +170,20 @@ public class ClientDAO extends DAO<Client>{
 		return listClient;
 		
 	}
+	*/
+	public ArrayList<Client> research(ArrayList<String> listMot){
+		ArrayList<Client> listClient = new ArrayList<>();
+		ArrayList<Resultat> listRes = new ArrayList<>();
+		
+		String MotDepart=listMot.get(0);
+		String[] champs = {"nom", "prenom", "tel", "adresse"};
+		for(int i=0; i<champs.length; i++){
+			if (getResultat(MotDepart, champs[i])!=null)
+				//concaténer les listes
+		}
+		
+		return listClient;
+	}
 
 	private ArrayList<Client> append(ArrayList<Client> listClient, ArrayList<Client> listResearch) {
 		for(Client c:listResearch){
@@ -178,13 +193,32 @@ public class ClientDAO extends DAO<Client>{
 		return listClient;
 	}
 
+	private ArrayList<Resultat> getResultat(String mot, String champs){
+		ArrayList<Resultat> listRes = new ArrayList<>();
+		Statement state;
+		try{
+			state = SC.createStatement();
+			state.executeQuery("SELECT \"id_client\",\""+champs+"\" FROM \"public\".\"Client\"");
+			ResultSet result=state.getResultSet();
+			
+			while(result.next()){
+				String motTest = result.getString(champs);
+				//Distance de levenshtein
+				//if(distance/mot.length>0.4)
+				listRes.add(new Resultat(result.getInt("id_client"), champs, /*distance/mot.length*/));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return listRes;
+	}
 	/**
 	 * Méthode appeler par research(ArrayList<String> listMot)
 	 * @param s le mot qu'on recherche
 	 * @param champs la colonne où on veut chercher s
 	 * @return la liste des résultats obtenus
 	 */
-	private ArrayList<Client> research(String s, String champs) {
+/*	private ArrayList<Client> research(String s, String champs) {
 		ArrayList<Client> listClient = new ArrayList<>();
 		Statement state;
 		Client obj = new Client();
@@ -208,7 +242,7 @@ public class ClientDAO extends DAO<Client>{
 		}
 		return listClient;
 	}
-	
+	*/
 	/**
 	 * méthode récursive pour vérifier que la chaine de caractère est un entier
 	 * @param s la chaine de caractère
