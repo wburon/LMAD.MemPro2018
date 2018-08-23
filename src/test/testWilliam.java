@@ -34,6 +34,8 @@ import DAO.ClientDAO;
 import DAO.InterventionDAO;
 import DAO.MaterielDAO;
 import DAO.Rendez_VousDAO;
+import Interface.MainFrame;
+import Interface.PanelClient;
 import Model.Client;
 import Model.Materiel;
 import Model.Methode;
@@ -45,6 +47,11 @@ import Singleton.SingletonConnection;
 public class testWilliam {
 
 	public static void main(String[] args) {
+		ClientDAO cDAO = new ClientDAO();
+		MainFrame mftest = new MainFrame();
+		mftest.setClient(cDAO.find(2));
+		mftest.setActivePanel(new PanelClient(mftest));
+		mftest.setVisible(true);
 		
 		
         
@@ -62,7 +69,7 @@ public class testWilliam {
 //		 String coord = getGPSCoord(adresse_complete);
 
 		
-		 try {
+//		 try {
 //			    URL url = new URL("https://www.viamichelin.fr/web/Itineraires?departure=20+Rue+Saint-L%C3%A9onard+49000+Angers+France&arrival=3+Rue+Rabelais+49000+Angers+France&index=0&vehicle=0&type=0&distance=km&currency=EUR&highway=false&toll=false&vignette=false&orc=false&crossing=true&caravan=false&shouldUseTraffic=false&withBreaks=false&break_frequency=7200&coffee_duration=1200&lunch_duration=3600&diner_duration=3600&night_duration=32400&car=hatchback&fuel=petrol&fuelCost=1.546&allowance=0&corridor=&departureDate=&arrivalDate=&fuelConsumption=");
 
 //			    URLConnection urlConn = url.openConnection();
@@ -73,12 +80,12 @@ public class testWilliam {
 //			    System.out.println("contentType:" + contentType);
 //
 //			    InputStream is = urlConn.getInputStream();
-			    Document doc = Jsoup.connect("https://fr.mappy.com/itineraire#/M2/TItinerary/IFR3+Rue+Rabelais+49000+Angers|TO20+Rue+Saint-Leonard+49000+Angers|MOvoiture|PRcar/").get();
-	            Elements km = doc.getElementsByClass("MultipathTabRoadbookView");
-	            System.out.println(km);
-		 }catch(IOException e){
-			 
-		 }
+//			    Document doc = Jsoup.connect("https://fr.mappy.com/itineraire#/M2/TItinerary/IFR3+Rue+Rabelais+49000+Angers|TO20+Rue+Saint-Leonard+49000+Angers|MOvoiture|PRcar/").get();
+//	            Elements km = doc.getElementsByClass("MultipathTabRoadbookView");
+//	            System.out.println(km);
+//		 }catch(IOException e){
+//			 
+//		 }
 //		 HttpURLConnection conn;
 //		try {
 //			conn = (HttpURLConnection) new URL("https://www.viamichelin.fr/web/Itineraires?departure=20+Rue+Saint-L%C3%A9onard+49000+Angers+France&arrival=3+Rue+Rabelais+49000+Angers+France&index=0&vehicle=0&type=0&distance=km&currency=EUR&highway=false&toll=false&vignette=false&orc=false&crossing=true&caravan=false&shouldUseTraffic=false&withBreaks=false&break_frequency=7200&coffee_duration=1200&lunch_duration=3600&diner_duration=3600&night_duration=32400&car=hatchback&fuel=petrol&fuelCost=1.546&allowance=0&corridor=&departureDate=&arrivalDate=&fuelConsumption=").openConnection();

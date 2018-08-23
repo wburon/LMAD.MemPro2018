@@ -223,9 +223,21 @@ public class Methode {
 	public static String toString3(ArrayList<Intervention> listIntervention) {
 		int sizeList = listIntervention.size();
 		ArrayList<Intervention> list3 = new ArrayList<>();
-		list3.add(listIntervention.get(sizeList - 1));
-		list3.add(listIntervention.get(sizeList - 2));
-		list3.add(listIntervention.get(sizeList - 3));
+		switch(sizeList){
+		case 0 :
+			break;
+		case 1 :
+			list3.add(listIntervention.get(0));
+			break;
+		case 2 :
+			list3.add(listIntervention.get(0));
+			list3.add(listIntervention.get(1));
+			break;
+		default :
+			list3.add(listIntervention.get(sizeList - 1));
+			list3.add(listIntervention.get(sizeList - 2));
+			list3.add(listIntervention.get(sizeList - 3));
+		}
 
 		return toStringInterventionList(list3);
 	}
