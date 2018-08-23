@@ -65,7 +65,7 @@ public class MainFrame extends JFrame {
 		this.setClient(cDAO.find(1));
 		panelClient = new PanelClient(this);
 		
-		this.activePanel = panelClient;
+		this.activePanel = panelAccueil;
 		
 		
 		

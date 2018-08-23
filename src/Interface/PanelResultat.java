@@ -33,7 +33,7 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 		JPanel panel_north = new JPanel();
 		add(panel_north, BorderLayout.NORTH);
 		
-		JLabel lblConsignes = new JLabel("Voici les r\u00E9sultats de votre requ\u00EAtes, \n double-cliquez sur un client dans la liste si vous souhaitez voir sa fiche.");
+		JLabel lblConsignes = new JLabel("Voici les r\u00E9sultats de votre requ\u00EAtes, double-cliquez sur un client dans la liste si vous souhaitez voir sa fiche.");
 		panel_north.add(lblConsignes);
 		
 		JPanel panel_west = new JPanel();

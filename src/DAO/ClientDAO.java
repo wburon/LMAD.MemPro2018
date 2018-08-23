@@ -171,7 +171,7 @@ public class ClientDAO extends DAO<Client>{
 		
 	}
 	*/
-	public ArrayList<Client> research(ArrayList<String> listMot){
+	/*public ArrayList<Client> research(ArrayList<String> listMot){
 		ArrayList<Client> listClient = new ArrayList<>();
 		ArrayList<Resultat> listRes = new ArrayList<>();
 		
@@ -183,7 +183,7 @@ public class ClientDAO extends DAO<Client>{
 		}
 		
 		return listClient;
-	}
+	}*/
 
 	private ArrayList<Client> append(ArrayList<Client> listClient, ArrayList<Client> listResearch) {
 		for(Client c:listResearch){
@@ -193,7 +193,7 @@ public class ClientDAO extends DAO<Client>{
 		return listClient;
 	}
 
-	private ArrayList<Resultat> getResultat(String mot, String champs){
+	public ArrayList<Resultat> getResultat(String mot, String champs){
 		ArrayList<Resultat> listRes = new ArrayList<>();
 		Statement state;
 		try{
@@ -204,7 +204,7 @@ public class ClientDAO extends DAO<Client>{
 			while(result.next()){
 				String motTest = result.getString(champs);
 				//Distance de levenshtein
-				//if(distance/mot.length>0.4)
+				//if(distance/mot.length<0.4)
 				listRes.add(new Resultat(result.getInt("id_client"), champs, /*distance/mot.length*/));
 			}
 		}catch(SQLException e){

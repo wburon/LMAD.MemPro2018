@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 
 import DAO.ClientDAO;
 import Model.Client;
+import Model.Materiel;
+import Model.Resultat;
 import Model.Table_Client;
 import javax.swing.JLabel;
 
@@ -26,10 +28,11 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	private Table_Client tClient;
 	private JTable table;
 	
-	private JButton btnRecherche;
+	private JButton btnRechercheClient;
+	private JButton btnRechercheOutil;
 	private JButton btnPlanning;
 	private JButton btnAjoutClient;
-	private JTextField jtfRecherche;
+	private JTextField jtfRechercheClient;
 	
 	private PanelResultat panelRes;
 	private PanelPlanning panelPlan;
@@ -37,6 +40,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	private MainFrame mf;
 
 	private ClientDAO cDAO;
+	private JTextField jtfRechercheOutil;
 	/**
 	 * Create the panel.
 	 */
@@ -49,21 +53,30 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		JPanel panelNorth = new JPanel();
 		add(panelNorth, BorderLayout.NORTH);
 		
-		jtfRecherche = new JTextField();
-		jtfRecherche.setText("ex : nom, pr\u00E9nom ou lieu");
-		jtfRecherche.addFocusListener(new FocusAdapter() {
+		jtfRechercheClient = new JTextField();
+		jtfRechercheClient.setText("ex : nom, pr\u00E9nom ou lieu");
+		jtfRechercheClient.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				jtfRecherche.setText("");
+				jtfRechercheClient.setText("");
 			}
 			});
 		
-		btnRecherche = new JButton("Recherche");
-		panelNorth.add(btnRecherche);
-		btnRecherche.addActionListener(this);
+		btnRechercheClient = new JButton("Recherche Client");
+		panelNorth.add(btnRechercheClient);
+		btnRechercheClient.addActionListener(this);
 		
-		panelNorth.add(jtfRecherche);
-		jtfRecherche.setColumns(10);
+		panelNorth.add(jtfRechercheClient);
+		jtfRechercheClient.setColumns(10);
+		
+		btnRechercheOutil = new JButton("Recherche Outil");
+		panelNorth.add(btnRechercheOutil);
+		btnRechercheOutil.addActionListener(this);
+		
+		jtfRechercheOutil = new JTextField();
+		jtfRechercheOutil.setText("ex : marque, num\u00E9ro de s\u00E9rie");
+		panelNorth.add(jtfRechercheOutil);
+		jtfRechercheOutil.setColumns(10);
 		
 		btnPlanning = new JButton("Planning");
 		panelNorth.add(btnPlanning);
@@ -102,12 +115,16 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if(e.getSource()==btnRecherche){
-			String recherche = jtfRecherche.getText();
-			ArrayList<Client> listClient = createListClient(recherche);
+		if(e.getSource()==btnRechercheClient){
+			String rechercheC = jtfRechercheClient.getText();
+			ArrayList<Client> listClient = createListClient(rechercheC);
 			panelRes = new PanelResultat(listClient, mf);
 			mf.changePanel(panelRes);
 			
+		}
+		if(e.getSource()==btnRechercheOutil){
+			String rechercheO = jtfRechercheOutil.getText();
+			ArrayList<Materiel> listMateriel = createListMat(rechercheO);
 		}
 		if(e.getSource()==btnAjoutClient){
 			fAC = new FrameAjoutClient();
@@ -120,6 +137,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		
 	}
 
+
 	/**
 	 * Cette méthode est appelé lorsqu'on appuie sur le bouton recherche,
 	 * pour créer la liste de client susceptible de répondre aux critères recherchés
@@ -127,24 +145,64 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @return la liste de client qui ont une correspondance avec la recherche
 	 */
 	private ArrayList<Client> createListClient(String recherche) {
-		int len=recherche.length();
+		ArrayList<Client> listClient = new ArrayList<>();
+		ArrayList<Resultat> listRes = new ArrayList<>();
+		ArrayList<String> listMot = createListMot(recherche);
+		
+		String MotDepart=listMot.get(0);
+		String[] champs = {"nom", "prenom", "tel", "adresse"};
+		for(int i=0; i<champs.length; i++){
+			if (cDAO.getResultat(MotDepart, champs[i])!=null){
+				//concaténer les listes
+			}
+				
+		}
+		if(listMot.size()>1)
+			return researchPlus(listMot, listRes, champs);
+		else
+			return listClient;
+	}
+	
+	private ArrayList<Client> researchPlus(ArrayList<String> listMot, ArrayList<Resultat> listRes, String[] champs) {
+		ArrayList<Client> listClient = new ArrayList<>();
+
+		for(Resultat res : listRes){
+			Client c = cDAO.find(res.getId());
+			for(int i = 1; i<listMot.size(); i++)
+				for(int j = 0; j<champs.length; j++)
+					if()
+			
+		}
+		
+		return listClient;
+	}
+
+	private ArrayList<Materiel> createListMat(String recherche) {
+		
+		
+		return null;
+	}
+	
+	private ArrayList<String> createListMot(String chaine){
+		int len=chaine.length();
 		char c=' ';
 		String mot="";
 		ArrayList<String> listMot=new ArrayList<>();
 		for(int i=0; i<len; i++){
-			if(recherche.charAt(i)==c){
+			if(chaine.charAt(i)==c){
 				listMot.add(mot);
 				mot="";
 			}
 			else if(i==len-1){
-				mot+=recherche.charAt(i);
+				mot+=chaine.charAt(i);
 				listMot.add(mot);
 			}
 			else
-				mot+=recherche.charAt(i);
+				mot+=chaine.charAt(i);
 		}
-		return cDAO.research(listMot);
+		return listMot;
 	}
+	
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
