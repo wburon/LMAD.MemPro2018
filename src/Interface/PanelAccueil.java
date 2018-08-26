@@ -168,15 +168,23 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 
 		for(Resultat res : listRes){
 			Client c = cDAO.find(res.getId());
-			for(int i = 1; i<listMot.size(); i++)
-				for(int j = 0; j<champs.length; j++)
-					if()
+			if(matchInfo(listMot, c, res.getChamps()))
+				listClient.add(c);
 			
 		}
 		
 		return listClient;
 	}
 
+	private boolean matchInfo(ArrayList<String> listMot, Client c, String champs){
+		switch(champs){
+		case "prenom":
+			for(int i=1; i<listMot.size(); i++){
+				
+			}
+		}
+		return false;
+	}
 	private ArrayList<Materiel> createListMat(String recherche) {
 		
 		
