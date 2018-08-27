@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import org.json.simple.JSONArray;
@@ -242,10 +243,10 @@ public class Methode {
 		return toStringInterventionList(list3);
 	}
 
-	private static String toStringInterventionList(ArrayList<Intervention> list) {
+	public static String toStringInterventionList(ArrayList<Intervention> list) {
 		String toString = "";
 		for (Intervention i : list) {
-			toString += i.getDate().toString() + i.getCommentaire() + System.getProperty("line.separator");
+			toString += i.getDate().toString() + i.getCommentaire() + "<br>";
 		}
 		return toString;
 	}
@@ -358,5 +359,23 @@ public class Methode {
 				return 1;
 			}
 		}
+	}
+
+	public static ArrayList<JButton> createButtonVP(int nbMat) {
+		// TODO Auto-generated method stub
+		ArrayList<JButton> list = new ArrayList<>();
+		for(int i=0; i<nbMat;i++){
+			list.add(new JButton("Voir Plus"));
+		}
+		return list;
+	}
+	
+	public static ArrayList<JButton> createButtonModifMat(int nbMat) {
+		// TODO Auto-generated method stub
+		ArrayList<JButton> list = new ArrayList<>();
+		for(int i=0; i<nbMat;i++){
+			list.add(new JButton("Modifier"));
+		}
+		return list;
 	}
 }

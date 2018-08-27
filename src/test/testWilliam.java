@@ -47,10 +47,16 @@ import Singleton.SingletonConnection;
 public class testWilliam {
 
 	public static void main(String[] args) {
+		
+//		InterventionDAO interventionDAO = new InterventionDAO();
+//		ClientDAO clDAO = new ClientDAO();
+//		String historique = Methode.toString3(interventionDAO.getListIntervention(clDAO.getListMateriel(clDAO.find(2)).get(1).getId_materiel()));
+//		System.out.println(historique);
 		ClientDAO cDAO = new ClientDAO();
 		MainFrame mftest = new MainFrame();
 		mftest.setClient(cDAO.find(2));
 		mftest.setActivePanel(new PanelClient(mftest));
+		mftest.init();
 		mftest.setVisible(true);
 		
 		
