@@ -11,6 +11,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -19,6 +21,8 @@ import javax.swing.JTextField;
 import DAO.ClientDAO;
 import Model.Client;
 import Model.Materiel;
+import Model.ResBrut;
+import Model.ResFinal;
 import Model.Resultat;
 import Model.Table_Client;
 import javax.swing.JLabel;
@@ -145,24 +149,83 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @return la liste de client qui ont une correspondance avec la recherche
 	 */
 	private ArrayList<Client> createListClient(String recherche) {
-		ArrayList<Client> listClient = new ArrayList<>();
-		ArrayList<Resultat> listRes = new ArrayList<>();
+		ArrayList<ResBrut> listRes1 = new ArrayList<>();
+		ArrayList<ResBrut> listRes2 = new ArrayList<>();
+		
+		//on récupère les mots séparés par un espace dans la barre de recherche dans listMot
 		ArrayList<String> listMot = createListMot(recherche);
 		
-		String MotDepart=listMot.get(0);
+		//On déclare les champs qu'on va rechercher dans la base de données dans ce tableau
 		String[] champs = {"nom", "prenom", "tel", "adresse"};
-		for(int i=0; i<champs.length; i++){
-			if (cDAO.getResultat(MotDepart, champs[i])!=null){
-				//concaténer les listes
+		
+		//On parcours tous les mots taper dans la liste de recherche
+		for(String mot : listMot){
+			for(int i=0; i<champs.length; i++){
+				listRes2 = cDAO.getResultat(mot, champs[i]);
+				if (listRes2!=null){
+					listRes1=append(listRes1, listRes2);
+				}
 			}
-				
 		}
-		if(listMot.size()>1)
-			return researchPlus(listMot, listRes, champs);
-		else
-			return listClient;
+		return classement(listRes1);
 	}
 	
+	/**
+	 * Permet d'assembler les élément de listRes2 qui ne sont pas dans listRes1
+	 * @param listRes1
+	 * @param listRes2
+	 * @return listRes1
+	 */
+	private ArrayList<ResBrut> append(ArrayList<ResBrut> listRes1, ArrayList<ResBrut> listRes2){
+		for(ResBrut res2 : listRes2)
+			if(!listRes1.contains(res2))
+				listRes1.add(res2);	
+		return listRes1;		
+	}
+	
+	/**
+	 * Cette méthode permet de classer les résultats par pertinence. 
+	 * Lorsque plusieurs mots ont "matché" ils sont mis en avant.
+	 * @param listResBrut liste des résultat "brut" mots par mots
+	 * @return listClient la liste client trier par pertinence
+	 */
+	private ArrayList<Client> classement(ArrayList<ResBrut> listResBrut){
+		ArrayList<Integer> IdRes = new ArrayList<>();
+		ArrayList<Integer> MultipleId = new ArrayList<>();
+		ArrayList<ResFinal> listResFinal = new ArrayList<>();
+		ArrayList<Client> listClient = new ArrayList<>();
+		
+		int id=0;
+		for(ResBrut res : listResBrut)
+			id = res.getId();
+			if(IdRes.contains(id))
+				MultipleId.add(id);
+			else
+				IdRes.add(id);
+		
+		int note = 1;
+		for(int mid : MultipleId){
+			for(ResBrut res : listResBrut){
+				if(res.getId()==mid)
+					note*=res.getNote();
+				listResBrut.remove(res);
+			}
+			listResFinal.add(new ResFinal(mid,note));
+			note=1;
+		}
+		Comparator<ResFinal> comparatorF = Comparator.comparing(ResFinal::getNote);
+		listResFinal.sort(comparatorF);
+		Comparator<ResBrut> comparatorB = Comparator.comparing(ResBrut::getNote);
+		listResBrut.sort(comparatorB);
+		
+		for(ResFinal rf : listResFinal)
+			listClient.add(cDAO.find(rf.getId()));
+		for(ResBrut rb : listResBrut)
+			listClient.add(cDAO.find(rb.getId()));
+		
+		return listClient;
+	}
+	/*
 	private ArrayList<Client> researchPlus(ArrayList<String> listMot, ArrayList<Resultat> listRes, String[] champs) {
 		ArrayList<Client> listClient = new ArrayList<>();
 
@@ -174,8 +237,9 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		}
 		
 		return listClient;
-	}
+	}*/
 
+	/*
 	private boolean matchInfo(ArrayList<String> listMot, Client c, String champs){
 		switch(champs){
 		case "prenom":
@@ -190,7 +254,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		
 		return null;
 	}
-	
+	*/
 	private ArrayList<String> createListMot(String chaine){
 		int len=chaine.length();
 		char c=' ';

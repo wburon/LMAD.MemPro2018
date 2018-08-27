@@ -11,6 +11,7 @@ import Singleton.SingletonConnection;
 import Model.Client;
 import Model.Materiel;
 import Model.Methode;
+import Model.ResBrut;
 import Model.Resultat;
 
 public class ClientDAO extends DAO<Client>{
@@ -193,8 +194,8 @@ public class ClientDAO extends DAO<Client>{
 		return listClient;
 	}
 
-	public ArrayList<Resultat> getResultat(String mot, String champs){
-		ArrayList<Resultat> listRes = new ArrayList<>();
+	public ArrayList<ResBrut> getResultat(String mot, String champs){
+		ArrayList<ResBrut> listRes = new ArrayList<>();
 		Statement state;
 		try{
 			state = SC.createStatement();
@@ -205,7 +206,7 @@ public class ClientDAO extends DAO<Client>{
 				String motTest = result.getString(champs);
 				//Distance de levenshtein
 				//if(distance/mot.length<0.4)
-				listRes.add(new Resultat(result.getInt("id_client"), champs, /*distance/mot.length*/));
+				listRes.add(new ResBrut(result.getInt("id_client"), champs, /*distance/mot.length*/));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
