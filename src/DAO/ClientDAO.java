@@ -12,7 +12,7 @@ import Model.Client;
 import Model.Materiel;
 import Model.Methode;
 import Model.ResBrut;
-import Model.Resultat;
+//import Model.Resultat;
 
 public class ClientDAO extends DAO<Client>{
 	Connection SC = SingletonConnection.getConnection();
