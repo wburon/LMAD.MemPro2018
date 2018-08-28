@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -52,6 +54,7 @@ public class testWilliam {
 //		ClientDAO clDAO = new ClientDAO();
 //		String historique = Methode.toString3(interventionDAO.getListIntervention(clDAO.getListMateriel(clDAO.find(2)).get(1).getId_materiel()));
 //		System.out.println(historique);
+		
 		ClientDAO cDAO = new ClientDAO();
 		MainFrame mftest = new MainFrame();
 		mftest.setClient(cDAO.find(2));

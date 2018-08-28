@@ -32,30 +32,15 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 	private JButton btnValider;
 	private Client client;
 	private JTextField jtfMarque;
+	private PanelClient panelClient;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClientDAO clDAO = new ClientDAO();
-					Client cl = clDAO.find(0);
-					FrameAjoutMateriel frame = new FrameAjoutMateriel(cl);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public FrameAjoutMateriel(Client client) {
-		this.client = client;
+	public FrameAjoutMateriel(PanelClient panelClient) {
+		this.panelClient = panelClient;
+		this.client = panelClient.getClient();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -80,7 +65,7 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 		btnValider.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel_sud.add(btnValider);
 		
-		btnAnnuler = new JButton("Annuler");
+		btnAnnuler = new JButton("Quitter");
 		btnAnnuler.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel_sud.add(btnAnnuler);
 		
@@ -133,6 +118,11 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 			matDAO.create(mat);
 			clear();
 		}else if(arg0.getSource() == btnAnnuler) {
+			MainFrame frame = new MainFrame();
+			frame.setClient(this.client);
+			frame.setActivePanel(new PanelClient(frame));
+			frame.init();
+			frame.setVisible(true);
 			this.dispose();
 		}
 		
@@ -145,6 +135,7 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 		this.jtfNom.setText("");
 		this.jtfNumSerie.setText("");
 		this.jtfType.setText("");
+		this.jtfMarque.setText("");
 	}
 
 }

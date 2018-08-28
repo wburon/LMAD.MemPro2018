@@ -69,7 +69,10 @@ public class PanelClient extends JPanel implements ActionListener {
 	private JLabel lblMarqueMat;
 	private JLabel lblMarqueMatI;
 	private GridBagConstraints gbc_lblMarqueMatI;
-	
+
+	public MainFrame getMf() {
+		return mf;
+	}
 
 	public Client getClient() {
 		return createClient();
@@ -88,7 +91,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		interventionDAO = new InterventionDAO();
 		btnVoirPlus = Methode.createButtonVP(this.listMateriel.size());
 		btnModifMateriel = Methode.createButtonModifMat(this.listMateriel.size());
-		
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0 };
 		gridBagLayout.rowWeights = new double[] { 0.0 };
@@ -97,6 +100,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		jtfnom = new JTextField();
 		jtfnom.setText("" + client.getNom());
 		jtfnom.setColumns(10);
+		jtfnom.setVisible(false);
 
 		jtfPrenom = new JTextField();
 		jtfPrenom.setText("" + client.getPrenom());
@@ -263,7 +267,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		panelDescriptionClient.add(lblInformationClient);
 
 		this.btnModification.addActionListener(this);
-		
+
 		JPanel panelDroit = new JPanel();
 		GridBagConstraints gbc_panelDroit = new GridBagConstraints();
 		gbc_panelDroit.weighty = 100.0;
@@ -273,17 +277,27 @@ public class PanelClient extends JPanel implements ActionListener {
 		gbc_panelDroit.gridy = 0;
 		add(panelDroit, gbc_panelDroit);
 		panelDroit.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel_1 = new JPanel();
 		panelDroit.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		int[] rowH = new int[this.nbMatofThisClient +1];
+		double[] rowW = new double[this.nbMatofThisClient +1];
+		for(int i=0; i<this.nbMatofThisClient;i++){
+			rowH[i] = 101;
+			rowW[i] = 0.0;
+		}
+		rowH[rowH.length-1] = 0;
+		rowW[rowW.length-1] = Double.MIN_VALUE;
+		
 
 		panelMateriel = new JPanel();
 		panel_1.add(panelMateriel, BorderLayout.CENTER);
 		GridBagLayout gbl_panelMateriel = new GridBagLayout();
-		gbl_panelMateriel.rowHeights = new int[] { 101, 101, 101, 0 };
+		gbl_panelMateriel.rowHeights = rowH;
 		gbl_panelMateriel.columnWeights = new double[] {};
-		gbl_panelMateriel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panelMateriel.rowWeights = rowW;
 		panelMateriel.setLayout(gbl_panelMateriel);
 
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
@@ -377,7 +391,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_btnVP.gridy = i;
 			gbc_btnVP.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(btnVoirPlus.get(i), gbc_btnVP);
-			
+
 			GridBagConstraints gbc_btnModifMat = new GridBagConstraints();
 			gbc_btnModifMat.fill = GridBagConstraints.BOTH;
 			gbc_btnModifMat.gridx = 10;
@@ -401,18 +415,18 @@ public class PanelClient extends JPanel implements ActionListener {
 		btnPrendreRdV.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panelSudMateriel.add(btnPrendreRdV);
 
-		 jtfNomMat = new JTextField();
-		 jtfNomMat.setColumns(10);
-		 jtfNomMat.setVisible(false);
-		
-		 jtfTypeMat = new JTextField();
-		 jtfTypeMat.setColumns(10);
-		
-		 jtfNumSerieMat = new JTextField();
-		 jtfNumSerieMat.setColumns(10);
-		 
-		 jtfMarqueMat = new JTextField();
-		 jtfMarqueMat.setColumns(10);
+		jtfNomMat = new JTextField();
+		jtfNomMat.setColumns(10);
+		jtfNomMat.setVisible(false);
+
+		jtfTypeMat = new JTextField();
+		jtfTypeMat.setColumns(10);
+
+		jtfNumSerieMat = new JTextField();
+		jtfNumSerieMat.setColumns(10);
+
+		jtfMarqueMat = new JTextField();
+		jtfMarqueMat.setColumns(10);
 
 		JPanel panelDescriptionMat = new JPanel();
 		panelDescriptionMat.setPreferredSize(new Dimension(10, 40));
@@ -422,7 +436,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblMateriel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelDescriptionMat.add(lblMateriel);
 		this.btnPrendreRdV.addActionListener(this);
-		for(JButton e : this.btnModifMateriel){
+		for (JButton e : this.btnModifMateriel) {
 			e.addActionListener(this);
 		}
 		for (JButton e : this.btnVoirPlus) {
@@ -433,7 +447,8 @@ public class PanelClient extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnModification) {
+		// Action du bouton de modification des informations clients
+		if (arg0.getSource() == btnModification) { 
 			if (jtfnom.isVisible()) {
 				clientDAO.update(createClient());
 				updatelblClient();
@@ -441,37 +456,50 @@ public class PanelClient extends JPanel implements ActionListener {
 			} else
 				changeVisibilityOfClient(false);
 		} else if (arg0.getSource() == btnAddMateriel) {
-			FrameAjoutMateriel frame = new FrameAjoutMateriel(this.client);
+			FrameAjoutMateriel frame = new FrameAjoutMateriel(this);
 			frame.setVisible(true);
+			this.mf.dispose();
 		} else if (arg0.getSource() == btnPrendreRdV) {
 			this.mf.setActivePanel(new PanelRDV(this));
 			this.mf.repaint();
-		} else if (this.btnVoirPlus.contains(arg0.getSource())){
+		// Action des boutons "Voir Plus", affichage en pop-up de l'historique des interventions
+		} else if (this.btnVoirPlus.contains(arg0.getSource())) {
 			Materiel matSelect = this.listMateriel.get(this.btnVoirPlus.indexOf(arg0.getSource()));
-			String listInterDeCeMat = Methode.toStringInterventionList(interventionDAO.getListIntervention(matSelect.getId_materiel()));
-			JOptionPane.showMessageDialog(this, "<html>"+listInterDeCeMat+"</html>", "Historique des interventions", 0, new ImageIcon("images/icon-832005_960_720.png"));
-		} else if(this.btnModifMateriel.contains(arg0.getSource())){
-			if(jtfNomMat.isVisible()){
-				materielDAO.update(createMaterielbyJtf(this.listMateriel.get(this.btnModifMateriel.indexOf(arg0.getSource())).getId_materiel()));
-				updatelblMateriel();
+			String listInterDeCeMat = Methode
+					.toStringInterventionList(interventionDAO.getListIntervention(matSelect.getId_materiel()));
+			JOptionPane.showMessageDialog(this, "<html>" + listInterDeCeMat + "</html>", "Historique des interventions",
+					0, new ImageIcon("images/icon-832005_960_720.png"));
+		// Action des boutons de modification du matériels d'un clients
+		} else if (this.btnModifMateriel.contains(arg0.getSource())) {
+			if (jtfNomMat.isVisible()) {
+				materielDAO.update(createMaterielbyJtf(
+						this.listMateriel.get(this.btnModifMateriel.indexOf(arg0.getSource())).getId_materiel()));
+				updatelblMateriel(this.btnModifMateriel.indexOf(arg0.getSource()));
 				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
-			} else 
+			} else
 				changeVisibilityOfMateriel(false, this.btnModifMateriel.indexOf(arg0.getSource()));
-			
+
 		}
 
 	}
-	
 
 	/**
 	 * Met à jour les labels informatifs du materiel lors qu'il y a eut une
 	 * modification
 	 */
-	private void updatelblMateriel() {
-		// TODO
-		
+	private void updatelblMateriel(int indexMat) {
+		this.lblNomMatI.setText(this.jtfNomMat.getText());
+		this.panelMateriel.add(this.lblNomMatI, this.gbc_lblNomMatI);
+		this.lblTypeMatI.setText(this.jtfTypeMat.getText());
+		this.panelMateriel.add(this.lblTypeMatI, this.gbc_lblTypeMatI);
+		this.lblNumSerieI.setText(this.jtfNumSerieMat.getText());
+		this.panelMateriel.add(this.lblNumSerieI, this.gbc_lblNumSerieI);
+		this.lblMarqueMatI.setText(this.jtfMarqueMat.getText());
+		this.panelMateriel.add(this.lblMarqueMatI, this.gbc_lblMarqueMatI);
 	}
+
 	
+
 	/**
 	 * Met à jour les labels informatifs du client lors qu'il y a eut une
 	 * modification
@@ -502,21 +530,21 @@ public class PanelClient extends JPanel implements ActionListener {
 		return c;
 	}
 
-	 /**
+	/**
 	 * création d'un object Materiel à partir des JTextField
 	 *
 	 * @return mat : Materiel
 	 */
-	 private Materiel createMaterielbyJtf(int id) {
-	 Materiel mat = new Materiel();
-	 mat.setId_materiel(id);
-	 mat.setNom(jtfNomMat.getText());
-	 mat.setNumSerie(jtfNumSerieMat.getText());
-	 mat.setType(jtfTypeMat.getText());
-	 mat.setMarque(jtfMarqueMat.getText());
-	 mat.setClient(this.client);
-	 return mat;
-	 }
+	private Materiel createMaterielbyJtf(int id) {
+		Materiel mat = new Materiel();
+		mat.setId_materiel(id);
+		mat.setNom(jtfNomMat.getText());
+		mat.setNumSerie(jtfNumSerieMat.getText());
+		mat.setType(jtfTypeMat.getText());
+		mat.setMarque(jtfMarqueMat.getText());
+		mat.setClient(this.client);
+		return mat;
+	}
 
 	/**
 	 * switch panel client
