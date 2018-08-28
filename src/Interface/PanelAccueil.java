@@ -23,7 +23,7 @@ import Model.Client;
 import Model.Materiel;
 import Model.ResBrut;
 import Model.ResFinal;
-import Model.Resultat;
+//import Model.Resultat;
 import Model.Table_Client;
 import javax.swing.JLabel;
 
