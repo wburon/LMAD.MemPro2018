@@ -43,32 +43,28 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblMailI;
 
 	// Champ de construction matériel
-	private JLabel lblNomMat, lblTypeMat, lblNumSerieMat;
+	private JLabel lblNomMat, lblTypeMat, lblNumSerieMat, lblMarqueMat;
 	private JPanel panelMateriel;
-	private JLabel lblNomMatI, lblTypeMatI, lblNumSerieI;
+	private JLabel lblNomMatI, lblTypeMatI, lblNumSerieI, lblMarqueMatI, lblHistoriqueIntervention;
 	private JTextField jtfNomMat, jtfTypeMat, jtfNumSerieMat, jtfMarqueMat;
-	private GridBagConstraints gbc_lblNomMatI, gbc_lblTypeMatI, gbc_lblNumSerieI;
+	private GridBagConstraints gbc_lblNomMatI, gbc_lblTypeMatI, gbc_lblNumSerieI, gbc_lblMarqueMatI, gbc_lblHistorique;
 
 	// Button
 	private JButton btnPrendreRdV, btnModification, btnAddMateriel;
-	private ArrayList<JButton> btnModifMateriel, btnVoirPlus;
+	private ArrayList<JButton> btnModifMateriel, btnVoirPlus, btnSupprMateriel;
 
 	// Autres champs
 	private ArrayList<Materiel> listMateriel;
+	private int nbMatofThisClient;
 
+	// DAO et model
 	private ClientDAO clientDAO;
 	private Client client;
 	private MaterielDAO materielDAO;
-	private Materiel materiel;
-	private MainFrame mf;
-	private int nbMatofThisClient;
 	private InterventionDAO interventionDAO;
-	private JLabel lblHistoriqueIntervention;
-	private GridBagConstraints gbc_lblHistorique;
 
-	private JLabel lblMarqueMat;
-	private JLabel lblMarqueMatI;
-	private GridBagConstraints gbc_lblMarqueMatI;
+	// main frame
+	private MainFrame mf;
 
 	public MainFrame getMf() {
 		return mf;
@@ -89,8 +85,9 @@ public class PanelClient extends JPanel implements ActionListener {
 		listMateriel = clientDAO.getListMateriel(client);
 		nbMatofThisClient = clientDAO.getListMateriel(this.client).size();
 		interventionDAO = new InterventionDAO();
-		btnVoirPlus = Methode.createButtonVP(this.listMateriel.size());
-		btnModifMateriel = Methode.createButtonModifMat(this.listMateriel.size());
+		btnVoirPlus = Methode.createButton(this.listMateriel.size(), "Voir Plus");
+		btnModifMateriel = Methode.createButton(this.listMateriel.size(), "Modifier");
+		btnSupprMateriel = Methode.createButton(this.listMateriel.size(), "Supprimer");
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0 };
@@ -281,16 +278,15 @@ public class PanelClient extends JPanel implements ActionListener {
 		JPanel panel_1 = new JPanel();
 		panelDroit.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
-		
-		int[] rowH = new int[this.nbMatofThisClient +1];
-		double[] rowW = new double[this.nbMatofThisClient +1];
-		for(int i=0; i<this.nbMatofThisClient;i++){
+
+		int[] rowH = new int[this.nbMatofThisClient + 1];
+		double[] rowW = new double[this.nbMatofThisClient + 1];
+		for (int i = 0; i < this.nbMatofThisClient; i++) {
 			rowH[i] = 101;
 			rowW[i] = 0.0;
 		}
-		rowH[rowH.length-1] = 0;
-		rowW[rowW.length-1] = Double.MIN_VALUE;
-		
+		rowH[rowH.length - 1] = 0;
+		rowW[rowW.length - 1] = Double.MIN_VALUE;
 
 		panelMateriel = new JPanel();
 		panel_1.add(panelMateriel, BorderLayout.CENTER);
@@ -385,19 +381,18 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblHistorique.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblHistoriqueIntervention, gbc_lblHistorique);
 
-			GridBagConstraints gbc_btnVP = new GridBagConstraints();
-			gbc_btnVP.fill = GridBagConstraints.BOTH;
-			gbc_btnVP.gridx = 9;
-			gbc_btnVP.gridy = i;
-			gbc_btnVP.insets = new Insets(5, 5, 5, 5);
-			panelMateriel.add(btnVoirPlus.get(i), gbc_btnVP);
+			JPanel panelBtn = new JPanel();
+			panelBtn.setLayout(new GridLayout(3, 1));
+			panelBtn.add(this.btnVoirPlus.get(i));
+			panelBtn.add(this.btnModifMateriel.get(i));
+			panelBtn.add(this.btnSupprMateriel.get(i));
 
-			GridBagConstraints gbc_btnModifMat = new GridBagConstraints();
-			gbc_btnModifMat.fill = GridBagConstraints.BOTH;
-			gbc_btnModifMat.gridx = 10;
-			gbc_btnModifMat.gridy = i;
-			gbc_btnModifMat.insets = new Insets(5, 5, 5, 5);
-			panelMateriel.add(btnModifMateriel.get(i), gbc_btnModifMat);
+			GridBagConstraints gbc_btn = new GridBagConstraints();
+			gbc_btn.fill = GridBagConstraints.BOTH;
+			gbc_btn.gridx = 9;
+			gbc_btn.gridy = i;
+			gbc_btn.insets = new Insets(5, 5, 5, 5);
+			panelMateriel.add(panelBtn, gbc_btn);
 		}
 
 		JPanel panelSudMateriel = new JPanel();
@@ -408,8 +403,6 @@ public class PanelClient extends JPanel implements ActionListener {
 		btnAddMateriel = new JButton("Ajouter Mat\u00E9riel");
 		btnAddMateriel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panelSudMateriel.add(btnAddMateriel);
-
-		this.btnAddMateriel.addActionListener(this);
 
 		btnPrendreRdV = new JButton("Prendre rendez-vous");
 		btnPrendreRdV.setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -435,11 +428,16 @@ public class PanelClient extends JPanel implements ActionListener {
 		JLabel lblMateriel = new JLabel("MATERIELS");
 		lblMateriel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelDescriptionMat.add(lblMateriel);
+		
 		this.btnPrendreRdV.addActionListener(this);
+		this.btnAddMateriel.addActionListener(this);
 		for (JButton e : this.btnModifMateriel) {
 			e.addActionListener(this);
 		}
 		for (JButton e : this.btnVoirPlus) {
+			e.addActionListener(this);
+		}
+		for (JButton e : this.btnSupprMateriel) {
 			e.addActionListener(this);
 		}
 
@@ -448,13 +446,14 @@ public class PanelClient extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// Action du bouton de modification des informations clients
-		if (arg0.getSource() == btnModification) { 
+		if (arg0.getSource() == btnModification) {
 			if (jtfnom.isVisible()) {
 				clientDAO.update(createClient());
 				updatelblClient();
 				changeVisibilityOfClient(true);
 			} else
 				changeVisibilityOfClient(false);
+			// Action du bouton d'ajout d'un matériels
 		} else if (arg0.getSource() == btnAddMateriel) {
 			FrameAjoutMateriel frame = new FrameAjoutMateriel(this);
 			frame.setVisible(true);
@@ -462,14 +461,15 @@ public class PanelClient extends JPanel implements ActionListener {
 		} else if (arg0.getSource() == btnPrendreRdV) {
 			this.mf.setActivePanel(new PanelRDV(this));
 			this.mf.repaint();
-		// Action des boutons "Voir Plus", affichage en pop-up de l'historique des interventions
+			// Action des boutons "Voir Plus", affichage en pop-up de
+			// l'historique des interventions
 		} else if (this.btnVoirPlus.contains(arg0.getSource())) {
 			Materiel matSelect = this.listMateriel.get(this.btnVoirPlus.indexOf(arg0.getSource()));
 			String listInterDeCeMat = Methode
 					.toStringInterventionList(interventionDAO.getListIntervention(matSelect.getId_materiel()));
 			JOptionPane.showMessageDialog(this, "<html>" + listInterDeCeMat + "</html>", "Historique des interventions",
 					0, new ImageIcon("images/icon-832005_960_720.png"));
-		// Action des boutons de modification du matériels d'un clients
+			// Action des boutons de modification du matériels d'un clients
 		} else if (this.btnModifMateriel.contains(arg0.getSource())) {
 			if (jtfNomMat.isVisible()) {
 				materielDAO.update(createMaterielbyJtf(
@@ -478,7 +478,15 @@ public class PanelClient extends JPanel implements ActionListener {
 				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
 			} else
 				changeVisibilityOfMateriel(false, this.btnModifMateriel.indexOf(arg0.getSource()));
-
+			// Action des boutons de suppression du matériels
+		} else if (this.btnSupprMateriel.contains(arg0.getSource())) {
+			materielDAO.delete(this.listMateriel.get(this.btnSupprMateriel.indexOf(arg0.getSource())));
+			MainFrame frame = new MainFrame();
+			frame.setClient(this.client);
+			frame.setActivePanel(new PanelClient(frame));
+			frame.init();
+			frame.setVisible(true);
+			this.mf.dispose();
 		}
 
 	}
@@ -497,8 +505,6 @@ public class PanelClient extends JPanel implements ActionListener {
 		this.lblMarqueMatI.setText(this.jtfMarqueMat.getText());
 		this.panelMateriel.add(this.lblMarqueMatI, this.gbc_lblMarqueMatI);
 	}
-
-	
 
 	/**
 	 * Met à jour les labels informatifs du client lors qu'il y a eut une

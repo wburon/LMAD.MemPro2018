@@ -361,21 +361,13 @@ public class Methode {
 		}
 	}
 
-	public static ArrayList<JButton> createButtonVP(int nbMat) {
-		// TODO Auto-generated method stub
+	public static ArrayList<JButton> createButton(int nbMat, String name) {
 		ArrayList<JButton> list = new ArrayList<>();
 		for(int i=0; i<nbMat;i++){
-			list.add(new JButton("Voir Plus"));
+			list.add(new JButton(name));
 		}
 		return list;
 	}
 	
-	public static ArrayList<JButton> createButtonModifMat(int nbMat) {
-		// TODO Auto-generated method stub
-		ArrayList<JButton> list = new ArrayList<>();
-		for(int i=0; i<nbMat;i++){
-			list.add(new JButton("Modifier"));
-		}
-		return list;
-	}
+	
 }
