@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -54,6 +55,8 @@ public class testWilliam {
 //		ClientDAO clDAO = new ClientDAO();
 //		String historique = Methode.toString3(interventionDAO.getListIntervention(clDAO.getListMateriel(clDAO.find(2)).get(1).getId_materiel()));
 //		System.out.println(historique);
+		
+		
 		
 		ClientDAO cDAO = new ClientDAO();
 		MainFrame mftest = new MainFrame();

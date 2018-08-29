@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.swing.JButton;
@@ -360,6 +361,8 @@ public class Methode {
 			}
 		}
 	}
+	
+	
 
 	public static ArrayList<JButton> createButton(int nbMat, String name) {
 		ArrayList<JButton> list = new ArrayList<>();
@@ -368,6 +371,7 @@ public class Methode {
 		}
 		return list;
 	}
-	
+
+		
 	
 }

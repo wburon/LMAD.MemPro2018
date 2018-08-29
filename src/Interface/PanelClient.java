@@ -74,6 +74,14 @@ public class PanelClient extends JPanel implements ActionListener {
 		return createClient();
 	}
 
+	public int getNbMatofThisClient() {
+		return nbMatofThisClient;
+	}
+	
+	public ArrayList<Materiel> getListMateriel() {
+		return listMateriel;
+	}
+
 	/**
 	 * Create the panel.
 	 */
@@ -459,8 +467,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			frame.setVisible(true);
 			this.mf.dispose();
 		} else if (arg0.getSource() == btnPrendreRdV) {
-			this.mf.setActivePanel(new PanelRDV(this));
-			this.mf.repaint();
+			this.mf.changePanel(new PanelRDV(this));
 			// Action des boutons "Voir Plus", affichage en pop-up de
 			// l'historique des interventions
 		} else if (this.btnVoirPlus.contains(arg0.getSource())) {

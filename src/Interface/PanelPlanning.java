@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,9 +33,10 @@ public class PanelPlanning extends JPanel {
 	 */
 	public PanelPlanning() {
 		neinCurrentWeek = Methode.findCurrentWeekInit();
-		neinCurrentMonday = (Date[]) neinCurrentWeek.keySet().toArray();
-		// TODO
-		//neinCurrentMonday.sort();
+		Set<Date> nCWKeySet = neinCurrentWeek.keySet();
+		neinCurrentMonday = nCWKeySet.toArray(new Date[nCWKeySet.size()]);
+		
+		Arrays.sort(neinCurrentMonday);
 		
 		setLayout(new BorderLayout(0, 0));
 		
