@@ -66,21 +66,21 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			}
 			});
 		
-		btnRechercheClient = new JButton("Recherche Client");
-		panelNorth.add(btnRechercheClient);
-		btnRechercheClient.addActionListener(this);
-		
 		panelNorth.add(jtfRechercheClient);
 		jtfRechercheClient.setColumns(10);
 		
-		btnRechercheOutil = new JButton("Recherche Outil");
-		panelNorth.add(btnRechercheOutil);
-		btnRechercheOutil.addActionListener(this);
+		btnRechercheClient = new JButton("Recherche Client");
+		panelNorth.add(btnRechercheClient);
+		btnRechercheClient.addActionListener(this);
 		
 		jtfRechercheOutil = new JTextField();
 		jtfRechercheOutil.setText("ex : marque, num\u00E9ro de s\u00E9rie");
 		panelNorth.add(jtfRechercheOutil);
 		jtfRechercheOutil.setColumns(10);
+		
+		btnRechercheOutil = new JButton("Recherche Outil");
+		panelNorth.add(btnRechercheOutil);
+		btnRechercheOutil.addActionListener(this);
 		
 		btnPlanning = new JButton("Planning");
 		panelNorth.add(btnPlanning);
@@ -125,11 +125,11 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			panelRes = new PanelResultat(listClient, mf);
 			mf.changePanel(panelRes);
 			
-		}
+		}/*
 		if(e.getSource()==btnRechercheOutil){
 			String rechercheO = jtfRechercheOutil.getText();
 			ArrayList<Materiel> listMateriel = createListMat(rechercheO);
-		}
+		}*/
 		if(e.getSource()==btnAjoutClient){
 			fAC = new FrameAjoutClient();
 			fAC.setVisible(true);
@@ -193,26 +193,32 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		ArrayList<Integer> IdRes = new ArrayList<>();
 		ArrayList<Integer> MultipleId = new ArrayList<>();
 		ArrayList<ResFinal> listResFinal = new ArrayList<>();
+		ArrayList<ResBrut> listResToDelete = new ArrayList<>();
 		ArrayList<Client> listClient = new ArrayList<>();
 		
 		int id=0;
-		for(ResBrut res : listResBrut)
+		for(ResBrut res : listResBrut){
 			id = res.getId();
-			if(IdRes.contains(id))
+			if(IdRes.contains(id) && !MultipleId.contains(id))
 				MultipleId.add(id);
 			else
 				IdRes.add(id);
+		}
 		
-		int note = 1;
+		double note = 0.0;
 		for(int mid : MultipleId){
 			for(ResBrut res : listResBrut){
-				if(res.getId()==mid)
-					note*=res.getNote();
-				listResBrut.remove(res);
+				if(res.getId()==mid){
+					note+=res.getNote();
+					listResToDelete.add(res);
+				}
 			}
 			listResFinal.add(new ResFinal(mid,note));
 			note=1;
 		}
+		
+		listResBrut = delete(listResBrut, listResToDelete);
+		
 		Comparator<ResFinal> comparatorF = Comparator.comparing(ResFinal::getNote);
 		listResFinal.sort(comparatorF);
 		Comparator<ResBrut> comparatorB = Comparator.comparing(ResBrut::getNote);
@@ -224,6 +230,12 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			listClient.add(cDAO.find(rb.getId()));
 		
 		return listClient;
+	}
+	
+	private ArrayList<ResBrut> delete(ArrayList<ResBrut> listResBrut, ArrayList<ResBrut> listResToDelete){
+		for(ResBrut rb : listResToDelete)
+			listResBrut.remove(rb);
+		return listResBrut;
 	}
 	/*
 	private ArrayList<Client> researchPlus(ArrayList<String> listMot, ArrayList<Resultat> listRes, String[] champs) {

@@ -202,16 +202,71 @@ public class ClientDAO extends DAO<Client>{
 			state.executeQuery("SELECT \"id_client\",\""+champs+"\" FROM \"public\".\"Client\"");
 			ResultSet result=state.getResultSet();
 			
+			int lev;double note;
+			
 			while(result.next()){
 				String motTest = result.getString(champs);
-				//Distance de levenshtein
-				//if(distance/mot.length<0.4)
-				listRes.add(new ResBrut(result.getInt("id_client"), champs, /*distance/mot.length*/));
+				lev=levenshtein(mot,motTest);
+				note = (double) lev/mot.length();
+				if(note<0.4)
+					listRes.add(new ResBrut(result.getInt("id_client"), champs, note));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return listRes;
+	}
+	
+	public int levenshtein(String s0, String s1) {
+		int len0 = s0.length()+1;
+		int len1 = s1.length()+1;
+	 
+		// les tableaux de distances
+		int[] cost = new int[len0];
+		int[] newcost = new int[len0];
+	 
+		// initial cost of skipping prefix in String s0
+		for(int i=0;i<len0;i++) cost[i]=i;
+	 
+		// dynamicaly computing the array of distances
+	 
+		// transformation cost for each letter in s1
+		for(int j=1;j<len1;j++) {
+	 
+			// initial cost of skipping prefix in String s1
+			newcost[0]=j-1;
+	 
+			// transformation cost for each letter in s0
+			for(int i=1;i<len0;i++) {
+	 
+				// matching current letters in both strings
+				int match = (s0.charAt(i-1)==s1.charAt(j-1))?0:1;
+	 
+				// computing cost for each transformation
+				int cost_replace = cost[i-1]+match;
+				int cost_insert  = cost[i]+1;
+				int cost_delete  = newcost[i-1]+1;
+	 
+				// keep minimum cost
+				newcost[i] = min(cost_insert, cost_delete, cost_replace);
+			}
+	 
+			// swap cost/newcost arrays
+			int[] swap=cost; cost=newcost; newcost=swap;
+		}
+	 
+		// the distance is the cost for transforming all letters in both strings
+		return cost[len0-1];
+	}
+	
+	private int min(int ci, int cd, int cr){
+		int min=Integer.MAX_VALUE;
+		int[] tab = {ci,cd,cr};
+		for(int i=0; i<tab.length; i++)
+			if(tab[i]<min)
+				min = tab[i];
+		
+		return min;
 	}
 	/**
 	 * Méthode appeler par research(ArrayList<String> listMot)

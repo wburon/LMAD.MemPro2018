@@ -3,9 +3,9 @@ package Model;
 public class ResFinal {
 
 	private int id;
-	private int note;
+	private double note;
 	
-	public ResFinal(int id, int note){
+	public ResFinal(int id, double note){
 		this.id=id;
 		this.note=note;
 	}
@@ -18,7 +18,7 @@ public class ResFinal {
 		this.id = id;
 	}
 
-	public int getNote() {
+	public double getNote() {
 		return note;
 	}
 
