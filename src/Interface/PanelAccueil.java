@@ -11,7 +11,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 import javax.swing.JTable;
@@ -19,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import DAO.ClientDAO;
+import DAO.MaterielDAO;
 import Model.Client;
 import Model.Materiel;
 import Model.ResBrut;
@@ -44,6 +44,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	private MainFrame mf;
 
 	private ClientDAO cDAO;
+	private MaterielDAO mDAO;
 	private JTextField jtfRechercheOutil;
 	/**
 	 * Create the panel.
@@ -125,11 +126,11 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			panelRes = new PanelResultat(listClient, mf);
 			mf.changePanel(panelRes);
 			
-		}/*
+		}
 		if(e.getSource()==btnRechercheOutil){
 			String rechercheO = jtfRechercheOutil.getText();
 			ArrayList<Materiel> listMateriel = createListMat(rechercheO);
-		}*/
+		}
 		if(e.getSource()==btnAjoutClient){
 			fAC = new FrameAjoutClient();
 			fAC.setVisible(true);
@@ -148,6 +149,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @param recherche un String regroupant tout les éléments taper dans la barre de recherche
 	 * @return la liste de client qui ont une correspondance avec la recherche
 	 */
+	@SuppressWarnings("unchecked")
 	private ArrayList<Client> createListClient(String recherche) {
 		ArrayList<ResBrut> listRes1 = new ArrayList<>();
 		ArrayList<ResBrut> listRes2 = new ArrayList<>();
@@ -167,7 +169,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 				}
 			}
 		}
-		return classement(listRes1);
+		return (ArrayList<Client>) classement(listRes1, cDAO);
 	}
 	
 	/**
@@ -189,12 +191,13 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @param listResBrut liste des résultat "brut" mots par mots
 	 * @return listClient la liste client trier par pertinence
 	 */
-	private ArrayList<Client> classement(ArrayList<ResBrut> listResBrut){
+	private ArrayList<?> classement(ArrayList<ResBrut> listResBrut, Object o){
 		ArrayList<Integer> IdRes = new ArrayList<>();
 		ArrayList<Integer> MultipleId = new ArrayList<>();
 		ArrayList<ResFinal> listResFinal = new ArrayList<>();
 		ArrayList<ResBrut> listResToDelete = new ArrayList<>();
 		ArrayList<Client> listClient = new ArrayList<>();
+		ArrayList<Materiel> listMateriel = new ArrayList<>();
 		
 		int id=0;
 		for(ResBrut res : listResBrut){
@@ -224,12 +227,23 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		Comparator<ResBrut> comparatorB = Comparator.comparing(ResBrut::getNote);
 		listResBrut.sort(comparatorB);
 		
-		for(ResFinal rf : listResFinal)
-			listClient.add(cDAO.find(rf.getId()));
-		for(ResBrut rb : listResBrut)
-			listClient.add(cDAO.find(rb.getId()));
+		String name = o.getClass().getSimpleName();
 		
-		return listClient;
+		if(o.getClass().getSimpleName()==name){
+			for(ResFinal rf : listResFinal)
+				listClient.add(cDAO.find(rf.getId()));
+			for(ResBrut rb : listResBrut)
+				listClient.add(cDAO.find(rb.getId()));
+		
+			return listClient;
+		}else{
+			for(ResFinal rf : listResFinal)
+				listMateriel.add(mDAO.find(rf.getId()));
+			for(ResBrut rb : listResBrut)
+				listMateriel.add(mDAO.find(rb.getId()));
+			
+			return listMateriel;
+		}
 	}
 	
 	private ArrayList<ResBrut> delete(ArrayList<ResBrut> listResBrut, ArrayList<ResBrut> listResToDelete){
@@ -260,13 +274,32 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			}
 		}
 		return false;
-	}
+	}*/
+	
+	@SuppressWarnings("unchecked")
 	private ArrayList<Materiel> createListMat(String recherche) {
+		ArrayList<ResBrut> listRes1 = new ArrayList<>();
+		ArrayList<ResBrut> listRes2 = new ArrayList<>();
 		
+		//on récupère les mots séparés par un espace dans la barre de recherche dans listMot
+		ArrayList<String> listMot = createListMot(recherche);
 		
-		return null;
+		//On déclare les champs qu'on va rechercher dans la base de données dans ce tableau
+		String[] champs = {"nom", "type", "marque"};
+		
+		//On parcours tous les mots taper dans la liste de recherche
+		for(String mot : listMot){
+			for(int i=0; i<champs.length; i++){
+				listRes2 = mDAO.getResultat(mot, champs[i]);
+				if (listRes2!=null){
+					listRes1=append(listRes1, listRes2);
+				}
+			}
+		}
+		
+		return (ArrayList<Materiel>) classement(listRes1,mDAO);
 	}
-	*/
+	
 	private ArrayList<String> createListMot(String chaine){
 		int len=chaine.length();
 		char c=' ';
