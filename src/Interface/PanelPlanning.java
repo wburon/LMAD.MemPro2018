@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class PanelPlanning extends JPanel {
 	private HashMap<Date, Date[]> neinCurrentWeek;
 	private Date[] currentWeek;
 	private Date[] neinCurrentMonday;
+	private Date selectedWeekMonday;
 
 	/**
 	 * Create the panel.
@@ -36,8 +38,10 @@ public class PanelPlanning extends JPanel {
 		Set<Date> nCWKeySet = neinCurrentWeek.keySet();
 		neinCurrentMonday = nCWKeySet.toArray(new Date[nCWKeySet.size()]);
 		
-		Arrays.sort(neinCurrentMonday);
 		
+		Arrays.sort(neinCurrentMonday);
+		this.selectedWeekMonday = neinCurrentMonday[0];
+				
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -54,6 +58,7 @@ public class PanelPlanning extends JPanel {
 		panel_2.add(btnPreviousWeek);
 		
 		JButton btnWeek1 = new JButton(Methode.toString(neinCurrentMonday[0]));
+		btnWeek1.setBackground(Color.GREEN);
 		panel_2.add(btnWeek1);
 		
 		JButton btnWeek2 = new JButton(Methode.toString(neinCurrentMonday[1]));
@@ -152,7 +157,14 @@ public class PanelPlanning extends JPanel {
 		
 		JPanel panel_Samedi_event = new JPanel();
 		panel_Samedi.add(panel_Samedi_event, BorderLayout.CENTER);
+		
+		remplissageEvent();
 
+	}
+
+	private void remplissageEvent() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
