@@ -4,9 +4,9 @@ public class ResBrut {
 
 	private int id;
 	private String champs;
-	private int note;
+	private double note;
 	
-	public ResBrut(int id,String champs, int note){
+	public ResBrut(int id,String champs, double note){
 		this.id=id;
 		this.champs=champs;
 		this.note=note;
@@ -28,7 +28,7 @@ public class ResBrut {
 		this.champs = champs;
 	}
 
-	public int getNote() {
+	public double getNote() {
 		return note;
 	}
 
