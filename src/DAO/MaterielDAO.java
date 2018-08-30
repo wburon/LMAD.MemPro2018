@@ -127,7 +127,7 @@ public class MaterielDAO extends DAO<Materiel>{
 				lev=levenshtein(mot,motTest);
 				note = (double) lev/mot.length();
 				if(note<0.4)
-					listRes.add(new ResBrut(result.getInt("id_client"), champs, note));
+					listRes.add(new ResBrut(result.getInt("id_materiel"), champs, note));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();

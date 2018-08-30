@@ -5,7 +5,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import Model.Client;
+import Model.Materiel;
 import Model.Table_Client;
+import Model.Table_Materiel;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -20,11 +22,13 @@ import javax.swing.JLabel;
 public class PanelResultat extends JPanel implements ActionListener, MouseListener{
 	
 	private Table_Client tClient;
+	private Table_Materiel tMat;
 	private JTable table;
 	private JButton btnRetour;
 	private MainFrame mf;
 	
-	public PanelResultat(ArrayList<Client> listClient, MainFrame mf) {
+	@SuppressWarnings("unchecked")
+	public PanelResultat(ArrayList<?> list, MainFrame mf) {
 		
 		this.mf = mf;
 		
@@ -52,8 +56,14 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 		JPanel panel_center = new JPanel();
 		add(panel_center, BorderLayout.CENTER);
 		
-		tClient = new Table_Client(listClient);
-		table = new JTable(tClient);
+		if (list.get(0).getClass().getName()=="Model.Client"){
+			tClient = new Table_Client((ArrayList<Client>) list);
+			table = new JTable(tClient);
+		}else{
+			tMat = new Table_Materiel((ArrayList<Materiel>) list);
+			table = new JTable(tMat);
+		}
+		
 		panel_center.add(new JScrollPane(table));
 		table.addMouseListener(this);
 		

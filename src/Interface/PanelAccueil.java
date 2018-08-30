@@ -130,6 +130,8 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		if(e.getSource()==btnRechercheOutil){
 			String rechercheO = jtfRechercheOutil.getText();
 			ArrayList<Materiel> listMateriel = createListMat(rechercheO);
+			panelRes = new PanelResultat(listMateriel, mf);
+			mf.changePanel(panelRes);
 		}
 		if(e.getSource()==btnAjoutClient){
 			fAC = new FrameAjoutClient();
@@ -227,9 +229,8 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		Comparator<ResBrut> comparatorB = Comparator.comparing(ResBrut::getNote);
 		listResBrut.sort(comparatorB);
 		
-		String name = o.getClass().getSimpleName();
 		
-		if(o.getClass().getSimpleName()==name){
+		if(o.getClass().getName()=="DAO.ClientDAO"){
 			for(ResFinal rf : listResFinal)
 				listClient.add(cDAO.find(rf.getId()));
 			for(ResBrut rb : listResBrut)
@@ -290,6 +291,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		//On parcours tous les mots taper dans la liste de recherche
 		for(String mot : listMot){
 			for(int i=0; i<champs.length; i++){
+				
 				listRes2 = mDAO.getResultat(mot, champs[i]);
 				if (listRes2!=null){
 					listRes1=append(listRes1, listRes2);

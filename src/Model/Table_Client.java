@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import DAO.ClientDAO;
 
 /**
  * Classe permettant de créer la liste client 
@@ -12,6 +11,7 @@ import DAO.ClientDAO;
  * @author Baron
  *
  */
+@SuppressWarnings("serial")
 public class Table_Client extends AbstractTableModel{
 	
 	private ArrayList<Client> listClient = new ArrayList<>();
