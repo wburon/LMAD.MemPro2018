@@ -96,7 +96,7 @@ public class InterventionDAO extends DAO<Intervention>{
 				intervention.setNumFacture(result.getInt("numFacture"));
 				intervention.setNumBL(result.getInt("numBL"));
 				intervention.setRefPiece(result.getInt("refPiece"));
-				intervention.setCommentaire(result.getString("commmentaire"));
+				intervention.setCommentaire(result.getString("commentaire"));
 				intervention.setDate(result.getDate("date"));
 			}
 			

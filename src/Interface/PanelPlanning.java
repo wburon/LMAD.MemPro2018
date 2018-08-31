@@ -29,6 +29,12 @@ public class PanelPlanning extends JPanel {
 	private Date[] currentWeek;
 	private Date[] neinCurrentMonday;
 	private Date selectedWeekMonday;
+	private JPanel panel_Lundi_event;
+	private JPanel panel_Mardi_event;
+	private JPanel panel_Mercredi_event;
+	private JPanel panel_Jeudi_event;
+	private JPanel panel_Vendredi_event;
+	private JPanel panel_Samedi_event;
 
 	/**
 	 * Create the panel.
@@ -100,7 +106,7 @@ public class PanelPlanning extends JPanel {
 		lblLundi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Lundi.add(lblLundi, BorderLayout.NORTH);
 		
-		JPanel panel_Lundi_event = new JPanel();
+		panel_Lundi_event = new JPanel();
 		panel_Lundi.add(panel_Lundi_event, BorderLayout.CENTER);
 		
 		JPanel panel_Mardi = new JPanel();
@@ -111,7 +117,7 @@ public class PanelPlanning extends JPanel {
 		lblMardi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Mardi.add(lblMardi, BorderLayout.NORTH);
 		
-		JPanel panel_Mardi_event = new JPanel();
+		panel_Mardi_event = new JPanel();
 		panel_Mardi.add(panel_Mardi_event, BorderLayout.CENTER);
 		
 		JPanel panel_Mercredi = new JPanel();
@@ -122,7 +128,7 @@ public class PanelPlanning extends JPanel {
 		lblMercredi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Mercredi.add(lblMercredi, BorderLayout.NORTH);
 		
-		JPanel panel_Mercredi_event = new JPanel();
+		panel_Mercredi_event = new JPanel();
 		panel_Mercredi.add(panel_Mercredi_event, BorderLayout.CENTER);
 		
 		JPanel panel_Jeudi = new JPanel();
@@ -133,7 +139,7 @@ public class PanelPlanning extends JPanel {
 		lblJeudi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Jeudi.add(lblJeudi, BorderLayout.NORTH);
 		
-		JPanel panel_Jeudi_event = new JPanel();
+		panel_Jeudi_event = new JPanel();
 		panel_Jeudi.add(panel_Jeudi_event, BorderLayout.CENTER);
 		
 		JPanel panel_Vendredi = new JPanel();
@@ -144,7 +150,7 @@ public class PanelPlanning extends JPanel {
 		lblVendredi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Vendredi.add(lblVendredi, BorderLayout.NORTH);
 		
-		JPanel panel_Vendredi_event = new JPanel();
+		panel_Vendredi_event = new JPanel();
 		panel_Vendredi.add(panel_Vendredi_event, BorderLayout.CENTER);
 		
 		JPanel panel_Samedi = new JPanel();
@@ -155,7 +161,7 @@ public class PanelPlanning extends JPanel {
 		lblSamedi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Samedi.add(lblSamedi, BorderLayout.NORTH);
 		
-		JPanel panel_Samedi_event = new JPanel();
+		panel_Samedi_event = new JPanel();
 		panel_Samedi.add(panel_Samedi_event, BorderLayout.CENTER);
 		
 		remplissageEvent();
@@ -163,7 +169,7 @@ public class PanelPlanning extends JPanel {
 	}
 
 	private void remplissageEvent() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

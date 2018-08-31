@@ -56,8 +56,7 @@ public class testWilliam {
 //		String historique = Methode.toString3(interventionDAO.getListIntervention(clDAO.getListMateriel(clDAO.find(2)).get(1).getId_materiel()));
 //		System.out.println(historique);
 		
-		
-		
+
 		ClientDAO cDAO = new ClientDAO();
 		MainFrame mftest = new MainFrame();
 		mftest.setClient(cDAO.find(2));
@@ -65,7 +64,7 @@ public class testWilliam {
 		mftest.init();
 		mftest.setVisible(true);
 		
-		
+			
         
 
 //		 Connection SC = SingletonConnection.getConnection();

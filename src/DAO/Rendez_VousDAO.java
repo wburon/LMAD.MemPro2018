@@ -23,7 +23,7 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		try {
 
 			PreparedStatement prepare = SC.prepareStatement(
-					"Insert into \"Rendez_vous\"(id_rdv, id_intervention, dateDebut, dateFin) values (?,?,?,?);");
+					"Insert into \"Rendez_vous\"(id_rdv, id_intervention, \"dateDebut\", \"dateFin\") values (?,?,?,?);");
 			prepare.setInt(1, maxId());
 			prepare.setInt(2, obj.getIntervention().getId_intervention());
 			prepare.setDate(3, (Date) obj.getDateDeb());
@@ -58,7 +58,7 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 	public boolean update(Rendez_Vous obj) {
 		try {
 			PreparedStatement prepare = SC
-					.prepareStatement("Update \"Rendez_vous\" set dateDebut=?, dateFin=? where id_rdv=?");
+					.prepareStatement("Update \"Rendez_vous\" set \"dateDebut\"=?, \"dateFin\"=? where id_rdv=?");
 
 			prepare.setDate(1, (Date) obj.getDateDeb());
 			prepare.setDate(2, (Date) obj.getDateFin());
@@ -115,7 +115,7 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		Rendez_Vous rdv = new Rendez_Vous();
 		ArrayList<Rendez_Vous> listRdv = new ArrayList<>();
 		try {
-			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Rendez_vous\" WHERE dateDebut>?",
+			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Rendez_vous\" WHERE \"dateDebut\">?",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 			prepare.setDate(1, (java.sql.Date) Calendar.getInstance().getTime());
 			ResultSet result = prepare.executeQuery();
@@ -131,5 +131,49 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		}
 		return listRdv;
 	}
+
+	public ArrayList<Rendez_Vous> getRdvInDate(java.util.Date date) {
+		InterventionDAO interDAO = new InterventionDAO();
+		Rendez_Vous rdv = new Rendez_Vous();
+		ArrayList<Rendez_Vous> listRdvInDate = new ArrayList<>();
+		try {
+			PreparedStatement prepare = SC.prepareStatement(
+					"SELECT * FROM \"Intervention\" WHERE date=?", ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			prepare.setDate(1, new java.sql.Date(date.getTime()));
+			ResultSet result = prepare.executeQuery();
+			while (result.next()) {
+				listRdvInDate.add(this.findInterDate(result.getInt("id_intervention")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listRdvInDate;
+
+	}
+
+	private Rendez_Vous findInterDate(int id) {
+		Rendez_Vous rdv = new Rendez_Vous();
+		InterventionDAO interDAO = new InterventionDAO();
+		try {
+			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Rendez_vous\" WHERE intervention=?",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			prepare.setInt(1, id);
+			ResultSet result = prepare.executeQuery();
+
+			if (result.first()) {
+				rdv.setId_rdv(result.getInt("id_rdv"));
+				rdv.setIntervention(interDAO.find(id));
+				rdv.setDateDeb(result.getDate("dateDebut"));
+				rdv.setDateFin(result.getDate("dateFin"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rdv;
+	}
+
+	
 
 }
