@@ -48,5 +48,9 @@ public class Table_Materiel extends AbstractTableModel {
 		}
 		
 	}
+	
+	public Client getClient(int rowIndex){
+		return listMat.get(rowIndex).getClient();
+	}
 
 }
