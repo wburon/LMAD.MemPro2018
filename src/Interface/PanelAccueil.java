@@ -108,6 +108,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		
 
 		cDAO = new ClientDAO();
+		mDAO = new MaterielDAO();
 		tClient = new Table_Client(cDAO.getListAccueil());
 		table = new JTable(tClient);
 		panelCenter.add(new JScrollPane(table));
