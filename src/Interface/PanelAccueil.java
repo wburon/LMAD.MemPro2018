@@ -29,29 +29,23 @@ import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class PanelAccueil extends JPanel implements ActionListener, MouseListener{
-	private Table_Client tClient;
-	private JTable table;
 	
-	private JButton btnRechercheClient;
-	private JButton btnRechercheOutil;
-	private JButton btnPlanning;
-	private JButton btnAjoutClient;
-	private JTextField jtfRechercheClient;
+	private Table_Client tClient; private JTable table;
+		
+	private JButton btnRechercheClient, btnRechercheOutil, btnPlanning, btnAjoutClient;
 	
-	private PanelResultat panelRes;
-	private PanelPlanning panelPlan;
-	private FrameAjoutClient fAC;
-	private MainFrame mf;
+	private JTextField jtfRechercheClient, jtfRechercheOutil;
+	
+	private PanelResultat panelRes; private PanelPlanning panelPlan; 
+	private FrameAjoutClient fAC; private MainFrame mf;
 
-	private ClientDAO cDAO;
-	private MaterielDAO mDAO;
-	private JTextField jtfRechercheOutil;
+	private ClientDAO cDAO; private MaterielDAO mDAO;
 	/**
 	 * Create the panel.
 	 */
 	public PanelAccueil(MainFrame mf) {
-		this.mf=mf;
 		
+		this.mf=mf;
 		
 		setLayout(new BorderLayout(0, 0));
 		
@@ -60,6 +54,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		
 		jtfRechercheClient = new JTextField();
 		jtfRechercheClient.setText("ex : nom, pr\u00E9nom ou lieu");
+		//efface les propositions quand on clique sur la barre de recherche
 		jtfRechercheClient.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -76,6 +71,12 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		
 		jtfRechercheOutil = new JTextField();
 		jtfRechercheOutil.setText("ex : marque, num\u00E9ro de s\u00E9rie");
+		//Idem que pour la recherche client
+		jtfRechercheOutil.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent e) {
+				jtfRechercheOutil.setText("");
+			}
+		});
 		panelNorth.add(jtfRechercheOutil);
 		jtfRechercheOutil.setColumns(10);
 		
@@ -97,7 +98,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		JPanel panelSouth = new JPanel();
 		add(panelSouth, BorderLayout.SOUTH);
 		
-		JLabel lblConsigne = new JLabel("Vous voici sur la page d'accueil du logiciel \" \" \n si vous souhaitez voir client pr\u00E9sent dans la liste double-cliquez dessus.");
+		JLabel lblConsigne = new JLabel("Vous voici sur la page d'accueil du logiciel \" \" \n si vous souhaitez voir un client pr\u00E9sent dans la liste double-cliquez dessus.");
 		panelSouth.add(lblConsigne);
 		
 		JPanel panelEast = new JPanel();
@@ -107,14 +108,10 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		add(panelCenter, BorderLayout.CENTER);
 		
 
-		cDAO = new ClientDAO();
-		mDAO = new MaterielDAO();
-		tClient = new Table_Client(cDAO.getListAccueil());
-		table = new JTable(tClient);
+		cDAO = new ClientDAO(); mDAO = new MaterielDAO();
+		tClient = new Table_Client(cDAO.getListAccueil()); table = new JTable(tClient);
 		panelCenter.add(new JScrollPane(table));
 		table.addMouseListener(this);
-		
-
 		
 	}
 
@@ -147,7 +144,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 
 
 	/**
-	 * Cette méthode est appelé lorsqu'on appuie sur le bouton recherche,
+	 * Cette méthode est appelé lorsqu'on appuie sur le bouton recherche Client,
 	 * pour créer la liste de client susceptible de répondre aux critères recherchés
 	 * @param recherche un String regroupant tout les éléments taper dans la barre de recherche
 	 * @return la liste de client qui ont une correspondance avec la recherche
@@ -176,6 +173,37 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	}
 	
 	/**
+	 * Cette méthode est appelé lorsqu'on appuie sur le bouton recherche Outil,
+	 * pour créer la liste de Matériel susceptible de répondre aux critères recherchés
+	 * @param recherche un String regroupant tout les éléments taper dans la barre de recherche
+	 * @return la liste de Matériel qui ont une correspondance avec la recherche
+	 */
+	@SuppressWarnings("unchecked")
+	private ArrayList<Materiel> createListMat(String recherche) {
+		ArrayList<ResBrut> listRes1 = new ArrayList<>();
+		ArrayList<ResBrut> listRes2 = new ArrayList<>();
+		
+		//on récupère les mots séparés par un espace dans la barre de recherche dans listMot
+		ArrayList<String> listMot = createListMot(recherche);
+		
+		//On déclare les champs qu'on va rechercher dans la base de données dans ce tableau
+		String[] champs = {"nom", "type", "marque"};
+		
+		//On parcours tous les mots taper dans la liste de recherche
+		for(String mot : listMot){
+			for(int i=0; i<champs.length; i++){
+				
+				listRes2 = mDAO.getResultat(mot, champs[i]);
+				if (listRes2!=null){
+					listRes1=append(listRes1, listRes2);
+				}
+			}
+		}
+		
+		return (ArrayList<Materiel>) classement(listRes1,mDAO);
+	}
+	
+	/**
 	 * Permet d'assembler les élément de listRes2 qui ne sont pas dans listRes1
 	 * @param listRes1
 	 * @param listRes2
@@ -192,7 +220,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * Cette méthode permet de classer les résultats par pertinence. 
 	 * Lorsque plusieurs mots ont "matché" ils sont mis en avant.
 	 * @param listResBrut liste des résultat "brut" mots par mots
-	 * @return listClient la liste client trier par pertinence
+	 * @return listClient la liste trier par pertinence
 	 */
 	private ArrayList<?> classement(ArrayList<ResBrut> listResBrut, Object o){
 		ArrayList<Integer> IdRes = new ArrayList<>();
@@ -252,71 +280,30 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		for(ResBrut rb : listResToDelete)
 			listResBrut.remove(rb);
 		return listResBrut;
-	}
-	/*
-	private ArrayList<Client> researchPlus(ArrayList<String> listMot, ArrayList<Resultat> listRes, String[] champs) {
-		ArrayList<Client> listClient = new ArrayList<>();
-
-		for(Resultat res : listRes){
-			Client c = cDAO.find(res.getId());
-			if(matchInfo(listMot, c, res.getChamps()))
-				listClient.add(c);
-			
-		}
-		
-		return listClient;
-	}*/
-
-	/*
-	private boolean matchInfo(ArrayList<String> listMot, Client c, String champs){
-		switch(champs){
-		case "prenom":
-			for(int i=1; i<listMot.size(); i++){
-				
-			}
-		}
-		return false;
-	}*/
+	}	
 	
-	@SuppressWarnings("unchecked")
-	private ArrayList<Materiel> createListMat(String recherche) {
-		ArrayList<ResBrut> listRes1 = new ArrayList<>();
-		ArrayList<ResBrut> listRes2 = new ArrayList<>();
-		
-		//on récupère les mots séparés par un espace dans la barre de recherche dans listMot
-		ArrayList<String> listMot = createListMot(recherche);
-		
-		//On déclare les champs qu'on va rechercher dans la base de données dans ce tableau
-		String[] champs = {"nom", "type", "marque"};
-		
-		//On parcours tous les mots taper dans la liste de recherche
-		for(String mot : listMot){
-			for(int i=0; i<champs.length; i++){
-				
-				listRes2 = mDAO.getResultat(mot, champs[i]);
-				if (listRes2!=null){
-					listRes1=append(listRes1, listRes2);
-				}
-			}
-		}
-		
-		return (ArrayList<Materiel>) classement(listRes1,mDAO);
-	}
-	
+	/**
+	 * Cette méthode permet d'implémenter dans une liste les mots séparés par un espace dans une chaine de caractere 
+	 * @param chaine la chaine de caractère dont on veut séparer les mots
+	 * @return une ArrayList<String> des mots séparés
+	 */
 	private ArrayList<String> createListMot(String chaine){
 		int len=chaine.length();
 		char c=' ';
 		String mot="";
 		ArrayList<String> listMot=new ArrayList<>();
 		for(int i=0; i<len; i++){
+			//si le caractère est un espace le mot se termine et on commence un nouveau mot
 			if(chaine.charAt(i)==c){
 				listMot.add(mot);
 				mot="";
 			}
+			//si on est arrivé au dernier caractère le mot se termine
 			else if(i==len-1){
 				mot+=chaine.charAt(i);
 				listMot.add(mot);
 			}
+			//on ajoute le caractère au mot en cours
 			else
 				mot+=chaine.charAt(i);
 		}

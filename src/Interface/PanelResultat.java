@@ -95,9 +95,13 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(e.getClickCount()==2){
-			mf.setClient(tClient.getClient(table.getSelectedRow()));
-			System.out.println(mf.getClient().getNom());
-			mf.changePanel(new PanelClient(mf));
+			if(table.getModel().getClass().getName()=="Model.Table_Client"){
+				mf.setClient(tClient.getClient(table.getSelectedRow()));
+				mf.changePanel(new PanelClient(mf));
+			}else{
+				mf.setClient(tMat.getClient(table.getSelectedRow()));
+				mf.changePanel(new PanelClient(mf));
+			}
 		}
 		
 	}
