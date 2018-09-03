@@ -11,8 +11,7 @@ import Singleton.SingletonConnection;
 import Model.Client;
 import Model.Materiel;
 import Model.Methode;
-import Model.ResBrut;
-//import Model.Resultat;
+import Model.Resultat;
 
 public class ClientDAO extends DAO<Client>{
 	Connection SC = SingletonConnection.getConnection();
@@ -148,8 +147,8 @@ public class ClientDAO extends DAO<Client>{
 		return listClient;
 	}
 
-	public ArrayList<ResBrut> getResultat(String mot, String champs){
-		ArrayList<ResBrut> listRes = new ArrayList<>();
+	public ArrayList<Resultat> getResultat(String mot, String champs){
+		ArrayList<Resultat> listRes = new ArrayList<>();
 		Statement state;
 		try{
 			state = SC.createStatement();
@@ -163,7 +162,7 @@ public class ClientDAO extends DAO<Client>{
 				lev=levenshtein(mot,motTest);
 				note = (double) lev/mot.length();
 				if(note<0.4)
-					listRes.add(new ResBrut(result.getInt("id_client"), champs, note));
+					listRes.add(new Resultat(result.getInt("id_client"), note));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();

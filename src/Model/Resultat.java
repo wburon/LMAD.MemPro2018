@@ -1,11 +1,11 @@
 package Model;
 
-public class ResFinal {
+public class Resultat {
 
 	private int id;
 	private double note;
 	
-	public ResFinal(int id, double note){
+	public Resultat(int id, double note){
 		this.id=id;
 		this.note=note;
 	}

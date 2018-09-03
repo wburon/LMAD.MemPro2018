@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import Model.Materiel;
-import Model.ResBrut;
+import Model.Resultat;
 import Singleton.SingletonConnection;
 
 public class MaterielDAO extends DAO<Materiel>{
@@ -112,8 +112,8 @@ public class MaterielDAO extends DAO<Materiel>{
 		return nbRow;
 	}
 	
-	public ArrayList<ResBrut> getResultat(String mot, String champs){
-		ArrayList<ResBrut> listRes = new ArrayList<>();
+	public ArrayList<Resultat> getResultat(String mot, String champs){
+		ArrayList<Resultat> listRes = new ArrayList<>();
 		Statement state;
 		try{
 			state = SC.createStatement();
@@ -127,7 +127,7 @@ public class MaterielDAO extends DAO<Materiel>{
 				lev=levenshtein(mot,motTest);
 				note = (double) lev/mot.length();
 				if(note<0.4)
-					listRes.add(new ResBrut(result.getInt("id_materiel"), champs, note));
+					listRes.add(new Resultat(result.getInt("id_materiel"), note));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();

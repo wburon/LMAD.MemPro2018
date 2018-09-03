@@ -21,9 +21,7 @@ import DAO.ClientDAO;
 import DAO.MaterielDAO;
 import Model.Client;
 import Model.Materiel;
-import Model.ResBrut;
-import Model.ResFinal;
-//import Model.Resultat;
+import Model.Resultat;
 import Model.Table_Client;
 import javax.swing.JLabel;
 
@@ -151,8 +149,8 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 */
 	@SuppressWarnings("unchecked")
 	private ArrayList<Client> createListClient(String recherche) {
-		ArrayList<ResBrut> listRes1 = new ArrayList<>();
-		ArrayList<ResBrut> listRes2 = new ArrayList<>();
+		ArrayList<Resultat> listRes1 = new ArrayList<>();
+		ArrayList<Resultat> listRes2 = new ArrayList<>();
 		
 		//on récupère les mots séparés par un espace dans la barre de recherche dans listMot
 		ArrayList<String> listMot = createListMot(recherche);
@@ -180,8 +178,8 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 */
 	@SuppressWarnings("unchecked")
 	private ArrayList<Materiel> createListMat(String recherche) {
-		ArrayList<ResBrut> listRes1 = new ArrayList<>();
-		ArrayList<ResBrut> listRes2 = new ArrayList<>();
+		ArrayList<Resultat> listRes1 = new ArrayList<>();
+		ArrayList<Resultat> listRes2 = new ArrayList<>();
 		
 		//on récupère les mots séparés par un espace dans la barre de recherche dans listMot
 		ArrayList<String> listMot = createListMot(recherche);
@@ -209,8 +207,8 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @param listRes2
 	 * @return listRes1
 	 */
-	private ArrayList<ResBrut> append(ArrayList<ResBrut> listRes1, ArrayList<ResBrut> listRes2){
-		for(ResBrut res2 : listRes2)
+	private ArrayList<Resultat> append(ArrayList<Resultat> listRes1, ArrayList<Resultat> listRes2){
+		for(Resultat res2 : listRes2)
 			if(!listRes1.contains(res2))
 				listRes1.add(res2);	
 		return listRes1;		
@@ -222,16 +220,16 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @param listResBrut liste des résultat "brut" mots par mots
 	 * @return listClient la liste trier par pertinence
 	 */
-	private ArrayList<?> classement(ArrayList<ResBrut> listResBrut, Object o){
+	private ArrayList<?> classement(ArrayList<Resultat> listResBrut, Object o){
 		ArrayList<Integer> IdRes = new ArrayList<>();
 		ArrayList<Integer> MultipleId = new ArrayList<>();
-		ArrayList<ResFinal> listResFinal = new ArrayList<>();
-		ArrayList<ResBrut> listResToDelete = new ArrayList<>();
+		ArrayList<Resultat> listResFinal = new ArrayList<>();
+		ArrayList<Resultat> listResToDelete = new ArrayList<>();
 		ArrayList<Client> listClient = new ArrayList<>();
 		ArrayList<Materiel> listMateriel = new ArrayList<>();
 		
 		int id=0;
-		for(ResBrut res : listResBrut){
+		for(Resultat res : listResBrut){
 			id = res.getId();
 			if(IdRes.contains(id) && !MultipleId.contains(id))
 				MultipleId.add(id);
@@ -241,43 +239,43 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		
 		double note = 0.0;
 		for(int mid : MultipleId){
-			for(ResBrut res : listResBrut){
+			for(Resultat res : listResBrut){
 				if(res.getId()==mid){
 					note+=res.getNote();
 					listResToDelete.add(res);
 				}
 			}
-			listResFinal.add(new ResFinal(mid,note));
+			listResFinal.add(new Resultat(mid,note));
 			note=1;
 		}
 		
 		listResBrut = delete(listResBrut, listResToDelete);
 		
-		Comparator<ResFinal> comparatorF = Comparator.comparing(ResFinal::getNote);
+		Comparator<Resultat> comparatorF = Comparator.comparing(Resultat::getNote);
 		listResFinal.sort(comparatorF);
-		Comparator<ResBrut> comparatorB = Comparator.comparing(ResBrut::getNote);
+		Comparator<Resultat> comparatorB = Comparator.comparing(Resultat::getNote);
 		listResBrut.sort(comparatorB);
 		
 		
 		if(o.getClass().getName()=="DAO.ClientDAO"){
-			for(ResFinal rf : listResFinal)
+			for(Resultat rf : listResFinal)
 				listClient.add(cDAO.find(rf.getId()));
-			for(ResBrut rb : listResBrut)
+			for(Resultat rb : listResBrut)
 				listClient.add(cDAO.find(rb.getId()));
 		
 			return listClient;
 		}else{
-			for(ResFinal rf : listResFinal)
+			for(Resultat rf : listResFinal)
 				listMateriel.add(mDAO.find(rf.getId()));
-			for(ResBrut rb : listResBrut)
+			for(Resultat rb : listResBrut)
 				listMateriel.add(mDAO.find(rb.getId()));
 			
 			return listMateriel;
 		}
 	}
 	
-	private ArrayList<ResBrut> delete(ArrayList<ResBrut> listResBrut, ArrayList<ResBrut> listResToDelete){
-		for(ResBrut rb : listResToDelete)
+	private ArrayList<Resultat> delete(ArrayList<Resultat> listResBrut, ArrayList<Resultat> listResToDelete){
+		for(Resultat rb : listResToDelete)
 			listResBrut.remove(rb);
 		return listResBrut;
 	}	
