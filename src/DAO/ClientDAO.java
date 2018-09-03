@@ -147,6 +147,12 @@ public class ClientDAO extends DAO<Client>{
 		return listClient;
 	}
 
+	/**
+	 * Méthode qui permet d'obtenir les résultat de la recherche d'un mot dans une colonne de la base de donnée.
+	 * @param mot String correspondant au mot recherché
+	 * @param champs String correspond au nom de la colonne dans laquelle on recherche le mot
+	 * @return listRes une liste de l'objet Resultat composer de l'id_client et de la note associé à ce résultat
+	 */
 	public ArrayList<Resultat> getResultat(String mot, String champs){
 		ArrayList<Resultat> listRes = new ArrayList<>();
 		Statement state;
@@ -157,10 +163,14 @@ public class ClientDAO extends DAO<Client>{
 			
 			int lev;double note;
 			
+			//On parcours l'ensemble des mots de la colonne associé au String champs pour trouver une correspondance avec le mot recherché
 			while(result.next()){
 				String motTest = result.getString(champs);
+				//La distance de Levenshtein permet de mesurer le nombre d'opérations pour passer du motTest au mot recherché
 				lev=levenshtein(mot,motTest);
+				//La note est la distance entre le motTest et le mot recherché sur la taille du mot recherché
 				note = (double) lev/mot.length();
+				//Si la note est inférieur à 0.4 on estime qu'il est pertinent d'enregistrer le résultat
 				if(note<0.4)
 					listRes.add(new Resultat(result.getInt("id_client"), note));
 			}
