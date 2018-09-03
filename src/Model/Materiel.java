@@ -45,5 +45,8 @@ public class Materiel {
 	public void setNumSerie(String numSerie) {
 		this.numSerie = numSerie;
 	}
+	public String toString(){
+		return this.nom + " " + this.marque + " " + this.type + " " + this.numSerie;
+	}
 
 }

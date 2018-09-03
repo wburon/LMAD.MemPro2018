@@ -19,7 +19,9 @@ import java.util.Set;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import DAO.Rendez_VousDAO;
 import Model.Methode;
+import Model.Rendez_Vous;
 
 import javax.swing.JButton;
 
@@ -35,6 +37,20 @@ public class PanelPlanning extends JPanel {
 	private JPanel panel_Jeudi_event;
 	private JPanel panel_Vendredi_event;
 	private JPanel panel_Samedi_event;
+	private JLabel lblLundi;
+	private JLabel lblMardi;
+	private JLabel lblMercredi;
+	private JLabel lblJeudi;
+	private JLabel lblVendredi;
+	private JLabel lblSamedi;
+	private Rendez_VousDAO rdvDAO;
+	private ArrayList<JButton> btnLunEvent;
+	private ArrayList<JButton> btnMarEvent;
+	private ArrayList<JButton> btnMerEvent;
+	private ArrayList<JButton> btnJeuEvent;
+	private ArrayList<JButton> btnVenEvent;
+	private ArrayList<JButton> btnSamEvent;
+	
 
 	/**
 	 * Create the panel.
@@ -44,9 +60,10 @@ public class PanelPlanning extends JPanel {
 		Set<Date> nCWKeySet = neinCurrentWeek.keySet();
 		neinCurrentMonday = nCWKeySet.toArray(new Date[nCWKeySet.size()]);
 		
-		
 		Arrays.sort(neinCurrentMonday);
 		this.selectedWeekMonday = neinCurrentMonday[0];
+		
+		rdvDAO = new Rendez_VousDAO();
 				
 		setLayout(new BorderLayout(0, 0));
 		
@@ -102,7 +119,7 @@ public class PanelPlanning extends JPanel {
 		panel_3.add(panel_Lundi);
 		panel_Lundi.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblLundi = new JLabel("Lundi ");
+		lblLundi = new JLabel("Lundi ");
 		lblLundi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Lundi.add(lblLundi, BorderLayout.NORTH);
 		
@@ -113,7 +130,7 @@ public class PanelPlanning extends JPanel {
 		panel_3.add(panel_Mardi);
 		panel_Mardi.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblMardi = new JLabel("Mardi");
+		lblMardi = new JLabel("Mardi");
 		lblMardi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Mardi.add(lblMardi, BorderLayout.NORTH);
 		
@@ -124,7 +141,7 @@ public class PanelPlanning extends JPanel {
 		panel_3.add(panel_Mercredi);
 		panel_Mercredi.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblMercredi = new JLabel("Mercredi");
+		lblMercredi = new JLabel("Mercredi");
 		lblMercredi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Mercredi.add(lblMercredi, BorderLayout.NORTH);
 		
@@ -135,7 +152,7 @@ public class PanelPlanning extends JPanel {
 		panel_3.add(panel_Jeudi);
 		panel_Jeudi.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblJeudi = new JLabel("Jeudi");
+		lblJeudi = new JLabel("Jeudi");
 		lblJeudi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Jeudi.add(lblJeudi, BorderLayout.NORTH);
 		
@@ -146,7 +163,7 @@ public class PanelPlanning extends JPanel {
 		panel_3.add(panel_Vendredi);
 		panel_Vendredi.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblVendredi = new JLabel("Vendredi");
+		lblVendredi = new JLabel("Vendredi");
 		lblVendredi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Vendredi.add(lblVendredi, BorderLayout.NORTH);
 		
@@ -157,19 +174,47 @@ public class PanelPlanning extends JPanel {
 		panel_3.add(panel_Samedi);
 		panel_Samedi.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblSamedi = new JLabel("Samedi");
+		lblSamedi = new JLabel("Samedi");
 		lblSamedi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_Samedi.add(lblSamedi, BorderLayout.NORTH);
 		
 		panel_Samedi_event = new JPanel();
 		panel_Samedi.add(panel_Samedi_event, BorderLayout.CENTER);
 		
-		remplissageEvent();
+		remplissageEvent(this.neinCurrentWeek.get(this.selectedWeekMonday));
 
 	}
 
-	private void remplissageEvent() {
-		
+	private void remplissageEvent(Date[] currentWeek) {
+		for(int i=0; i<6; i++){
+			switch(i){
+			case 0 :
+				// lundi
+				this.lblLundi.setText("Lundi "+Methode.toStringDate(currentWeek[0]));
+				btnLunEvent = Methode.createButton(rdvDAO.getRdvInDate(currentWeek[i]).length, "");
+				int j = 0;
+				for(Rendez_Vous r : rdvDAO.getRdvInDate(currentWeek[i])){
+					btnLunEvent.get(j).setText(r.toString());
+					this.panel_Lundi_event.add(btnLunEvent.get(j));
+					j++;
+				}
+				break;
+			case 1 : 
+				// mardi
+				break;
+			case 2 :
+				// mercredi
+				break;
+			case 3 : 
+				// jeudi
+				break;
+			case 4 :
+				// vendredi
+				break;
+			default :
+				// samedi
+			}
+		}
 		
 	}
 

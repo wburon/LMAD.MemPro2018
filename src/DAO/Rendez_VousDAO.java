@@ -9,8 +9,13 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import Model.Client;
+import Model.Methode;
 import Model.Rendez_Vous;
 import Singleton.SingletonConnection;
 
@@ -132,7 +137,7 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		return listRdv;
 	}
 
-	public ArrayList<Rendez_Vous> getRdvInDate(java.util.Date date) {
+	public Rendez_Vous[] getRdvInDate(java.util.Date date) {
 		InterventionDAO interDAO = new InterventionDAO();
 		Rendez_Vous rdv = new Rendez_Vous();
 		ArrayList<Rendez_Vous> listRdvInDate = new ArrayList<>();
@@ -148,8 +153,14 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return listRdvInDate;
-
+		HashMap<Integer, Rendez_Vous> map = new HashMap<>();
+		DateComparator comparateur = this.new DateComparator(map);
+		TreeMap<Integer,Rendez_Vous> mapTriee = new TreeMap<>(comparateur);
+		for(Rendez_Vous r : listRdvInDate){
+			map.put(r.getId_rdv(), r);
+		}
+		mapTriee.putAll(map);
+		return mapTriee.keySet().toArray(new Rendez_Vous[mapTriee.keySet().size()]);
 	}
 
 	private Rendez_Vous findInterDate(int id) {
@@ -174,6 +185,21 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		return rdv;
 	}
 
-	
+	class DateComparator implements Comparator<Integer> {
+		Map<Integer, Rendez_Vous> base;
+
+		public DateComparator(Map<Integer, Rendez_Vous> base) {
+			this.base = base;
+		}
+
+		public int compare(Integer a, Integer b) {
+			if (base.get(a).getDateDeb().after(base.get(b).getDateDeb())) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
+
+	}
 
 }

@@ -372,6 +372,16 @@ public class Methode {
 		return list;
 	}
 
+	public static String toStringDate(Date date) {
+		// TODO Auto-generated method stub
+		return date.getDay()+"/"+date.getMonth()+"/"+date.getYear();
+	}
+
+	public static String toStringHourOfDate(Date date) {
+		// TODO Auto-generated method stub
+		return date.getHours()+"h"+date.getMinutes();
+	}
+
 		
 	
 }

@@ -32,5 +32,24 @@ public class Rendez_Vous {
 		this.dateFin = dateFin;
 	}
 	
+	public String toString() {
+		String horaire = Methode.toStringHourOfDate(this.dateDeb) + " à " + Methode.toStringHourOfDate(this.dateFin);
+		String clientName = this.intervention.getMateriel().getClient().getNom() + " " + this.intervention.getMateriel().getClient().getPrenom();
+		String adresse = this.intervention.getMateriel().getClient().getAdresse() + " " + this.intervention.getMateriel().getClient().getVille();
+		String tel = Integer.toString(this.intervention.getMateriel().getClient().getTel());
+		return "<html>" + horaire + "<br>" + clientName + "<br>" + adresse + "<br>" + tel + "</html>";
+	}
+	
+	public String fullToSting() {
+		String horaire = Methode.toStringHourOfDate(this.dateDeb) + " à " + Methode.toStringHourOfDate(this.dateFin);
+		String clientName = this.intervention.getMateriel().getClient().getNom() + " " + this.intervention.getMateriel().getClient().getPrenom();
+		String adresse = this.intervention.getMateriel().getClient().getAdresse() + " " + this.intervention.getMateriel().getClient().getVille();
+		String tel = Integer.toString(this.intervention.getMateriel().getClient().getTel());
+		String commentaire = this.intervention.getCommentaire();
+		String materiel = this.intervention.getMateriel().toString();
+		
+		return "<html>" + horaire + "<br>" + clientName + "<br>" + adresse + "<br>" + tel + "<br>" + materiel +"<br><br>" + commentaire + "</html>";
+	}
+	
 
 }
