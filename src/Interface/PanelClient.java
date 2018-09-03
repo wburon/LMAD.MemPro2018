@@ -31,6 +31,8 @@ import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class PanelClient extends JPanel implements ActionListener {
 
@@ -86,6 +88,7 @@ public class PanelClient extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public PanelClient(MainFrame mf) {
+		setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		this.mf = mf;
 		this.client = mf.getClient();
 		clientDAO = new ClientDAO();
@@ -128,6 +131,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		jtfCourriel.setColumns(10);
 
 		JPanel panelGauche = new JPanel();
+		panelGauche.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_panelGauche = new GridBagConstraints();
 		gbc_panelGauche.weighty = 100.0;
 		gbc_panelGauche.weightx = 5.0;
@@ -266,7 +270,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		panelDescriptionClient.setPreferredSize(new Dimension(10, 40));
 		panelGauche.add(panelDescriptionClient, BorderLayout.NORTH);
 
-		JLabel lblInformationClient = new JLabel("INFORMATION CLIENT");
+		JLabel lblInformationClient = new JLabel("INFORMATIONS CLIENT");
 		lblInformationClient.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblInformationClient.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panelDescriptionClient.add(lblInformationClient);
@@ -274,6 +278,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		this.btnModification.addActionListener(this);
 
 		JPanel panelDroit = new JPanel();
+		panelDroit.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_panelDroit = new GridBagConstraints();
 		gbc_panelDroit.weighty = 100.0;
 		gbc_panelDroit.weightx = 40.0;

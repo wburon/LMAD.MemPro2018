@@ -57,15 +57,22 @@ public class testWilliam {
 //		System.out.println(historique);
 		
 
-		ClientDAO cDAO = new ClientDAO();
-		MainFrame mftest = new MainFrame();
-		mftest.setClient(cDAO.find(2));
-		mftest.setActivePanel(new PanelClient(mftest));
-		mftest.init();
-		mftest.setVisible(true);
+//		ClientDAO cDAO = new ClientDAO();
+//		MainFrame mftest = new MainFrame();
+//		mftest.setClient(cDAO.find(2));
+//		mftest.setActivePanel(new PanelClient(mftest));
+//		mftest.init();
+//		mftest.setVisible(true);
 		
-			
+//		GregorianCalendar gC = new GregorianCalendar(Locale.FRANCE);
+//		System.out.println(gC.getTime().toString());
+//		gC.roll(Calendar.DATE, -7);
+//		System.out.println(gC.getTime().toString());
         
+		GregorianCalendar gC = new GregorianCalendar(Locale.FRANCE);
+		System.out.println(gC.getTime().toString());
+		gC.add(Calendar.DATE, -7);
+		System.out.println(gC.getTime().toString());
 
 //		 Connection SC = SingletonConnection.getConnection();
 

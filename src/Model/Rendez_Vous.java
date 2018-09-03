@@ -37,7 +37,7 @@ public class Rendez_Vous {
 		String clientName = this.intervention.getMateriel().getClient().getNom() + " " + this.intervention.getMateriel().getClient().getPrenom();
 		String adresse = this.intervention.getMateriel().getClient().getAdresse() + " " + this.intervention.getMateriel().getClient().getVille();
 		String tel = Integer.toString(this.intervention.getMateriel().getClient().getTel());
-		return "<html>" + horaire + "<br>" + clientName + "<br>" + adresse + "<br>" + tel + "</html>";
+		return "<html>id:"+ this.id_rdv + "<br>" + horaire + "<br>" + clientName + "<br>" + adresse + "<br>" + tel + "</html>";
 	}
 	
 	public String fullToSting() {
