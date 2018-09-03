@@ -43,6 +43,11 @@ public class PanelRDV extends JPanel implements ActionListener {
 	private JPanel panel_3;
 	private JPanel panel_4;
 	private ArrayList<JRadioButton> listRadioButton;
+	private MainFrame mf;
+
+	public MainFrame getMf() {
+		return mf;
+	}
 
 	public Client getClient() {
 		return client.getClient();
@@ -60,25 +65,17 @@ public class PanelRDV extends JPanel implements ActionListener {
 		return editorPane.getText();
 	}
 
-	public Materiel getMateriel() {
-		return null;
-		// TODO ATTENTION, il faut trouver qqchose pour la selection du materiel
-		// return client.getMateriel();
-	}
-
 	public JPanel getPanelCommentaire() {
 		return panelCommentaire;
 	}
 
-	public void setPanelCommentaire(JPanel panelCommentaire) {
-		this.panelCommentaire = panelCommentaire;
-	}
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelRDV(PanelClient client) {
 		this.client = client;
+		this.mf = client.getMf();
 		this.listRadioButton = new ArrayList<>();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 450, 0 };

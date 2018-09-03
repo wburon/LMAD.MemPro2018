@@ -10,13 +10,16 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JTextField;
 
+import DAO.ClientDAO;
 import DAO.InterventionDAO;
 import DAO.Rendez_VousDAO;
 import Model.Intervention;
+import Model.Materiel;
 import Model.Rendez_Vous;
 
 import javax.swing.JComboBox;
@@ -32,13 +35,19 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	private Rendez_VousDAO rdvDAO;
 	private JButton btnAnnuler;
 	private InterventionDAO interDAO;
+	private MainFrame mf;
+	private JComboBox comboBoxMateriel;
+	private ClientDAO clDAO;
+	private ArrayList<Materiel> listMateriel;
 
 	/**
 	 * Create the panel.
 	 */
 	public Panel_RdvInfo(PanelRDV rdv) {
 		this.rdv = rdv;
+		this.mf = rdv.getMf();
 		rdvDAO = new Rendez_VousDAO();
+		clDAO = new ClientDAO();
 		
 		setLayout(new BorderLayout(0, 0));
 
@@ -64,7 +73,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 
 		JPanel panelEcriture = new JPanel();
 		add(panelEcriture, BorderLayout.CENTER);
-		panelEcriture.setLayout(new GridLayout(4, 2, 0, 0));
+		panelEcriture.setLayout(new GridLayout(5, 2, 0, 0));
 
 		JLabel lblNumeroDeFacture = new JLabel("Numero de facture");
 		panelEcriture.add(lblNumeroDeFacture);
@@ -94,9 +103,30 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		comboBoxTI.setModel(new DefaultComboBoxModel(new String[] {"ENTRETIENT", "OCCASIONNEL"}));
 		panelEcriture.add(comboBoxTI);
 		
+		JLabel lblMateriel = new JLabel("Materiel");
+		panelEcriture.add(lblMateriel);
+		
+		comboBoxMateriel = new JComboBox();
+		this.listMateriel = clDAO.getListMateriel(rdv.getClient());
+		comboBoxMateriel.setModel(new DefaultComboBoxModel(getListMatNameNumSerie(this.listMateriel)));
+		panelEcriture.add(comboBoxMateriel);
+		
 		this.btnTerminer.addActionListener(this);
 		this.btnAnnuler.addActionListener(this);
 	}
+
+
+
+	private String[] getListMatNameNumSerie(ArrayList<Materiel> listMateriel2) {
+		String[] tabName = new String[listMateriel2.size()];
+		int i = 0;
+		for(Materiel mat : listMateriel2){
+			tabName[0] = mat.getNom() + " " + mat.getNumSerie();
+		}
+		return tabName;
+	}
+
+
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -104,7 +134,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 			rdvDAO.create(createRdV());
 			this.rdv.rinitPanelCommentaire();
 		}else if(arg0.getSource() == btnAnnuler){
-			// TODO
+			this.mf.changePanel(rdv);
 		}
 
 	}
@@ -119,13 +149,13 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	
 	public Intervention createIntervention(){
 		Intervention inter = new Intervention();
-		inter.setMateriel(rdv.getMateriel());
+		inter.setMateriel((Materiel) comboBoxMateriel.getSelectedItem());
 		inter.setNumBL(Integer.parseInt(jtfNumBL.getText()));
 		inter.setNumFacture(Integer.parseInt(jtfNumFact.getText()));
 		inter.setRefPiece(Integer.parseInt(jtfRefPiece.getText()));
 		inter.setCommentaire(rdv.getCommentaire());
 		inter.setDate(rdv.getDeb());
-		inter.setType_intervention(null); //TODO A VOIR SI LE TYPE PASSE EN ENUM
+		inter.setType_intervention((String) comboBoxTI.getSelectedItem());
 		interDAO.create(inter);
 		return inter;
 	}

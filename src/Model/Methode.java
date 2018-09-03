@@ -186,8 +186,7 @@ public class Methode {
 		return titlesTab;
 	}
 
-	public static HashMap<Date, Date[]> findCurrentWeekInit() {
-		Calendar calendar = new GregorianCalendar(Locale.FRANCE);
+	public static HashMap<Date, Date[]> findCurrentWeekInit(Calendar calendar) {
 		HashMap<Date, Date[]> list = new HashMap<>();
 
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);

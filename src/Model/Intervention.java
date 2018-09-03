@@ -6,7 +6,7 @@ public class Intervention {
 	
 	private int id_intervention;
 	private Materiel materiel;
-	private Type_Intervention type_intervention;
+	private String type_intervention;
 	private int numFacture;
 	private int numBL;
 	private int refPiece;
@@ -37,10 +37,10 @@ public class Intervention {
 	public void setMateriel(Materiel materiel) {
 		this.materiel = materiel;
 	}
-	public Type_Intervention getType_intervention() {
+	public String getType_intervention() {
 		return type_intervention;
 	}
-	public void setType_intervention(Type_Intervention type_intervention) {
+	public void setType_intervention(String type_intervention) {
 		this.type_intervention = type_intervention;
 	}
 	public int getNumFacture() {
