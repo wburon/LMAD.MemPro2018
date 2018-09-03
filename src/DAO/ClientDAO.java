@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.jsoup.internal.Normalizer;
+
 import Singleton.SingletonConnection;
 import Model.Client;
 import Model.Materiel;
@@ -181,6 +183,9 @@ public class ClientDAO extends DAO<Client>{
 	}
 	
 	public int levenshtein(String s0, String s1) {
+		s0.toLowerCase();
+		s1.toLowerCase();
+		
 		int len0 = s0.length()+1;
 		int len1 = s1.length()+1;
 	 

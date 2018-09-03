@@ -2,28 +2,26 @@ package test;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
+
+import org.jsoup.internal.Normalizer;
+
 import DAO.ClientDAO;
 import DAO.MaterielDAO;
 import Model.Client;
-import Model.ResBrut;
+import Model.Resultat;
 
 public class TestCorentin {
 
 	public static void main (String[] args){
-		ClientDAO cDAO = new ClientDAO();
-		MaterielDAO mDAO = new MaterielDAO();
-		Client c = new Client();
+//		ClientDAO cDAO = new ClientDAO();
+//		MaterielDAO mDAO = new MaterielDAO();
+//		Client c = new Client();
+//		
+//		ArrayList<Resultat> listResBrut1 = new ArrayList<>();
+//		ArrayList<Resultat> listResBrut2 = new ArrayList<>();
+//		ArrayList<Integer> listNb = new ArrayList<>();
 		
-		ArrayList<ResBrut> listResBrut1 = new ArrayList<>();
-		ArrayList<ResBrut> listResBrut2 = new ArrayList<>();
-		ArrayList<Integer> listNb = new ArrayList<>();
-		
-		String[] champs = {"nom" , "type", "marque"}; 
-		String mot = "tondeuse";
-		for(int i=0; i<champs.length; i++){
-			listResBrut1 = mDAO.getResultat(mot,champs[i]);
-			System.out.println(listResBrut1.get(0).getChamps());
-		}
-		
+				
 	}
 }
