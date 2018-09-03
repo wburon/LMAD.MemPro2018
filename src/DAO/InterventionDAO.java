@@ -25,7 +25,7 @@ public class InterventionDAO extends DAO<Intervention>{
 					.prepareStatement("Insert into \"Intervention\"(id_intervention, materiel,type_intervention,\"numFacture\",\"numBL\",\"refPiece\", commentaire, date) values (?,?,?,?,?,?,?,?);");
 			prepare.setInt(1, maxId());
 			prepare.setInt(2, obj.getMateriel().getId_materiel());
-			prepare.setInt(3, obj.getType_intervention().getId_type_intervention());
+			prepare.setString(3, obj.getType_intervention());
 			prepare.setInt(4, obj.getNumFacture());
 			prepare.setInt(5, obj.getNumBL());
 			prepare.setInt(6, obj.getRefPiece());
@@ -63,7 +63,7 @@ public class InterventionDAO extends DAO<Intervention>{
 			PreparedStatement prepare=SC.prepareStatement("Update \"Intervention\" set materiel=?, type_intervention=?, numFacture=?, numBL=?, refPiece=?, commentaire=?, date=? where id_intervention=?");
 			
 			prepare.setInt(1, obj.getMateriel().getId_materiel());
-			prepare.setInt(2, obj.getType_intervention().getId_type_intervention());
+			prepare.setString(2, obj.getType_intervention());
 			prepare.setInt(3, obj.getNumFacture());
 			prepare.setInt(4, obj.getNumBL());
 			prepare.setInt(5, obj.getRefPiece());
@@ -82,7 +82,6 @@ public class InterventionDAO extends DAO<Intervention>{
 	@Override
 	public Intervention find(int id) {
 		Intervention intervention = new Intervention();
-		Type_InterventionDAO tiDAO = new Type_InterventionDAO();
 		MaterielDAO matDAO = new MaterielDAO();
 		try{
 			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Intervention\" WHERE id_intervention=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
@@ -92,7 +91,7 @@ public class InterventionDAO extends DAO<Intervention>{
 			if(result.first()){
 				intervention.setId_intervention(id);
 				intervention.setMateriel(matDAO.find(result.getInt("materiel")));
-				intervention.setType_intervention(tiDAO.find(result.getInt("type_intervention")));
+				intervention.setType_intervention(result.getString("type_intervention"));
 				intervention.setNumFacture(result.getInt("numFacture"));
 				intervention.setNumBL(result.getInt("numBL"));
 				intervention.setRefPiece(result.getInt("refPiece"));
@@ -128,7 +127,6 @@ public class InterventionDAO extends DAO<Intervention>{
 	 */
 	public ArrayList<Intervention> getListIntervention(int id_materiel) {
 		ArrayList<Intervention> historiqueIntervention = new ArrayList<>();
-		Type_InterventionDAO tiDAO = new Type_InterventionDAO();
 		MaterielDAO matDAO = new MaterielDAO();
 		try{
 			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Intervention\" WHERE materiel=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
@@ -139,7 +137,7 @@ public class InterventionDAO extends DAO<Intervention>{
 				Intervention intervention = new Intervention();
 				intervention.setId_intervention(result.getInt("id_intervention"));
 				intervention.setMateriel(matDAO.find(id_materiel));
-				intervention.setType_intervention(tiDAO.find(result.getInt("type_intervention")));
+				intervention.setType_intervention(result.getString("type_intervention"));
 				intervention.setNumFacture(result.getInt("numFacture"));
 				intervention.setNumBL(result.getInt("numBL"));
 				intervention.setRefPiece(result.getInt("refPiece"));
