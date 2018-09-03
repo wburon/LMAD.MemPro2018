@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -57,22 +58,28 @@ public class testWilliam {
 //		System.out.println(historique);
 		
 
-//		ClientDAO cDAO = new ClientDAO();
-//		MainFrame mftest = new MainFrame();
-//		mftest.setClient(cDAO.find(2));
-//		mftest.setActivePanel(new PanelClient(mftest));
-//		mftest.init();
-//		mftest.setVisible(true);
+		ClientDAO cDAO = new ClientDAO();
+		MainFrame mftest = new MainFrame();
+		mftest.setClient(cDAO.find(2));
+		mftest.setActivePanel(new PanelClient(mftest));
+		mftest.init();
+		mftest.setVisible(true);
+		
+//		Calendar calParis = Calendar.getInstance();
+//
+//	    calParis.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
+//	    System.out.println("Time in Paris: " + calParis.get(Calendar.HOUR_OF_DAY) + ":"
+//	        + calParis.get(Calendar.MINUTE));
 		
 //		GregorianCalendar gC = new GregorianCalendar(Locale.FRANCE);
 //		System.out.println(gC.getTime().toString());
 //		gC.roll(Calendar.DATE, -7);
 //		System.out.println(gC.getTime().toString());
         
-		GregorianCalendar gC = new GregorianCalendar(Locale.FRANCE);
-		System.out.println(gC.getTime().toString());
-		gC.add(Calendar.DATE, -7);
-		System.out.println(gC.getTime().toString());
+//		GregorianCalendar gC = new GregorianCalendar(Locale.FRANCE);
+//		System.out.println(gC.getTime().toString());
+//		gC.add(Calendar.DATE, -7);
+//		System.out.println(gC.getTime().toString());
 
 //		 Connection SC = SingletonConnection.getConnection();
 

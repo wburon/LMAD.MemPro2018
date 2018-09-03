@@ -372,13 +372,16 @@ public class Methode {
 	}
 
 	public static String toStringDate(Date date) {
-		// TODO Auto-generated method stub
-		return date.getDay()+"/"+date.getMonth()+"/"+date.getYear();
+		GregorianCalendar cal = new GregorianCalendar(Locale.FRANCE);
+		cal.setTime(date);
+		return cal.get(Calendar.DATE)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR);
 	}
 
 	public static String toStringHourOfDate(Date date) {
 		// TODO Auto-generated method stub
-		return date.getHours()+"h"+date.getMinutes();
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		return cal.get(Calendar.HOUR_OF_DAY)+"h"+cal.get(Calendar.MINUTE);
 	}
 
 		

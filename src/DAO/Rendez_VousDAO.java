@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import Model.Client;
@@ -28,11 +30,11 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		try {
 
 			PreparedStatement prepare = SC.prepareStatement(
-					"Insert into \"Rendez_vous\"(id_rdv, id_intervention, \"dateDebut\", \"dateFin\") values (?,?,?,?);");
+					"Insert into \"Rendez_vous\"(id_rdv, intervention, \"dateDebut\", \"dateFin\") values (?,?,?,?);");
 			prepare.setInt(1, maxId());
 			prepare.setInt(2, obj.getIntervention().getId_intervention());
-			prepare.setDate(3, (Date) obj.getDateDeb());
-			prepare.setDate(4, (Date) obj.getDateFin());
+			prepare.setTimestamp(3, new java.sql.Timestamp(obj.getDateDeb().getTime()), Calendar.getInstance(TimeZone.getTimeZone("UTC+2")));
+			prepare.setTimestamp(4, new java.sql.Timestamp(obj.getDateFin().getTime()), Calendar.getInstance(TimeZone.getTimeZone("GMT")));
 
 			prepare.executeUpdate();
 
@@ -65,8 +67,8 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 			PreparedStatement prepare = SC
 					.prepareStatement("Update \"Rendez_vous\" set \"dateDebut\"=?, \"dateFin\"=? where id_rdv=?");
 
-			prepare.setDate(1, (Date) obj.getDateDeb());
-			prepare.setDate(2, (Date) obj.getDateFin());
+			prepare.setDate(1, new java.sql.Date(obj.getDateDeb().getTime()));
+			prepare.setDate(2, new java.sql.Date(obj.getDateFin().getTime()));
 			prepare.setInt(3, obj.getId_rdv());
 
 			prepare.executeUpdate();
@@ -160,7 +162,8 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 			map.put(r.getId_rdv(), r);
 		}
 		mapTriee.putAll(map);
-		return mapTriee.keySet().toArray(new Rendez_Vous[mapTriee.keySet().size()]);
+		
+		return mapTriee.values().toArray(new Rendez_Vous[mapTriee.keySet().size()]);
 	}
 
 	private Rendez_Vous findInterDate(int id) {
@@ -175,8 +178,8 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 			if (result.first()) {
 				rdv.setId_rdv(result.getInt("id_rdv"));
 				rdv.setIntervention(interDAO.find(id));
-				rdv.setDateDeb(result.getDate("dateDebut"));
-				rdv.setDateFin(result.getDate("dateFin"));
+				rdv.setDateDeb(result.getTimestamp("dateDebut"));
+				rdv.setDateFin(result.getTimestamp("dateFin"));
 			}
 
 		} catch (SQLException e) {

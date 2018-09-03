@@ -48,6 +48,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		this.mf = rdv.getMf();
 		rdvDAO = new Rendez_VousDAO();
 		clDAO = new ClientDAO();
+		interDAO = new InterventionDAO();
 		
 		setLayout(new BorderLayout(0, 0));
 
@@ -121,7 +122,8 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		String[] tabName = new String[listMateriel2.size()];
 		int i = 0;
 		for(Materiel mat : listMateriel2){
-			tabName[0] = mat.getNom() + " " + mat.getNumSerie();
+			tabName[i] = mat.getNom() + " " + mat.getNumSerie();
+			i++;
 		}
 		return tabName;
 	}
@@ -149,13 +151,14 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	
 	public Intervention createIntervention(){
 		Intervention inter = new Intervention();
-		inter.setMateriel((Materiel) comboBoxMateriel.getSelectedItem());
+		inter.setMateriel(listMateriel.get(comboBoxMateriel.getSelectedIndex()));
 		inter.setNumBL(Integer.parseInt(jtfNumBL.getText()));
 		inter.setNumFacture(Integer.parseInt(jtfNumFact.getText()));
 		inter.setRefPiece(Integer.parseInt(jtfRefPiece.getText()));
 		inter.setCommentaire(rdv.getCommentaire());
 		inter.setDate(rdv.getDeb());
 		inter.setType_intervention((String) comboBoxTI.getSelectedItem());
+		inter.setId_intervention(interDAO.maxId());
 		interDAO.create(inter);
 		return inter;
 	}

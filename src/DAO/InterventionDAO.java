@@ -30,7 +30,7 @@ public class InterventionDAO extends DAO<Intervention>{
 			prepare.setInt(5, obj.getNumBL());
 			prepare.setInt(6, obj.getRefPiece());
 			prepare.setString(7, obj.getCommentaire());
-			prepare.setDate(8, (Date) obj.getDate());
+			prepare.setDate(8, new java.sql.Date(obj.getDate().getTime()));
 			
 			prepare.executeUpdate();
 
@@ -68,7 +68,7 @@ public class InterventionDAO extends DAO<Intervention>{
 			prepare.setInt(4, obj.getNumBL());
 			prepare.setInt(5, obj.getRefPiece());
 			prepare.setString(5, obj.getCommentaire());
-			prepare.setDate(7, (Date) obj.getDate());
+			prepare.setDate(7, new java.sql.Date(obj.getDate().getTime()));
 			prepare.setInt(8, obj.getId_intervention());
 
 			prepare.executeUpdate();

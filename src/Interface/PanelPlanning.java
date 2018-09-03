@@ -48,12 +48,12 @@ public class PanelPlanning extends JPanel implements ActionListener {
 	private JLabel lblVendredi;
 	private JLabel lblSamedi;
 	private Rendez_VousDAO rdvDAO;
-	private ArrayList<JButton> btnLunEvent;
-	private ArrayList<JButton> btnMarEvent;
-	private ArrayList<JButton> btnMerEvent;
-	private ArrayList<JButton> btnJeuEvent;
-	private ArrayList<JButton> btnVenEvent;
-	private ArrayList<JButton> btnSamEvent;
+	private ArrayList<JButton> btnLunEvent = new ArrayList<>();
+	private ArrayList<JButton> btnMarEvent = new ArrayList<>();
+	private ArrayList<JButton> btnMerEvent = new ArrayList<>();
+	private ArrayList<JButton> btnJeuEvent = new ArrayList<>();
+	private ArrayList<JButton> btnVenEvent = new ArrayList<>();
+	private ArrayList<JButton> btnSamEvent = new ArrayList<>();
 	private ArrayList<ArrayList<JButton>> listPanelEvent;
 	private JButton btnWeek1;
 	private JButton btnWeek2;
@@ -214,7 +214,17 @@ public class PanelPlanning extends JPanel implements ActionListener {
 		panel_Samedi.add(panel_Samedi_event, BorderLayout.CENTER);
 
 		remplissageEvent(this.neinCurrentWeek.get(this.selectedWeekMonday));
+		
+		for(int i=0; i<this.btn9Week.length; i++){
+			this.btn9Week[i].addActionListener(this);
+		}
+		this.btnNextWeek.addActionListener(this);
+		this.btnPreviousWeek.addActionListener(this);
 
+	}
+
+	public Date[] getCurrentWeek() {
+		return currentWeek;
 	}
 
 	private void remplissageEvent(Date[] currentWeek) {
@@ -222,7 +232,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 			switch (i) {
 			case 0:
 				// lundi
-				this.lblLundi.setText("Lundi " + Methode.toStringDate(currentWeek[0]));
+				this.lblLundi.setText("Lundi " + Methode.toStringDate(this.selectedWeekMonday));
 				btnLunEvent = Methode.createButton(rdvDAO.getRdvInDate(currentWeek[i]).length, "");
 				int j = 0;
 				for (Rendez_Vous r : rdvDAO.getRdvInDate(currentWeek[i])) {
@@ -233,7 +243,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 				break;
 			case 1:
 				// mardi
-				this.lblMardi.setText("Mardi " + Methode.toStringDate(currentWeek[1]));
+				this.lblMardi.setText("Mardi " + Methode.toStringDate(currentWeek[0]));
 				btnMarEvent = Methode.createButton(rdvDAO.getRdvInDate(currentWeek[i]).length, "");
 				j = 0;
 				for (Rendez_Vous r : rdvDAO.getRdvInDate(currentWeek[i])) {
@@ -244,7 +254,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 				break;
 			case 2:
 				// mercredi
-				this.lblMercredi.setText("Mercredi " + Methode.toStringDate(currentWeek[2]));
+				this.lblMercredi.setText("Mercredi " + Methode.toStringDate(currentWeek[1]));
 				btnMarEvent = Methode.createButton(rdvDAO.getRdvInDate(currentWeek[i]).length, "");
 				j = 0;
 				for (Rendez_Vous r : rdvDAO.getRdvInDate(currentWeek[i])) {
@@ -255,7 +265,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 				break;
 			case 3:
 				// jeudi
-				this.lblJeudi.setText("Jeudi " + Methode.toStringDate(currentWeek[3]));
+				this.lblJeudi.setText("Jeudi " + Methode.toStringDate(currentWeek[2]));
 				btnJeuEvent = Methode.createButton(rdvDAO.getRdvInDate(currentWeek[i]).length, "");
 				j = 0;
 				for (Rendez_Vous r : rdvDAO.getRdvInDate(currentWeek[i])) {
@@ -266,7 +276,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 				break;
 			case 4:
 				// vendredi
-				this.lblVendredi.setText("Vendredi " + Methode.toStringDate(currentWeek[4]));
+				this.lblVendredi.setText("Vendredi " + Methode.toStringDate(currentWeek[3]));
 				btnVenEvent = Methode.createButton(rdvDAO.getRdvInDate(currentWeek[i]).length, "");
 				j = 0;
 				for (Rendez_Vous r : rdvDAO.getRdvInDate(currentWeek[i])) {
@@ -277,7 +287,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 				break;
 			default:
 				// samedi
-				this.lblSamedi.setText("Samedi " + Methode.toStringDate(currentWeek[5]));
+				this.lblSamedi.setText("Samedi " + Methode.toStringDate(currentWeek[4]));
 				btnSamEvent = Methode.createButton(rdvDAO.getRdvInDate(currentWeek[i]).length, "");
 				j = 0;
 				for (Rendez_Vous r : rdvDAO.getRdvInDate(currentWeek[i])) {
@@ -319,7 +329,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 			for (int i = 0; i < this.btn9Week.length; i++) {
 				if (arg0.getSource() == this.btn9Week[i]) {
 					this.selectedWeekMonday = this.neinCurrentMonday[i];
-					for (int j = 0; j < this.btn9Week.length; i++) {
+					for (int j = 0; j < this.btn9Week.length; j++) {
 						this.btn9Week[j].setBackground(null);
 					}
 					this.btn9Week[i].setBackground(Color.GREEN);

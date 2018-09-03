@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -44,6 +45,11 @@ public class PanelRDV extends JPanel implements ActionListener {
 	private JPanel panel_4;
 	private ArrayList<JRadioButton> listRadioButton;
 	private MainFrame mf;
+	private JPanel panelSud;
+	private GridBagConstraints gbc_panelSud;
+	private PanelPlanning panelNord;
+	private JLabel lblAnnee;
+	private JTextField jtfAn;
 
 	public MainFrame getMf() {
 		return mf;
@@ -69,7 +75,6 @@ public class PanelRDV extends JPanel implements ActionListener {
 		return panelCommentaire;
 	}
 
-
 	/**
 	 * Create the panel.
 	 */
@@ -84,20 +89,20 @@ public class PanelRDV extends JPanel implements ActionListener {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JPanel panelNord = new PanelPlanning();
+		panelNord = new PanelPlanning();
 		GridBagConstraints gbc_panelNord = new GridBagConstraints();
 		gbc_panelNord.weightx = 100.0;
-		gbc_panelNord.weighty = 98.0;
+		gbc_panelNord.weighty = 90.0;
 		gbc_panelNord.fill = GridBagConstraints.BOTH;
 		gbc_panelNord.insets = new Insets(0, 0, 5, 0);
 		gbc_panelNord.gridx = 0;
 		gbc_panelNord.gridy = 0;
 		add(panelNord, gbc_panelNord);
 
-		JPanel panelSud = new JPanel();
-		GridBagConstraints gbc_panelSud = new GridBagConstraints();
+		panelSud = new JPanel();
+		gbc_panelSud = new GridBagConstraints();
 		gbc_panelSud.weightx = 100.0;
-		gbc_panelSud.weighty = 2.0;
+		gbc_panelSud.weighty = 10.0;
 		gbc_panelSud.fill = GridBagConstraints.BOTH;
 		gbc_panelSud.gridx = 0;
 		gbc_panelSud.gridy = 1;
@@ -162,54 +167,105 @@ public class PanelRDV extends JPanel implements ActionListener {
 		gbc_panelInfoRdV.gridx = 0;
 		gbc_panelInfoRdV.gridy = 0;
 		panel_3.add(panelInfoRdV, gbc_panelInfoRdV);
-		panelInfoRdV.setLayout(new GridLayout(2, 4, 0, 0));
+		GridBagLayout gbl_panelInfoRdV = new GridBagLayout();
+		gbl_panelInfoRdV.columnWidths = new int[] { 89, 89, 89, 89, 89, 0, 89, 0, 0 };
+		gbl_panelInfoRdV.rowHeights = new int[] { 60, 60, 0 };
+		gbl_panelInfoRdV.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panelInfoRdV.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		panelInfoRdV.setLayout(gbl_panelInfoRdV);
 
 		JLabel lblJour = new JLabel("Jour");
 		lblJour.setHorizontalAlignment(SwingConstants.CENTER);
 		lblJour.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblJour.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panelInfoRdV.add(lblJour);
+		GridBagConstraints gbc_lblJour = new GridBagConstraints();
+		gbc_lblJour.fill = GridBagConstraints.BOTH;
+		gbc_lblJour.insets = new Insets(0, 0, 5, 5);
+		gbc_lblJour.gridx = 0;
+		gbc_lblJour.gridy = 0;
+		panelInfoRdV.add(lblJour, gbc_lblJour);
 
 		jtfJour = new JTextField();
-		panelInfoRdV.add(jtfJour);
+		GridBagConstraints gbc_jtfJour = new GridBagConstraints();
+		gbc_jtfJour.fill = GridBagConstraints.BOTH;
+		gbc_jtfJour.insets = new Insets(0, 0, 5, 5);
+		gbc_jtfJour.gridx = 1;
+		gbc_jtfJour.gridy = 0;
+		panelInfoRdV.add(jtfJour, gbc_jtfJour);
 		jtfJour.setColumns(10);
 
 		JLabel lblMois = new JLabel("Mois");
 		lblMois.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMois.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panelInfoRdV.add(lblMois);
+		GridBagConstraints gbc_lblMois = new GridBagConstraints();
+		gbc_lblMois.fill = GridBagConstraints.BOTH;
+		gbc_lblMois.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMois.gridx = 2;
+		gbc_lblMois.gridy = 0;
+		panelInfoRdV.add(lblMois, gbc_lblMois);
 
 		jtfMois = new JTextField();
-		panelInfoRdV.add(jtfMois);
+		GridBagConstraints gbc_jtfMois = new GridBagConstraints();
+		gbc_jtfMois.fill = GridBagConstraints.BOTH;
+		gbc_jtfMois.insets = new Insets(0, 0, 5, 5);
+		gbc_jtfMois.gridx = 3;
+		gbc_jtfMois.gridy = 0;
+		panelInfoRdV.add(jtfMois, gbc_jtfMois);
 		jtfMois.setColumns(10);
+
+		lblAnnee = new JLabel("Annee");
+		lblAnnee.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_lblAnnee = new GridBagConstraints();
+		gbc_lblAnnee.fill = GridBagConstraints.BOTH;
+		gbc_lblAnnee.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAnnee.gridx = 4;
+		gbc_lblAnnee.gridy = 0;
+		panelInfoRdV.add(lblAnnee, gbc_lblAnnee);
+
+		jtfAn = new JTextField();
+		GridBagConstraints gbc_jtfAn = new GridBagConstraints();
+		gbc_jtfAn.insets = new Insets(0, 0, 5, 5);
+		gbc_jtfAn.fill = GridBagConstraints.BOTH;
+		gbc_jtfAn.gridx = 5;
+		gbc_jtfAn.gridy = 0;
+		panelInfoRdV.add(jtfAn, gbc_jtfAn);
+		jtfAn.setColumns(10);
 
 		JLabel lblDe = new JLabel("De");
 		lblDe.setHorizontalAlignment(SwingConstants.CENTER);
-		panelInfoRdV.add(lblDe);
+		GridBagConstraints gbc_lblDe = new GridBagConstraints();
+		gbc_lblDe.fill = GridBagConstraints.BOTH;
+		gbc_lblDe.insets = new Insets(0, 0, 0, 5);
+		gbc_lblDe.gridx = 0;
+		gbc_lblDe.gridy = 1;
+		panelInfoRdV.add(lblDe, gbc_lblDe);
 
 		jtfH1 = new JTextField();
-		panelInfoRdV.add(jtfH1);
+		GridBagConstraints gbc_jtfH1 = new GridBagConstraints();
+		gbc_jtfH1.fill = GridBagConstraints.BOTH;
+		gbc_jtfH1.insets = new Insets(0, 0, 0, 5);
+		gbc_jtfH1.gridx = 1;
+		gbc_jtfH1.gridy = 1;
+		panelInfoRdV.add(jtfH1, gbc_jtfH1);
 		jtfH1.setColumns(10);
 
 		JLabel lblA = new JLabel("\u00E0");
 		lblA.setHorizontalAlignment(SwingConstants.CENTER);
-		panelInfoRdV.add(lblA);
+		GridBagConstraints gbc_lblA = new GridBagConstraints();
+		gbc_lblA.fill = GridBagConstraints.BOTH;
+		gbc_lblA.insets = new Insets(0, 0, 0, 5);
+		gbc_lblA.gridx = 2;
+		gbc_lblA.gridy = 1;
+		panelInfoRdV.add(lblA, gbc_lblA);
 
 		jtfH2 = new JTextField();
-		panelInfoRdV.add(jtfH2);
+		GridBagConstraints gbc_jtfH2 = new GridBagConstraints();
+		gbc_jtfH2.insets = new Insets(0, 0, 0, 5);
+		gbc_jtfH2.fill = GridBagConstraints.BOTH;
+		gbc_jtfH2.gridx = 3;
+		gbc_jtfH2.gridy = 1;
+		panelInfoRdV.add(jtfH2, gbc_jtfH2);
 		jtfH2.setColumns(10);
-
-		ArrayList<Materiel> listMatOfClient = this.client.getListMateriel();
-		for (int i = 0; i < listMatOfClient.size(); i++) {
-			JRadioButton rdbtnRadioButton = new JRadioButton(listMatOfClient.get(i).getNom());
-			GridBagConstraints gbc_Radio = new GridBagConstraints();
-			gbc_Radio.fill = GridBagConstraints.BOTH;
-			gbc_Radio.gridx = 0;
-			gbc_Radio.gridy = i;
-			gbc_Radio.insets = new Insets(5, 5, 5, 5);
-			this.listRadioButton.add(rdbtnRadioButton);
-			panel_4.add(rdbtnRadioButton);
-		}
 
 		btnValider.addActionListener(this);
 		btnAnnuler.addActionListener(this);
@@ -220,12 +276,15 @@ public class PanelRDV extends JPanel implements ActionListener {
 		if (arg0.getSource() == btnValider) {
 			String[] h1 = jtfH1.getText().split("h");
 			String[] h2 = jtfH2.getText().split("h");
-			this.deb = new Date(Integer.parseInt(jtfJour.getText()), Integer.parseInt(jtfMois.getText()),
-					Calendar.getInstance().get(Calendar.YEAR), Integer.parseInt(h1[0]), Integer.parseInt(h1[1]));
-			this.fin = new Date(Integer.parseInt(jtfJour.getText()), Integer.parseInt(jtfMois.getText()),
-					Calendar.getInstance().get(Calendar.YEAR), Integer.parseInt(h2[0]), Integer.parseInt(h2[1]));
-			this.panel_1 = new Panel_RdvInfo(this);
-			this.panel_1.repaint();
+			Calendar cal = new GregorianCalendar();
+			cal.set(Integer.parseInt(jtfAn.getText()), Integer.parseInt(jtfMois.getText()), Integer.parseInt(jtfJour.getText()), Integer.parseInt(h1[0]),Integer.parseInt(h1[1]));
+			this.deb = cal.getTime();
+			cal.set(Integer.parseInt(jtfAn.getText()), Integer.parseInt(jtfMois.getText()), Integer.parseInt(jtfJour.getText()), Integer.parseInt(h2[0]), Integer.parseInt(h2[1]));
+			this.fin = cal.getTime();
+			remove(this.panelSud);
+			this.panelSud = new Panel_RdvInfo(this);
+			add(panelSud, gbc_panelSud);
+			validate();
 		} else if (arg0.getSource() == btnAnnuler) {
 			// TODO
 		} else if (arg0.getSource() == btnOptimiser) {
