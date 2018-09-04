@@ -1,6 +1,8 @@
 package Interface;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -12,14 +14,17 @@ import javax.swing.JPanel;
 import DAO.ClientDAO;
 import Model.Client;
 import Model.Methode;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ActionListener{
 
 	private Client client;
 	private JPanel activePanel;
 	private PanelAccueil panelAccueil;
 	private PanelClient panelClient;
+	private JMenuItem mntmAccueil;
 
 	
 
@@ -106,8 +111,23 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//setBounds(100, 100, 450, 300);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		mntmAccueil = new JMenuItem("Accueil");
+		menuBar.add(mntmAccueil);
+		mntmAccueil.addActionListener(this);
 			
 		setContentPane(this.activePanel);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if(arg0.getSource() == mntmAccueil){
+			this.changePanel(new PanelAccueil(this));
+		}
+		
 	}
 
 }
