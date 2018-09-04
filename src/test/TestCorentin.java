@@ -19,7 +19,7 @@ public class TestCorentin {
 		ArrayList<Resultat> listResBrut2 = new ArrayList<>();
 		ArrayList<Integer> listNb = new ArrayList<>();
 		
-		String test = "L'été";
+		String test = "Jean-Marie";
 		
 		test = test.toLowerCase();
 		test = Normalizer.normalize(test, Normalizer.Form.NFD);

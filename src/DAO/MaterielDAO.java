@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import Model.Materiel;
@@ -146,6 +147,9 @@ public class MaterielDAO extends DAO<Materiel>{
 	}
 	
 	public int levenshtein(String s0, String s1) {
+		s0 = simple(s0);
+		s1 = simple(s1);
+		
 		int len0 = s0.length()+1;
 		int len1 = s1.length()+1;
 	 
@@ -185,6 +189,12 @@ public class MaterielDAO extends DAO<Materiel>{
 	 
 		// the distance is the cost for transforming all letters in both strings
 		return cost[len0-1];
+	}
+	
+	private String simple(String s){
+		s=s.toLowerCase();
+		s=Normalizer.normalize(s, Normalizer.Form.NFD);
+		return s.replaceAll("\\p{M}", "");
 	}
 	
 	private int min(int ci, int cd, int cr){

@@ -16,7 +16,7 @@ public class Table_Client extends AbstractTableModel{
 	
 	private ArrayList<Client> listClient = new ArrayList<>();
 	
-	private final String[] entete={"nom","prenom","adresse","téléphone"}; 
+	private final String[] entete={"nom","prenom","adresse","ville","téléphone","mail"}; 
 	
 	public Table_Client (ArrayList<Client> listClient){
 		this.listClient = listClient;
@@ -48,7 +48,11 @@ public class Table_Client extends AbstractTableModel{
 		case 2:
 			return listClient.get(rowIndex).getAdresse();
 		case 3: 
+			return listClient.get(rowIndex).getVille();
+		case 4:
 			return listClient.get(rowIndex).getTel();
+		case 5: 
+			return listClient.get(rowIndex).getMail();
 		default:
 			return null;
 		}
