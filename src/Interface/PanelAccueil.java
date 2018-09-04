@@ -24,6 +24,7 @@ import Model.Materiel;
 import Model.Resultat;
 import Model.Table_Client;
 import javax.swing.JLabel;
+import java.awt.Dimension;
 
 @SuppressWarnings("serial")
 public class PanelAccueil extends JPanel implements ActionListener, MouseListener{
@@ -51,6 +52,8 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		add(panelNorth, BorderLayout.NORTH);
 		
 		jtfRechercheClient = new JTextField();
+		jtfRechercheClient.setMinimumSize(new Dimension(25, 22));
+		jtfRechercheClient.setPreferredSize(new Dimension(25, 22));
 		jtfRechercheClient.setText("ex : nom, pr\u00E9nom ou lieu");
 		//efface les propositions quand on clique sur la barre de recherche
 		jtfRechercheClient.addFocusListener(new FocusAdapter() {
@@ -61,13 +64,15 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			});
 		
 		panelNorth.add(jtfRechercheClient);
-		jtfRechercheClient.setColumns(10);
+		jtfRechercheClient.setColumns(15);
 		
 		btnRechercheClient = new JButton("Recherche Client");
 		panelNorth.add(btnRechercheClient);
 		btnRechercheClient.addActionListener(this);
 		
 		jtfRechercheOutil = new JTextField();
+		jtfRechercheOutil.setPreferredSize(new Dimension(25, 22));
+		jtfRechercheOutil.setMinimumSize(new Dimension(25, 22));
 		jtfRechercheOutil.setText("ex : marque, num\u00E9ro de s\u00E9rie");
 		//Idem que pour la recherche client
 		jtfRechercheOutil.addFocusListener(new FocusAdapter() {
@@ -76,7 +81,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			}
 		});
 		panelNorth.add(jtfRechercheOutil);
-		jtfRechercheOutil.setColumns(10);
+		jtfRechercheOutil.setColumns(15);
 		
 		btnRechercheOutil = new JButton("Recherche Outil");
 		panelNorth.add(btnRechercheOutil);
@@ -102,13 +107,16 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		JPanel panelEast = new JPanel();
 		add(panelEast, BorderLayout.EAST);
 		
-		JPanel panelCenter = new JPanel();
-		add(panelCenter, BorderLayout.CENTER);
+//		JPanel panelCenter = new JPanel();
+//		add(panelCenter, BorderLayout.CENTER);
 		
 
 		cDAO = new ClientDAO(); mDAO = new MaterielDAO();
 		tClient = new Table_Client(cDAO.getListAccueil()); table = new JTable(tClient);
-		panelCenter.add(new JScrollPane(table));
+		JScrollPane scrollPane = new JScrollPane(table);
+//		scrollPane.setPreferredSize(new Dimension(600, 402));
+		add(scrollPane, BorderLayout.CENTER);
+//		panelCenter.add(scrollPane);
 		table.addMouseListener(this);
 		
 	}
@@ -229,6 +237,9 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		ArrayList<Materiel> listMateriel = new ArrayList<>();
 		
 		int id=0;
+		
+		//on parcours la liste des résultats et on implémente une liste MultipleId avec les id qu'on retrouve plusieurs fois,
+		//et IdRes regroupe tous les "id"
 		for(Resultat res : listResBrut){
 			id = res.getId();
 			if(IdRes.contains(id) && !MultipleId.contains(id))
@@ -238,25 +249,30 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		}
 		
 		double note = 0.0;
+		
+		//On parcours la liste MultipleId
 		for(int mid : MultipleId){
+			
+			//Pour chaque id on parcours l'ensemble des résultats s'ils ont le même id que mid alors on additionne sa note et on l'implémente dans listResToDelete
 			for(Resultat res : listResBrut){
 				if(res.getId()==mid){
 					note+=res.getNote();
 					listResToDelete.add(res);
 				}
 			}
+			//On implémente dans la liste un nouveau Resultat qui comprend le mid et l'addition des notes des résultats "brut"
 			listResFinal.add(new Resultat(mid,note));
-			note=1;
+			note=0.0;
 		}
 		
+		//On supprime de la listResBrut les éléments qui font parti de la listResToDelete
 		listResBrut = delete(listResBrut, listResToDelete);
 		
-		Comparator<Resultat> comparatorF = Comparator.comparing(Resultat::getNote);
-		listResFinal.sort(comparatorF);
-		Comparator<Resultat> comparatorB = Comparator.comparing(Resultat::getNote);
-		listResBrut.sort(comparatorB);
+		Comparator<Resultat> comparator = Comparator.comparing(Resultat::getNote);
+		listResFinal.sort(comparator);
+		listResBrut.sort(comparator);
 		
-		
+		//Selon l'objet on retourne une ArrayList de Client ou de Materiel
 		if(o.getClass().getName()=="DAO.ClientDAO"){
 			for(Resultat rf : listResFinal)
 				listClient.add(cDAO.find(rf.getId()));
@@ -274,6 +290,12 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		}
 	}
 	
+	/**
+	 * Cette méthode permet de supprimer d'une ArrayList les éléments qui font aussi parti d'une autre ArrayList
+	 * @param listResBrut l'ArrayList sur laquelle on veut supprimer des éléments
+	 * @param listResToDelete l'ArrayList des éléments à supprimer
+	 * @return listResBrut sans les éléments de listResToDelete
+	 */
 	private ArrayList<Resultat> delete(ArrayList<Resultat> listResBrut, ArrayList<Resultat> listResToDelete){
 		for(Resultat rb : listResToDelete)
 			listResBrut.remove(rb);
@@ -323,6 +345,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		//Lorsque l'on fait un double clique sur une ligne du tableau on ouvre le panel client
 		if(e.getClickCount()==2){
 			mf.setClient(tClient.getClient(table.getSelectedRow()));
 			System.out.println(mf.getClient().getNom());

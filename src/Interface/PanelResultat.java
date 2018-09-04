@@ -53,8 +53,8 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 		JPanel panel_east = new JPanel();
 		add(panel_east, BorderLayout.EAST);
 		
-		JPanel panel_center = new JPanel();
-		add(panel_center, BorderLayout.CENTER);
+//		JPanel panel_center = new JPanel();
+//		add(panel_center, BorderLayout.CENTER);
 		
 		if (list.get(0).getClass().getName()=="Model.Client"){
 			tClient = new Table_Client((ArrayList<Client>) list);
@@ -64,7 +64,7 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 			table = new JTable(tMat);
 		}
 		
-		panel_center.add(new JScrollPane(table));
+		add(new JScrollPane(table), BorderLayout.CENTER);
 		table.addMouseListener(this);
 		
 	}

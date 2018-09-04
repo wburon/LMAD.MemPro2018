@@ -9,7 +9,7 @@ public class Table_Materiel extends AbstractTableModel {
 
 	private ArrayList<Materiel> listMat = new ArrayList<>();
 
-	private final String[] entete = { "nom", "type", "marque", "numéro de série" };
+	private final String[] entete = { "nom", "type", "marque", "numéro de série", "propriétaire"};
 
 	public Table_Materiel(ArrayList<Materiel> listMat) {
 		this.listMat = listMat;
@@ -33,6 +33,7 @@ public class Table_Materiel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		String nom, prenom;
 		// TODO Auto-generated method stub
 		switch (columnIndex) {
 		case 0:
@@ -43,6 +44,10 @@ public class Table_Materiel extends AbstractTableModel {
 			return listMat.get(rowIndex).getMarque();
 		case 3:
 			return listMat.get(rowIndex).getNumSerie();
+		case 4: 
+			nom = listMat.get(rowIndex).getClient().getNom();
+			prenom = listMat.get(rowIndex).getClient().getPrenom();
+			return prenom + " " + nom;
 		default:
 			return null;
 		}
