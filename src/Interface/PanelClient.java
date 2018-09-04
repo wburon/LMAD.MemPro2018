@@ -309,6 +309,107 @@ public class PanelClient extends JPanel implements ActionListener {
 		gbl_panelMateriel.rowWeights = rowW;
 		panelMateriel.setLayout(gbl_panelMateriel);
 
+		updatePanelMateriel();
+
+		JPanel panelSudMateriel = new JPanel();
+		panelSudMateriel.setPreferredSize(new Dimension(10, 120));
+		panelDroit.add(panelSudMateriel, BorderLayout.SOUTH);
+		panelSudMateriel.setLayout(new GridLayout(3, 1, 0, 0));
+
+		btnAddMateriel = new JButton("Ajouter Mat\u00E9riel");
+		btnAddMateriel.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		panelSudMateriel.add(btnAddMateriel);
+
+		btnPrendreRdV = new JButton("Prendre rendez-vous");
+		btnPrendreRdV.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		panelSudMateriel.add(btnPrendreRdV);
+
+		jtfNomMat = new JTextField();
+		jtfNomMat.setColumns(10);
+		jtfNomMat.setVisible(false);
+
+		jtfTypeMat = new JTextField();
+		jtfTypeMat.setColumns(10);
+
+		jtfNumSerieMat = new JTextField();
+		jtfNumSerieMat.setColumns(10);
+
+		jtfMarqueMat = new JTextField();
+		jtfMarqueMat.setColumns(10);
+
+		JPanel panelDescriptionMat = new JPanel();
+		panelDescriptionMat.setPreferredSize(new Dimension(10, 40));
+		panelDroit.add(panelDescriptionMat, BorderLayout.NORTH);
+
+		JLabel lblMateriel = new JLabel("MATERIELS");
+		lblMateriel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		panelDescriptionMat.add(lblMateriel);
+		
+		this.btnPrendreRdV.addActionListener(this);
+		this.btnAddMateriel.addActionListener(this);
+		for (JButton e : this.btnModifMateriel) {
+			e.addActionListener(this);
+		}
+		for (JButton e : this.btnVoirPlus) {
+			e.addActionListener(this);
+		}
+		for (JButton e : this.btnSupprMateriel) {
+			e.addActionListener(this);
+		}
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// Action du bouton de modification des informations clients
+		if (arg0.getSource() == btnModification) {
+			if (jtfnom.isVisible()) {
+				clientDAO.update(createClient());
+				updatelblClient();
+				changeVisibilityOfClient(true);
+			} else
+				changeVisibilityOfClient(false);
+			// Action du bouton d'ajout d'un matériels
+		} else if (arg0.getSource() == btnAddMateriel) {
+			FrameAjoutMateriel frame = new FrameAjoutMateriel(this);
+			frame.setVisible(true);
+			this.mf.dispose();
+		} else if (arg0.getSource() == btnPrendreRdV) {
+			this.mf.changePanel(new PanelRDV(this));
+			// Action des boutons "Voir Plus", affichage en pop-up de
+			// l'historique des interventions
+		} else if (this.btnVoirPlus.contains(arg0.getSource())) {
+			Materiel matSelect = this.listMateriel.get(this.btnVoirPlus.indexOf(arg0.getSource()));
+			String listInterDeCeMat = Methode
+					.toStringInterventionList(interventionDAO.getListIntervention(matSelect.getId_materiel()));
+			JOptionPane.showMessageDialog(this, "<html>" + listInterDeCeMat + "</html>", "Historique des interventions",
+					0, new ImageIcon("images/icon-832005_960_720.png"));
+			// Action des boutons de modification du matériels d'un clients
+		} else if (this.btnModifMateriel.contains(arg0.getSource())) {
+			if (jtfNomMat.isVisible()) {
+				materielDAO.update(createMaterielbyJtf(
+						this.listMateriel.get(this.btnModifMateriel.indexOf(arg0.getSource())).getId_materiel()));
+//				updatelblMateriel(this.btnModifMateriel.indexOf(arg0.getSource()));
+				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
+				updatePanelMateriel();
+			} else
+				changeVisibilityOfMateriel(false, this.btnModifMateriel.indexOf(arg0.getSource()));
+			// Action des boutons de suppression du matériels
+		} else if (this.btnSupprMateriel.contains(arg0.getSource())) {
+			materielDAO.delete(this.listMateriel.get(this.btnSupprMateriel.indexOf(arg0.getSource())));
+			MainFrame frame = new MainFrame();
+			frame.setClient(this.client);
+			frame.setActivePanel(new PanelClient(frame));
+			frame.init();
+			frame.setVisible(true);
+			this.mf.dispose();
+		}
+
+	}
+
+	private void updatePanelMateriel() {
+		this.panelMateriel.removeAll();
+		
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
 
 			lblNomMat = new JLabel("Nom : ");
@@ -407,100 +508,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_btn.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(panelBtn, gbc_btn);
 		}
-
-		JPanel panelSudMateriel = new JPanel();
-		panelSudMateriel.setPreferredSize(new Dimension(10, 120));
-		panelDroit.add(panelSudMateriel, BorderLayout.SOUTH);
-		panelSudMateriel.setLayout(new GridLayout(3, 1, 0, 0));
-
-		btnAddMateriel = new JButton("Ajouter Mat\u00E9riel");
-		btnAddMateriel.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		panelSudMateriel.add(btnAddMateriel);
-
-		btnPrendreRdV = new JButton("Prendre rendez-vous");
-		btnPrendreRdV.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		panelSudMateriel.add(btnPrendreRdV);
-
-		jtfNomMat = new JTextField();
-		jtfNomMat.setColumns(10);
-		jtfNomMat.setVisible(false);
-
-		jtfTypeMat = new JTextField();
-		jtfTypeMat.setColumns(10);
-
-		jtfNumSerieMat = new JTextField();
-		jtfNumSerieMat.setColumns(10);
-
-		jtfMarqueMat = new JTextField();
-		jtfMarqueMat.setColumns(10);
-
-		JPanel panelDescriptionMat = new JPanel();
-		panelDescriptionMat.setPreferredSize(new Dimension(10, 40));
-		panelDroit.add(panelDescriptionMat, BorderLayout.NORTH);
-
-		JLabel lblMateriel = new JLabel("MATERIELS");
-		lblMateriel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		panelDescriptionMat.add(lblMateriel);
-		
-		this.btnPrendreRdV.addActionListener(this);
-		this.btnAddMateriel.addActionListener(this);
-		for (JButton e : this.btnModifMateriel) {
-			e.addActionListener(this);
-		}
-		for (JButton e : this.btnVoirPlus) {
-			e.addActionListener(this);
-		}
-		for (JButton e : this.btnSupprMateriel) {
-			e.addActionListener(this);
-		}
-
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// Action du bouton de modification des informations clients
-		if (arg0.getSource() == btnModification) {
-			if (jtfnom.isVisible()) {
-				clientDAO.update(createClient());
-				updatelblClient();
-				changeVisibilityOfClient(true);
-			} else
-				changeVisibilityOfClient(false);
-			// Action du bouton d'ajout d'un matériels
-		} else if (arg0.getSource() == btnAddMateriel) {
-			FrameAjoutMateriel frame = new FrameAjoutMateriel(this);
-			frame.setVisible(true);
-			this.mf.dispose();
-		} else if (arg0.getSource() == btnPrendreRdV) {
-			this.mf.changePanel(new PanelRDV(this));
-			// Action des boutons "Voir Plus", affichage en pop-up de
-			// l'historique des interventions
-		} else if (this.btnVoirPlus.contains(arg0.getSource())) {
-			Materiel matSelect = this.listMateriel.get(this.btnVoirPlus.indexOf(arg0.getSource()));
-			String listInterDeCeMat = Methode
-					.toStringInterventionList(interventionDAO.getListIntervention(matSelect.getId_materiel()));
-			JOptionPane.showMessageDialog(this, "<html>" + listInterDeCeMat + "</html>", "Historique des interventions",
-					0, new ImageIcon("images/icon-832005_960_720.png"));
-			// Action des boutons de modification du matériels d'un clients
-		} else if (this.btnModifMateriel.contains(arg0.getSource())) {
-			if (jtfNomMat.isVisible()) {
-				materielDAO.update(createMaterielbyJtf(
-						this.listMateriel.get(this.btnModifMateriel.indexOf(arg0.getSource())).getId_materiel()));
-				updatelblMateriel(this.btnModifMateriel.indexOf(arg0.getSource()));
-				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
-			} else
-				changeVisibilityOfMateriel(false, this.btnModifMateriel.indexOf(arg0.getSource()));
-			// Action des boutons de suppression du matériels
-		} else if (this.btnSupprMateriel.contains(arg0.getSource())) {
-			materielDAO.delete(this.listMateriel.get(this.btnSupprMateriel.indexOf(arg0.getSource())));
-			MainFrame frame = new MainFrame();
-			frame.setClient(this.client);
-			frame.setActivePanel(new PanelClient(frame));
-			frame.init();
-			frame.setVisible(true);
-			this.mf.dispose();
-		}
-
+		this.panelMateriel.validate();
 	}
 
 	/**
