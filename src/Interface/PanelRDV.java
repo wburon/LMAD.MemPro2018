@@ -19,62 +19,55 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.SwingConstants;
 
-import DAO.Rendez_VousDAO;
 import Model.Client;
-import Model.Materiel;
 import Model.Methode;
-import Model.Rendez_Vous;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JRadioButton;
-import javax.swing.JMenuBar;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 
 public class PanelRDV extends JPanel implements ActionListener {
-	private JTextField jtfJour;
-	private JTextField jtfMois;
-	private JTextField jtfH1;
-	private JTextField jtfH2;
-	private JButton btnValider;
-	private PanelClient panelClient;
+	
+	// JTextField définissant les dates de rendez-vous
+	private JTextField jtfJour, jtfMois,jtfAn, jtfH1, jtfH2;
+	// Stockage des dates de début et de fin
 	private Date deb, fin;
+
+	// Les différents boutons
+	private JButton btnValider, btnAnnuler, btnOptimiser;
+	private PanelClient panelClient;
+	
+	// MainFrame
+	private MainFrame mf;
+	
+	// Autres champs plus spécifiques
 	private JEditorPane dtrpnAjouteUnCommentaire;
 	private JPanel panelCommentaire;
-	private JButton btnAnnuler;
-	private JButton btnOptimiser;
 	private JPanel panel_1;
 	private JPanel panel_3;
-	private JPanel panel_4;
-	private ArrayList<JRadioButton> listRadioButton;
-	private MainFrame mf;
 	private JPanel panelSud;
 	private GridBagConstraints gbc_panelSud;
 	private PanelPlanning panelNord;
-	private JLabel lblAnnee;
-	private JTextField jtfAn;
 
+
+	// Quelques getteurs utiles
 	public MainFrame getMf() {
 		return mf;
 	}
-
 	public Client getClient() {
 		return panelClient.getClient();
 	}
-
 	public PanelClient getPanelClient() {
 		return panelClient;
 	}
-
 	public Date getDeb() {
 		return deb;
 	}
-
 	public Date getFin() {
 		return fin;
 	}
-
 	public String getCommentaire() {
 		return dtrpnAjouteUnCommentaire.getText();
 	}
@@ -85,7 +78,6 @@ public class PanelRDV extends JPanel implements ActionListener {
 	public PanelRDV(PanelClient client) {
 		this.panelClient = client;
 		this.mf = client.getMf();
-		this.listRadioButton = new ArrayList<>();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 450, 0 };
 		gridBagLayout.rowHeights = new int[] { 150, 150, 0, 0 };
@@ -206,7 +198,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 		panelInfoRdV.add(jtfMois, gbc_jtfMois);
 		jtfMois.setColumns(10);
 
-		lblAnnee = new JLabel("Annee (exemple : 2018)");
+		JLabel lblAnnee = new JLabel("Annee (exemple : 2018)");
 		lblAnnee.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblAnnee = new GridBagConstraints();
 		gbc_lblAnnee.fill = GridBagConstraints.BOTH;
@@ -260,12 +252,15 @@ public class PanelRDV extends JPanel implements ActionListener {
 		panelInfoRdV.add(jtfH2, gbc_jtfH2);
 		jtfH2.setColumns(10);
 
+		// on rend les boutons utilisables
 		btnValider.addActionListener(this);
 		btnAnnuler.addActionListener(this);
+		btnOptimiser.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		// On valide cette étape et passe à la suivante
 		if (arg0.getSource() == btnValider) {
 			String[] h1 = jtfH1.getText().split("h");
 			String[] h2 = jtfH2.getText().split("h");
@@ -278,8 +273,10 @@ public class PanelRDV extends JPanel implements ActionListener {
 			this.panelSud = new Panel_RdvInfo(this);
 			add(panelSud, gbc_panelSud);
 			validate();
+		// Annulation de la prise de rendez-vous et retour a l'écran client
 		} else if (arg0.getSource() == btnAnnuler) {
 			this.mf.changePanel(this.panelClient);
+		// Montre les rendez-déjà pris ce situant dans la même ville/rue que le client actuel
 		} else if (arg0.getSource() == btnOptimiser) {
 			String positionClient = this.getClient().getGps();
 			// TODO trouve les trois rendez-vous déjà prit les plus proche de ce

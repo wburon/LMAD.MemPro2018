@@ -27,27 +27,23 @@ import Model.Rendez_Vous;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 
 public class PanelPlanning extends JPanel implements ActionListener {
 
+	// Element de gestion des dates du planning
 	private HashMap<Date, Date[]> neinCurrentWeek;
 	private Date[] currentWeek;
 	private Date[] neinCurrentMonday;
 	private Date selectedWeekMonday;
-	private JPanel panel_Lundi_event;
-	private JPanel panel_Mardi_event;
-	private JPanel panel_Mercredi_event;
-	private JPanel panel_Jeudi_event;
-	private JPanel panel_Vendredi_event;
-	private JPanel panel_Samedi_event;
-	private JLabel lblLundi;
-	private JLabel lblMardi;
-	private JLabel lblMercredi;
-	private JLabel lblJeudi;
-	private JLabel lblVendredi;
-	private JLabel lblSamedi;
+	
+	// Panel/Label(titre) des différents jours de la semaine (sauf dimanche)
+	private JPanel panel_Lundi_event, panel_Mardi_event, panel_Mercredi_event, panel_Jeudi_event, panel_Vendredi_event, panel_Samedi_event;
+	private JLabel lblLundi, lblMardi, lblMercredi, lblJeudi, lblVendredi, lblSamedi;
+
+	// DAO
 	private Rendez_VousDAO rdvDAO;
+	
+	// Les boutons à nombre variable
 	private ArrayList<JButton> btnLunEvent = new ArrayList<>();
 	private ArrayList<JButton> btnMarEvent = new ArrayList<>();
 	private ArrayList<JButton> btnMerEvent = new ArrayList<>();
@@ -55,19 +51,14 @@ public class PanelPlanning extends JPanel implements ActionListener {
 	private ArrayList<JButton> btnVenEvent = new ArrayList<>();
 	private ArrayList<JButton> btnSamEvent = new ArrayList<>();
 	private ArrayList<ArrayList<JButton>> listPanelEvent;
-	private JButton btnWeek1;
-	private JButton btnWeek2;
-	private JButton btnWeek3;
-	private JButton btnWeek4;
-	private JButton btnWeek5;
-	private JButton btnWeek6;
-	private JButton btnWeek7;
-	private JButton btnWeek8;
-	private JButton btnWeek9;
+	private JButton btnPreviousWeek, btnWeek1, btnWeek2, btnWeek3, btnWeek4, btnWeek5, btnWeek6, btnWeek7, btnWeek8, btnWeek9, btnNextWeek;
 	private JButton[] btn9Week;
-	private JButton btnPreviousWeek;
-	private JButton btnNextWeek;
 
+	// Quelques getteurs utiles
+	public Date[] getCurrentWeek() {
+		return currentWeek;
+	}
+	
 	/**
 	 * Create the panel.
 	 */
@@ -217,10 +208,6 @@ public class PanelPlanning extends JPanel implements ActionListener {
 
 	}
 
-	public Date[] getCurrentWeek() {
-		return currentWeek;
-	}
-
 	private void remplissageEvent(Date[] currentWeek) {
 		clearEvent();
 		for (int i = 0; i < 6; i++) {
@@ -308,6 +295,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		// change les btnWeek pour pouvoir cliqué sur d'autre semaines que ces neufs là
 		if (arg0.getSource() == this.btnPreviousWeek) {
 			GregorianCalendar gC = new GregorianCalendar();
 			gC.setTime(this.neinCurrentMonday[0]);
@@ -346,6 +334,9 @@ public class PanelPlanning extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Actualise les btnWeek
+	 */
 	private void setBtnWeek() {
 		this.btnWeek1.setText(Methode.toStringDate(neinCurrentMonday[0]));
 		this.btnWeek2.setText(Methode.toStringDate(neinCurrentMonday[1]));
@@ -358,7 +349,10 @@ public class PanelPlanning extends JPanel implements ActionListener {
 		this.btnWeek9.setText(Methode.toStringDate(neinCurrentMonday[8]));
 	}
 	
-
+	/**
+	 * Ouvre la JOptionPane permettant d'en apprendre plus sur le rendez-vous 
+	 * @param string
+	 */
 	private void lauchViewMore(String string) {
 		int id_rdv = Integer.parseInt(string);
 		JOptionPane.showMessageDialog(this, rdvDAO.find(id_rdv).fullToSting(), "Information du le rendez-vous !", 0,
@@ -366,6 +360,9 @@ public class PanelPlanning extends JPanel implements ActionListener {
 
 	}
 	
+	/**
+	 * Vide les panel_Event
+	 */
 	private void clearEvent(){
 		this.panel_Lundi_event.removeAll();
 		this.panel_Mardi_event.removeAll();

@@ -8,17 +8,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.Dimension;
 
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Component;
-import javax.swing.SwingConstants;
 
 import DAO.ClientDAO;
 import DAO.InterventionDAO;
@@ -45,7 +42,6 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblMailI;
 
 	// Champ de construction matériel
-	private JLabel lblNomMat, lblTypeMat, lblNumSerieMat, lblMarqueMat;
 	private JPanel panelMateriel;
 	private JLabel lblNomMatI, lblTypeMatI, lblNumSerieI, lblMarqueMatI, lblHistoriqueIntervention;
 	private JTextField jtfNomMat, jtfTypeMat, jtfNumSerieMat, jtfMarqueMat;
@@ -68,18 +64,16 @@ public class PanelClient extends JPanel implements ActionListener {
 	// main frame
 	private MainFrame mf;
 
+	// Quelques getteurs utiles
 	public MainFrame getMf() {
 		return mf;
 	}
-
 	public Client getClient() {
 		return createClient();
 	}
-
 	public int getNbMatofThisClient() {
 		return nbMatofThisClient;
 	}
-	
 	public ArrayList<Materiel> getListMateriel() {
 		return listMateriel;
 	}
@@ -390,7 +384,6 @@ public class PanelClient extends JPanel implements ActionListener {
 			if (jtfNomMat.isVisible()) {
 				materielDAO.update(createMaterielbyJtf(
 						this.listMateriel.get(this.btnModifMateriel.indexOf(arg0.getSource())).getId_materiel()));
-//				updatelblMateriel(this.btnModifMateriel.indexOf(arg0.getSource()));
 				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
 				updatePanelMateriel();
 			} else
@@ -413,77 +406,41 @@ public class PanelClient extends JPanel implements ActionListener {
 		
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
 
-//			lblNomMat = new JLabel("Nom : ");
-//			lblNomMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//			GridBagConstraints gbc_lblNomMat = new GridBagConstraints();
-//			gbc_lblNomMat.fill = GridBagConstraints.BOTH;
-//			gbc_lblNomMat.gridx = 0;
-//			gbc_lblNomMat.gridy = i;
-//			gbc_lblNomMat.insets = new Insets(5, 5, 5, 5);
-//			panelMateriel.add(lblNomMat, gbc_lblNomMat);
-
 			lblNomMatI = new JLabel(listMateriel.get(i).getNom());
 			lblNomMatI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblNomMatI = new GridBagConstraints();
 			gbc_lblNomMatI.fill = GridBagConstraints.BOTH;
-			gbc_lblNomMatI.gridx = 0; //1
+			gbc_lblNomMatI.gridx = 0; 
 			gbc_lblNomMatI.gridy = i;
 			gbc_lblNomMatI.weightx = 15;
 			gbc_lblNomMatI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblNomMatI, gbc_lblNomMatI);
 
-//			lblTypeMat = new JLabel("Type : ");
-//			lblTypeMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//			GridBagConstraints gbc_lblTypeMat = new GridBagConstraints();
-//			gbc_lblTypeMat.fill = GridBagConstraints.BOTH;
-//			gbc_lblTypeMat.gridx = 2;
-//			gbc_lblTypeMat.gridy = i;
-//			gbc_lblTypeMat.insets = new Insets(5, 5, 5, 5);
-//			panelMateriel.add(lblTypeMat, gbc_lblTypeMat);
-
 			lblTypeMatI = new JLabel(listMateriel.get(i).getType());
 			lblTypeMatI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblTypeMatI = new GridBagConstraints();
 			gbc_lblTypeMatI.fill = GridBagConstraints.BOTH;
-			gbc_lblTypeMatI.gridx = 1; //3
+			gbc_lblTypeMatI.gridx = 1; 
 			gbc_lblTypeMatI.gridy = i;
 			gbc_lblTypeMatI.weightx = 15;
 			gbc_lblTypeMatI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblTypeMatI, gbc_lblTypeMatI);
 
-//			lblNumSerieMat = new JLabel("Num\u00E9ro de s\u00E9rie : ");
-//			lblNumSerieMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//			GridBagConstraints gbc_lblNumSerieMat = new GridBagConstraints();
-//			gbc_lblNumSerieMat.fill = GridBagConstraints.BOTH;
-//			gbc_lblNumSerieMat.gridx = 4;
-//			gbc_lblNumSerieMat.gridy = i;
-//			gbc_lblNumSerieMat.insets = new Insets(5, 5, 5, 5);
-//			panelMateriel.add(lblNumSerieMat, gbc_lblNumSerieMat);
-
 			lblNumSerieI = new JLabel(listMateriel.get(i).getNumSerie());
 			lblNumSerieI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblNumSerieI = new GridBagConstraints();
 			gbc_lblNumSerieI.fill = GridBagConstraints.BOTH;
-			gbc_lblNumSerieI.gridx = 2; //5
+			gbc_lblNumSerieI.gridx = 2; 
 			gbc_lblNumSerieI.gridy = i;
 			gbc_lblNumSerieI.weightx = 15;
 			gbc_lblNumSerieI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblNumSerieI, gbc_lblNumSerieI);
 
-//			lblMarqueMat = new JLabel("Marque : ");
-//			lblMarqueMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//			GridBagConstraints gbc_lblMarqueMat = new GridBagConstraints();
-//			gbc_lblMarqueMat.fill = GridBagConstraints.BOTH;
-//			gbc_lblMarqueMat.gridx = 6;
-//			gbc_lblMarqueMat.gridy = i;
-//			gbc_lblMarqueMat.insets = new Insets(5, 5, 5, 5);
-//			panelMateriel.add(lblMarqueMat, gbc_lblMarqueMat);
-
 			lblMarqueMatI = new JLabel(listMateriel.get(i).getMarque());
 			lblMarqueMatI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblMarqueMatI = new GridBagConstraints();
 			gbc_lblMarqueMatI.fill = GridBagConstraints.BOTH;
-			gbc_lblMarqueMatI.gridx = 3; //7
+			gbc_lblMarqueMatI.gridx = 3;
 			gbc_lblMarqueMatI.gridy = i;
 			gbc_lblMarqueMatI.weightx = 15;
 			gbc_lblMarqueMatI.insets = new Insets(5, 5, 5, 5);
@@ -495,7 +452,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			lblHistoriqueIntervention.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			gbc_lblHistorique = new GridBagConstraints();
 			gbc_lblHistorique.fill = GridBagConstraints.BOTH;
-			gbc_lblHistorique.gridx = 4; //8
+			gbc_lblHistorique.gridx = 4;
 			gbc_lblHistorique.gridy = i;
 			gbc_lblHistorique.weightx = 30;
 			gbc_lblHistorique.insets = new Insets(5, 5, 5, 5);
@@ -509,28 +466,13 @@ public class PanelClient extends JPanel implements ActionListener {
 
 			GridBagConstraints gbc_btn = new GridBagConstraints();
 			gbc_btn.fill = GridBagConstraints.BOTH;
-			gbc_btn.gridx = 5; //9
+			gbc_btn.gridx = 5;
 			gbc_btn.gridy = i;
 			gbc_btn.weightx = 10;
 			gbc_btn.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(panelBtn, gbc_btn);
 		}
 		this.panelMateriel.validate();
-	}
-
-	/**
-	 * Met à jour les labels informatifs du materiel lors qu'il y a eut une
-	 * modification
-	 */
-	private void updatelblMateriel(int indexMat) {
-		this.lblNomMatI.setText(this.jtfNomMat.getText());
-		this.panelMateriel.add(this.lblNomMatI, this.gbc_lblNomMatI);
-		this.lblTypeMatI.setText(this.jtfTypeMat.getText());
-		this.panelMateriel.add(this.lblTypeMatI, this.gbc_lblTypeMatI);
-		this.lblNumSerieI.setText(this.jtfNumSerieMat.getText());
-		this.panelMateriel.add(this.lblNumSerieI, this.gbc_lblNumSerieI);
-		this.lblMarqueMatI.setText(this.jtfMarqueMat.getText());
-		this.panelMateriel.add(this.lblMarqueMatI, this.gbc_lblMarqueMatI);
 	}
 
 	/**

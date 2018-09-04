@@ -9,9 +9,7 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.JTextField;
 
@@ -26,18 +24,26 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 public class Panel_RdvInfo extends JPanel implements ActionListener {
-	private JTextField jtfNumFact;
-	private JTextField jtfNumBL;
-	private JTextField jtfRefPiece;
-	private JComboBox comboBoxTI;
-	private JButton btnTerminer;
+	
+	// JTextField et ComboBox de construction
+	private JTextField jtfNumFact, jtfNumBL, jtfRefPiece;
+	private JComboBox comboBoxTI, comboBoxMateriel;
+	
+	// Les boutons
+	private JButton btnTerminer, btnAnnuler;
+	
+	// PanelRdv
 	private PanelRDV rdv;
+	
+	// DAO
 	private Rendez_VousDAO rdvDAO;
-	private JButton btnAnnuler;
 	private InterventionDAO interDAO;
-	private MainFrame mf;
-	private JComboBox comboBoxMateriel;
 	private ClientDAO clDAO;
+	
+	// MainFrame
+	private MainFrame mf;
+	
+	// Liste de materiel du client
 	private ArrayList<Materiel> listMateriel;
 
 	/**
@@ -116,8 +122,11 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		this.btnAnnuler.addActionListener(this);
 	}
 
-
-
+	/**
+	 * Renvoie une liste composé de (NomMat et NumSerieMat) à partir de la listMateriel2
+	 * @param listMateriel2
+	 * @return tableau de type String[]
+	 */
 	private String[] getListMatNameNumSerie(ArrayList<Materiel> listMateriel2) {
 		String[] tabName = new String[listMateriel2.size()];
 		int i = 0;
@@ -128,19 +137,23 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		return tabName;
 	}
 
-
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		// Validation terminal de la prise de rendez-vous
 		if(arg0.getSource()==btnTerminer){
 			rdvDAO.create(createRdV());
 			this.rdv.getMf().changePanel(this.rdv.getPanelClient());
+		// Annulation retour au panelRdv (première etape)
 		}else if(arg0.getSource() == btnAnnuler){
 			this.mf.changePanel(rdv);
 		}
 
 	}
-
+	
+	/**
+	 * Crée un objet Rendez_Vous
+	 * @return
+	 */
 	public Rendez_Vous createRdV() {
 		Rendez_Vous r = new Rendez_Vous();
 		r.setIntervention(createIntervention());
@@ -149,6 +162,10 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 		return r;
 	}
 	
+	/**
+	 * Crée une intervention dans la bdd et renvoie l'obget Intervention
+	 * @return
+	 */
 	public Intervention createIntervention(){
 		Intervention inter = new Intervention();
 		inter.setMateriel(listMateriel.get(comboBoxMateriel.getSelectedIndex()));

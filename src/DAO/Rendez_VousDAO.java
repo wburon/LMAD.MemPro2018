@@ -124,7 +124,7 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 		try {
 			PreparedStatement prepare = SC.prepareStatement("SELECT * FROM \"Rendez_vous\" WHERE \"dateDebut\">?",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
-			prepare.setDate(1, (java.sql.Date) Calendar.getInstance().getTime());
+			prepare.setDate(1, new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 			ResultSet result = prepare.executeQuery();
 			while (result.next()) {
 				rdv.setId_rdv(result.getInt("id_rdv"));
