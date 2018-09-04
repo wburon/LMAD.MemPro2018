@@ -29,6 +29,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JRadioButton;
 import javax.swing.JMenuBar;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class PanelRDV extends JPanel implements ActionListener {
 	private JTextField jtfJour;
@@ -38,7 +40,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 	private JButton btnValider;
 	private PanelClient panelClient;
 	private Date deb, fin;
-	private JEditorPane editorPane;
+	private JEditorPane dtrpnAjouteUnCommentaire;
 	private JPanel panelCommentaire;
 	private JButton btnAnnuler;
 	private JButton btnOptimiser;
@@ -74,7 +76,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 	}
 
 	public String getCommentaire() {
-		return editorPane.getText();
+		return dtrpnAjouteUnCommentaire.getText();
 	}
 
 	/**
@@ -140,28 +142,16 @@ public class PanelRDV extends JPanel implements ActionListener {
 		btnAnnuler = new JButton("Annuler");
 		panel_2.add(btnAnnuler);
 
-		editorPane = new JEditorPane();
-		panelCommentaire.add(editorPane, BorderLayout.CENTER);
+		dtrpnAjouteUnCommentaire = new JEditorPane();
+		dtrpnAjouteUnCommentaire.setText("ajoute un commentaire ici");
+		dtrpnAjouteUnCommentaire.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelCommentaire.add(dtrpnAjouteUnCommentaire, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_3 = new GridBagLayout();
 		gbl_panel_3.columnWidths = new int[] { 344, 0 };
 		gbl_panel_3.rowHeights = new int[] { 120, 0 };
 		gbl_panel_3.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
 		gbl_panel_3.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		panel_3.setLayout(gbl_panel_3);
-
-		panel_4 = new JPanel();
-		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
-		gbc_panel_4.weightx = 20.0;
-		gbc_panel_4.fill = GridBagConstraints.BOTH;
-		gbc_panel_4.gridx = 1;
-		gbc_panel_4.gridy = 0;
-		panel_3.add(panel_4, gbc_panel_4);
-		GridBagLayout gbl_panel_4 = new GridBagLayout();
-		gbl_panel_4.columnWidths = new int[] { 0 };
-		gbl_panel_4.rowHeights = new int[] { 0 };
-		gbl_panel_4.columnWeights = new double[] { Double.MIN_VALUE };
-		gbl_panel_4.rowWeights = new double[] { Double.MIN_VALUE };
-		panel_4.setLayout(gbl_panel_4);
 
 		JPanel panelInfoRdV = new JPanel();
 		GridBagConstraints gbc_panelInfoRdV = new GridBagConstraints();
@@ -171,13 +161,13 @@ public class PanelRDV extends JPanel implements ActionListener {
 		gbc_panelInfoRdV.gridy = 0;
 		panel_3.add(panelInfoRdV, gbc_panelInfoRdV);
 		GridBagLayout gbl_panelInfoRdV = new GridBagLayout();
-		gbl_panelInfoRdV.columnWidths = new int[] { 89, 89, 89, 89, 89, 0, 89, 0, 0 };
+		gbl_panelInfoRdV.columnWidths = new int[] {89, 89, 89, 89, 89, 89, 0};
 		gbl_panelInfoRdV.rowHeights = new int[] { 60, 60, 0 };
 		gbl_panelInfoRdV.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_panelInfoRdV.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		panelInfoRdV.setLayout(gbl_panelInfoRdV);
 
-		JLabel lblJour = new JLabel("Jour");
+		JLabel lblJour = new JLabel("Jour (exemple : 10)");
 		lblJour.setHorizontalAlignment(SwingConstants.CENTER);
 		lblJour.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblJour.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -197,7 +187,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 		panelInfoRdV.add(jtfJour, gbc_jtfJour);
 		jtfJour.setColumns(10);
 
-		JLabel lblMois = new JLabel("Mois");
+		JLabel lblMois = new JLabel("Mois (exemple : 01)");
 		lblMois.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMois.setAlignmentX(Component.CENTER_ALIGNMENT);
 		GridBagConstraints gbc_lblMois = new GridBagConstraints();
@@ -216,7 +206,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 		panelInfoRdV.add(jtfMois, gbc_jtfMois);
 		jtfMois.setColumns(10);
 
-		lblAnnee = new JLabel("Annee");
+		lblAnnee = new JLabel("Annee (exemple : 2018)");
 		lblAnnee.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblAnnee = new GridBagConstraints();
 		gbc_lblAnnee.fill = GridBagConstraints.BOTH;
@@ -234,7 +224,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 		panelInfoRdV.add(jtfAn, gbc_jtfAn);
 		jtfAn.setColumns(10);
 
-		JLabel lblDe = new JLabel("De");
+		JLabel lblDe = new JLabel("<html>De<br>(exemple : 10h15)</html>");
 		lblDe.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblDe = new GridBagConstraints();
 		gbc_lblDe.fill = GridBagConstraints.BOTH;
