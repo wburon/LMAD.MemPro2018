@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.Normalizer;
 import java.util.ArrayList;
 
-import org.jsoup.internal.Normalizer;
 
 import Singleton.SingletonConnection;
 import Model.Client;
@@ -183,8 +183,8 @@ public class ClientDAO extends DAO<Client>{
 	}
 	
 	public int levenshtein(String s0, String s1) {
-		s0.toLowerCase();
-		s1.toLowerCase();
+		s0=simple(s0);
+		s1=simple(s1);
 		
 		int len0 = s0.length()+1;
 		int len1 = s1.length()+1;
@@ -235,6 +235,12 @@ public class ClientDAO extends DAO<Client>{
 				min = tab[i];
 		
 		return min;
+	}
+	
+	private String simple(String s){
+		s=s.toLowerCase();
+		s=Normalizer.normalize(s, Normalizer.Form.NFD);
+		return s.replaceAll("\\p{M}", "");
 	}
 	
 	/**
