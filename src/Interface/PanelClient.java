@@ -163,7 +163,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblNom.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_lblNom = new GridBagConstraints();
 		gbc_lblNom.fill = GridBagConstraints.BOTH;
-		gbc_lblNom.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNom.insets = new Insets(5, 5, 5, 5);
 		gbc_lblNom.gridx = 0;
 		gbc_lblNom.gridy = 0;
 		panelInfoClient.add(lblNom, gbc_lblNom);
@@ -172,7 +172,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblNomI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		gbc_lblNomI = new GridBagConstraints();
 		gbc_lblNomI.fill = GridBagConstraints.BOTH;
-		gbc_lblNomI.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNomI.insets = new Insets(5, 5, 5, 5);
 		gbc_lblNomI.gridx = 1;
 		gbc_lblNomI.gridy = 0;
 		panelInfoClient.add(lblNomI, gbc_lblNomI);
@@ -181,7 +181,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblPrenom.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_lblPrenom = new GridBagConstraints();
 		gbc_lblPrenom.fill = GridBagConstraints.BOTH;
-		gbc_lblPrenom.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPrenom.insets = new Insets(5, 5, 5, 5);
 		gbc_lblPrenom.gridx = 0;
 		gbc_lblPrenom.gridy = 1;
 		panelInfoClient.add(lblPrenom, gbc_lblPrenom);
@@ -190,7 +190,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblPrenomI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		gbc_lblPrenomI = new GridBagConstraints();
 		gbc_lblPrenomI.fill = GridBagConstraints.BOTH;
-		gbc_lblPrenomI.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPrenomI.insets = new Insets(5, 5, 5, 5);
 		gbc_lblPrenomI.gridx = 1;
 		gbc_lblPrenomI.gridy = 1;
 		panelInfoClient.add(lblPrenomI, gbc_lblPrenomI);
@@ -199,7 +199,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblAdresse.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_lblAdresse = new GridBagConstraints();
 		gbc_lblAdresse.fill = GridBagConstraints.BOTH;
-		gbc_lblAdresse.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAdresse.insets = new Insets(5, 5, 5, 5);
 		gbc_lblAdresse.gridx = 0;
 		gbc_lblAdresse.gridy = 2;
 		panelInfoClient.add(lblAdresse, gbc_lblAdresse);
@@ -208,7 +208,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblAdresseI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		gbc_lblAdresseI = new GridBagConstraints();
 		gbc_lblAdresseI.fill = GridBagConstraints.BOTH;
-		gbc_lblAdresseI.insets = new Insets(0, 0, 5, 0);
+		gbc_lblAdresseI.insets = new Insets(5, 5, 5, 5);
 		gbc_lblAdresseI.gridx = 1;
 		gbc_lblAdresseI.gridy = 2;
 		panelInfoClient.add(lblAdresseI, gbc_lblAdresseI);
@@ -217,7 +217,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblVille.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_lblVille = new GridBagConstraints();
 		gbc_lblVille.fill = GridBagConstraints.BOTH;
-		gbc_lblVille.insets = new Insets(0, 0, 5, 5);
+		gbc_lblVille.insets = new Insets(5, 5, 5, 5);
 		gbc_lblVille.gridx = 0;
 		gbc_lblVille.gridy = 3;
 		panelInfoClient.add(lblVille, gbc_lblVille);
@@ -226,7 +226,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblVilleI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		gbc_lblVilleI = new GridBagConstraints();
 		gbc_lblVilleI.fill = GridBagConstraints.BOTH;
-		gbc_lblVilleI.insets = new Insets(0, 0, 5, 0);
+		gbc_lblVilleI.insets = new Insets(5, 5, 5, 5);
 		gbc_lblVilleI.gridx = 1;
 		gbc_lblVilleI.gridy = 3;
 		panelInfoClient.add(lblVilleI, gbc_lblVilleI);
@@ -235,7 +235,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblTelephone.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_lblTelephone = new GridBagConstraints();
 		gbc_lblTelephone.fill = GridBagConstraints.BOTH;
-		gbc_lblTelephone.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTelephone.insets = new Insets(5, 5, 5, 5);
 		gbc_lblTelephone.gridx = 0;
 		gbc_lblTelephone.gridy = 4;
 		panelInfoClient.add(lblTelephone, gbc_lblTelephone);
@@ -244,7 +244,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblTelephoneI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		gbc_lblTelephoneI = new GridBagConstraints();
 		gbc_lblTelephoneI.fill = GridBagConstraints.BOTH;
-		gbc_lblTelephoneI.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTelephoneI.insets = new Insets(5, 5, 5, 5);
 		gbc_lblTelephoneI.gridx = 1;
 		gbc_lblTelephoneI.gridy = 4;
 		panelInfoClient.add(lblTelephoneI, gbc_lblTelephoneI);
@@ -253,7 +253,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblMail.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_lblMail = new GridBagConstraints();
 		gbc_lblMail.fill = GridBagConstraints.BOTH;
-		gbc_lblMail.insets = new Insets(0, 0, 0, 5);
+		gbc_lblMail.insets = new Insets(5, 5, 5, 5);
 		gbc_lblMail.gridx = 0;
 		gbc_lblMail.gridy = 5;
 		panelInfoClient.add(lblMail, gbc_lblMail);
@@ -262,6 +262,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		lblMailI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		gbc_lblMailI = new GridBagConstraints();
 		gbc_lblMailI.fill = GridBagConstraints.BOTH;
+		gbc_lblMailI.insets = new Insets(5, 5, 5, 5);
 		gbc_lblMailI.gridx = 1;
 		gbc_lblMailI.gridy = 5;
 		panelInfoClient.add(lblMailI, gbc_lblMailI);
@@ -381,7 +382,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		} else if (this.btnVoirPlus.contains(arg0.getSource())) {
 			Materiel matSelect = this.listMateriel.get(this.btnVoirPlus.indexOf(arg0.getSource()));
 			String listInterDeCeMat = Methode
-					.toStringInterventionList(interventionDAO.getListIntervention(matSelect.getId_materiel()));
+					.toStringInterventionList(interventionDAO.getListIntervention(matSelect.getId_materiel()), false);
 			JOptionPane.showMessageDialog(this, "<html>" + listInterDeCeMat + "</html>", "Historique des interventions",
 					0, new ImageIcon("images/icon-832005_960_720.png"));
 			// Action des boutons de modification du matériels d'un clients
@@ -412,75 +413,79 @@ public class PanelClient extends JPanel implements ActionListener {
 		
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
 
-			lblNomMat = new JLabel("Nom : ");
-			lblNomMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			GridBagConstraints gbc_lblNomMat = new GridBagConstraints();
-			gbc_lblNomMat.fill = GridBagConstraints.BOTH;
-			gbc_lblNomMat.gridx = 0;
-			gbc_lblNomMat.gridy = i;
-			gbc_lblNomMat.insets = new Insets(5, 5, 5, 5);
-			panelMateriel.add(lblNomMat, gbc_lblNomMat);
+//			lblNomMat = new JLabel("Nom : ");
+//			lblNomMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//			GridBagConstraints gbc_lblNomMat = new GridBagConstraints();
+//			gbc_lblNomMat.fill = GridBagConstraints.BOTH;
+//			gbc_lblNomMat.gridx = 0;
+//			gbc_lblNomMat.gridy = i;
+//			gbc_lblNomMat.insets = new Insets(5, 5, 5, 5);
+//			panelMateriel.add(lblNomMat, gbc_lblNomMat);
 
 			lblNomMatI = new JLabel(listMateriel.get(i).getNom());
 			lblNomMatI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblNomMatI = new GridBagConstraints();
 			gbc_lblNomMatI.fill = GridBagConstraints.BOTH;
-			gbc_lblNomMatI.gridx = 1;
+			gbc_lblNomMatI.gridx = 0; //1
 			gbc_lblNomMatI.gridy = i;
+			gbc_lblNomMatI.weightx = 15;
 			gbc_lblNomMatI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblNomMatI, gbc_lblNomMatI);
 
-			lblTypeMat = new JLabel("Type : ");
-			lblTypeMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			GridBagConstraints gbc_lblTypeMat = new GridBagConstraints();
-			gbc_lblTypeMat.fill = GridBagConstraints.BOTH;
-			gbc_lblTypeMat.gridx = 2;
-			gbc_lblTypeMat.gridy = i;
-			gbc_lblTypeMat.insets = new Insets(5, 5, 5, 5);
-			panelMateriel.add(lblTypeMat, gbc_lblTypeMat);
+//			lblTypeMat = new JLabel("Type : ");
+//			lblTypeMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//			GridBagConstraints gbc_lblTypeMat = new GridBagConstraints();
+//			gbc_lblTypeMat.fill = GridBagConstraints.BOTH;
+//			gbc_lblTypeMat.gridx = 2;
+//			gbc_lblTypeMat.gridy = i;
+//			gbc_lblTypeMat.insets = new Insets(5, 5, 5, 5);
+//			panelMateriel.add(lblTypeMat, gbc_lblTypeMat);
 
 			lblTypeMatI = new JLabel(listMateriel.get(i).getType());
 			lblTypeMatI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblTypeMatI = new GridBagConstraints();
 			gbc_lblTypeMatI.fill = GridBagConstraints.BOTH;
-			gbc_lblTypeMatI.gridx = 3;
+			gbc_lblTypeMatI.gridx = 1; //3
 			gbc_lblTypeMatI.gridy = i;
+			gbc_lblTypeMatI.weightx = 15;
 			gbc_lblTypeMatI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblTypeMatI, gbc_lblTypeMatI);
 
-			lblNumSerieMat = new JLabel("Num\u00E9ro de s\u00E9rie : ");
-			lblNumSerieMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			GridBagConstraints gbc_lblNumSerieMat = new GridBagConstraints();
-			gbc_lblNumSerieMat.fill = GridBagConstraints.BOTH;
-			gbc_lblNumSerieMat.gridx = 4;
-			gbc_lblNumSerieMat.gridy = i;
-			gbc_lblNumSerieMat.insets = new Insets(5, 5, 5, 5);
-			panelMateriel.add(lblNumSerieMat, gbc_lblNumSerieMat);
+//			lblNumSerieMat = new JLabel("Num\u00E9ro de s\u00E9rie : ");
+//			lblNumSerieMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//			GridBagConstraints gbc_lblNumSerieMat = new GridBagConstraints();
+//			gbc_lblNumSerieMat.fill = GridBagConstraints.BOTH;
+//			gbc_lblNumSerieMat.gridx = 4;
+//			gbc_lblNumSerieMat.gridy = i;
+//			gbc_lblNumSerieMat.insets = new Insets(5, 5, 5, 5);
+//			panelMateriel.add(lblNumSerieMat, gbc_lblNumSerieMat);
 
 			lblNumSerieI = new JLabel(listMateriel.get(i).getNumSerie());
 			lblNumSerieI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblNumSerieI = new GridBagConstraints();
 			gbc_lblNumSerieI.fill = GridBagConstraints.BOTH;
-			gbc_lblNumSerieI.gridx = 5;
+			gbc_lblNumSerieI.gridx = 2; //5
 			gbc_lblNumSerieI.gridy = i;
+			gbc_lblNumSerieI.weightx = 15;
 			gbc_lblNumSerieI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblNumSerieI, gbc_lblNumSerieI);
 
-			lblMarqueMat = new JLabel("Marque : ");
-			lblMarqueMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			GridBagConstraints gbc_lblMarqueMat = new GridBagConstraints();
-			gbc_lblMarqueMat.fill = GridBagConstraints.BOTH;
-			gbc_lblMarqueMat.gridx = 6;
-			gbc_lblMarqueMat.gridy = i;
-			gbc_lblMarqueMat.insets = new Insets(5, 5, 5, 5);
-			panelMateriel.add(lblMarqueMat, gbc_lblMarqueMat);
+//			lblMarqueMat = new JLabel("Marque : ");
+//			lblMarqueMat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//			GridBagConstraints gbc_lblMarqueMat = new GridBagConstraints();
+//			gbc_lblMarqueMat.fill = GridBagConstraints.BOTH;
+//			gbc_lblMarqueMat.gridx = 6;
+//			gbc_lblMarqueMat.gridy = i;
+//			gbc_lblMarqueMat.insets = new Insets(5, 5, 5, 5);
+//			panelMateriel.add(lblMarqueMat, gbc_lblMarqueMat);
 
 			lblMarqueMatI = new JLabel(listMateriel.get(i).getMarque());
 			lblMarqueMatI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblMarqueMatI = new GridBagConstraints();
 			gbc_lblMarqueMatI.fill = GridBagConstraints.BOTH;
-			gbc_lblMarqueMatI.gridx = 7;
+			gbc_lblMarqueMatI.gridx = 3; //7
 			gbc_lblMarqueMatI.gridy = i;
+			gbc_lblMarqueMatI.weightx = 15;
 			gbc_lblMarqueMatI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblMarqueMatI, gbc_lblMarqueMatI);
 
@@ -490,8 +495,9 @@ public class PanelClient extends JPanel implements ActionListener {
 			lblHistoriqueIntervention.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			gbc_lblHistorique = new GridBagConstraints();
 			gbc_lblHistorique.fill = GridBagConstraints.BOTH;
-			gbc_lblHistorique.gridx = 8;
+			gbc_lblHistorique.gridx = 4; //8
 			gbc_lblHistorique.gridy = i;
+			gbc_lblHistorique.weightx = 30;
 			gbc_lblHistorique.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblHistoriqueIntervention, gbc_lblHistorique);
 
@@ -503,8 +509,9 @@ public class PanelClient extends JPanel implements ActionListener {
 
 			GridBagConstraints gbc_btn = new GridBagConstraints();
 			gbc_btn.fill = GridBagConstraints.BOTH;
-			gbc_btn.gridx = 9;
+			gbc_btn.gridx = 5; //9
 			gbc_btn.gridy = i;
+			gbc_btn.weightx = 10;
 			gbc_btn.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(panelBtn, gbc_btn);
 		}
@@ -656,5 +663,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		jtfMarqueMat.setVisible(b);
 		panelMateriel.add(jtfMarqueMat, gbc_jtfMarqueMat);
 	}
+	
+	
 
 }

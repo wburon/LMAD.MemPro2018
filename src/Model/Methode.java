@@ -26,6 +26,7 @@ import java.util.TreeMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -211,7 +212,6 @@ public class Methode {
 		return dateOfWeek;
 	}
 
-
 	/**
 	 * Met en forme les 3 premières lignes de la liste (le trois dernière
 	 * interventions)
@@ -222,43 +222,53 @@ public class Methode {
 	public static String toString3(ArrayList<Intervention> listIntervention) {
 		int sizeList = listIntervention.size();
 		ArrayList<Intervention> list3 = new ArrayList<>();
-		switch(sizeList){
-		case 0 :
+		switch (sizeList) {
+		case 0:
 			break;
-		case 1 :
+		case 1:
 			list3.add(listIntervention.get(0));
 			break;
-		case 2 :
+		case 2:
 			list3.add(listIntervention.get(0));
 			list3.add(listIntervention.get(1));
 			break;
-		default :
+		default:
 			list3.add(listIntervention.get(sizeList - 1));
 			list3.add(listIntervention.get(sizeList - 2));
 			list3.add(listIntervention.get(sizeList - 3));
 		}
 
-		return toStringInterventionList(list3);
+		return toStringInterventionList(list3, true);
 	}
 
-	public static String toStringInterventionList(ArrayList<Intervention> list) {
+	/**
+	 * La liste des interventions de la liste "list" converti en String et ajuster selon le parametre VP
+	 * @param list
+	 * @param VP : chaine de caractère restrainte si "true"
+	 * @return
+	 */
+	public static String toStringInterventionList(ArrayList<Intervention> list, boolean VP) {
 		String toString = "";
 		for (Intervention i : list) {
-			toString += i.getDate().toString() + i.getCommentaire() + "<br>";
+			String inter = i.getDate().toString() + i.getCommentaire();
+			if (VP == true)
+				inter = monStringModifier(inter);
+			toString += inter + "<br>";
 		}
 		return toString;
 	}
 
 	public static String composeTroisClient(String positionClient) {
-		// TODO a partir de l'agenda et de la positionClient trouve les trois rendez-vous les plus proche et génère un string
+		// TODO a partir de l'agenda et de la positionClient trouve les trois
+		// rendez-vous les plus proche et génère un string
 		Rendez_VousDAO rdvDAO = new Rendez_VousDAO();
 		ArrayList<Rendez_Vous> list3Client = new ArrayList<>();
 		HashMap<Integer, Double> map = new HashMap<>();
 		Methode methode = new Methode();
 		ValueComparator comparateur = methode.new ValueComparator(map);
-		TreeMap<Integer,Double> mapTriee = new TreeMap<>(comparateur);
-		for( Rendez_Vous rdv : rdvDAO.getListRdv()){
-			Double d = getDistance(rdv.getIntervention().getMateriel().getClient().getGps(),positionClient);
+		TreeMap<Integer, Double> mapTriee = new TreeMap<>(comparateur);
+		for (Rendez_Vous rdv : rdvDAO.getListRdv()) {
+			Double d = getDistance(rdv.getIntervention().getMateriel().getClient().getGps(), positionClient);
 			map.put(rdv.getIntervention().getMateriel().getClient().getId_client(), d);
 		}
 		mapTriee.putAll(map);
@@ -269,8 +279,8 @@ public class Methode {
 	private static Double getDistance(String gps, String positionClient) {
 		Double result = null;
 		try {
-			URL url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+gps+"&destinations="+positionClient
-					+ "&units=metric&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg");
+			URL url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + gps
+					+ "&destinations=" + positionClient + "&units=metric&key=AIzaSyAf7g4C-OE5qG-sDfzctgKpX7kG0lXnVcg");
 			result = postURLDistance(url, "");
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -294,7 +304,7 @@ public class Methode {
 		try {
 			HttpURLConnection UrlConn = (HttpURLConnection) url.openConnection();
 			System.setProperty("http.agent", "Chrome");
-			//UrlConn.setRequestMethod("POST");
+			// UrlConn.setRequestMethod("POST");
 			UrlConn.setAllowUserInteraction(false);
 			// envoyer des params
 			UrlConn.setDoOutput(true);
@@ -321,7 +331,7 @@ public class Methode {
 		}
 		return resultat;
 	}
-	
+
 	private static Double distance(InputStream result) {
 		Double lng = null, lat = null;
 		try {
@@ -342,7 +352,6 @@ public class Methode {
 		return d;
 	}
 
-
 	class ValueComparator implements Comparator<Integer> {
 		Map<Integer, Double> base;
 
@@ -358,12 +367,10 @@ public class Methode {
 			}
 		}
 	}
-	
-	
 
 	public static ArrayList<JButton> createButton(int nbMat, String name) {
 		ArrayList<JButton> list = new ArrayList<>();
-		for(int i=0; i<nbMat;i++){
+		for (int i = 0; i < nbMat; i++) {
 			list.add(new JButton(name));
 		}
 		return list;
@@ -383,6 +390,23 @@ public class Methode {
 		return format.format(cal.getTime());
 	}
 
-		
-	
+	static int VALEUR_MAX_LABEL = 60; // limite de 60 caractères dans un JLabel
+
+	public static String monStringModifier(String lbl) {
+		int taille = lbl.length();
+		if (taille > VALEUR_MAX_LABEL)
+			lbl = remplaceResteParVide(lbl);
+		return lbl;
+	}
+
+	public static String remplaceResteParVide(String text) {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(text.subSequence(0, VALEUR_MAX_LABEL));// on recupère le
+															// nombre de
+															// caractère voulus
+		sb.append("...");
+		return sb.toString();
+	}
+
 }
