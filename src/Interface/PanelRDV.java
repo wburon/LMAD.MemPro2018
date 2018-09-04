@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -27,6 +28,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JRadioButton;
+import javax.swing.JMenuBar;
 
 public class PanelRDV extends JPanel implements ActionListener {
 	private JTextField jtfJour;
@@ -34,7 +36,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 	private JTextField jtfH1;
 	private JTextField jtfH2;
 	private JButton btnValider;
-	private PanelClient client;
+	private PanelClient panelClient;
 	private Date deb, fin;
 	private JEditorPane editorPane;
 	private JPanel panelCommentaire;
@@ -56,7 +58,11 @@ public class PanelRDV extends JPanel implements ActionListener {
 	}
 
 	public Client getClient() {
-		return client.getClient();
+		return panelClient.getClient();
+	}
+
+	public PanelClient getPanelClient() {
+		return panelClient;
 	}
 
 	public Date getDeb() {
@@ -71,22 +77,18 @@ public class PanelRDV extends JPanel implements ActionListener {
 		return editorPane.getText();
 	}
 
-	public JPanel getPanelCommentaire() {
-		return panelCommentaire;
-	}
-
 	/**
 	 * Create the panel.
 	 */
 	public PanelRDV(PanelClient client) {
-		this.client = client;
+		this.panelClient = client;
 		this.mf = client.getMf();
 		this.listRadioButton = new ArrayList<>();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 450, 0 };
-		gridBagLayout.rowHeights = new int[] { 150, 150, 0 };
+		gridBagLayout.rowHeights = new int[] { 150, 150, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		panelNord = new PanelPlanning();
@@ -101,6 +103,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 
 		panelSud = new JPanel();
 		gbc_panelSud = new GridBagConstraints();
+		gbc_panelSud.insets = new Insets(0, 0, 5, 0);
 		gbc_panelSud.weightx = 100.0;
 		gbc_panelSud.weighty = 10.0;
 		gbc_panelSud.fill = GridBagConstraints.BOTH;
@@ -276,43 +279,25 @@ public class PanelRDV extends JPanel implements ActionListener {
 		if (arg0.getSource() == btnValider) {
 			String[] h1 = jtfH1.getText().split("h");
 			String[] h2 = jtfH2.getText().split("h");
-			Calendar cal = new GregorianCalendar();
-			cal.set(Integer.parseInt(jtfAn.getText()), Integer.parseInt(jtfMois.getText()), Integer.parseInt(jtfJour.getText()), Integer.parseInt(h1[0]),Integer.parseInt(h1[1]));
+			Calendar cal = new GregorianCalendar(Locale.FRANCE);
+			cal.set(Integer.parseInt(jtfAn.getText()), Integer.parseInt(jtfMois.getText())-1, Integer.parseInt(jtfJour.getText()), Integer.parseInt(h1[0]),Integer.parseInt(h1[1]));
 			this.deb = cal.getTime();
-			cal.set(Integer.parseInt(jtfAn.getText()), Integer.parseInt(jtfMois.getText()), Integer.parseInt(jtfJour.getText()), Integer.parseInt(h2[0]), Integer.parseInt(h2[1]));
+			cal.set(Integer.parseInt(jtfAn.getText()), Integer.parseInt(jtfMois.getText())-1, Integer.parseInt(jtfJour.getText()), Integer.parseInt(h2[0]), Integer.parseInt(h2[1]));
 			this.fin = cal.getTime();
 			remove(this.panelSud);
 			this.panelSud = new Panel_RdvInfo(this);
 			add(panelSud, gbc_panelSud);
 			validate();
 		} else if (arg0.getSource() == btnAnnuler) {
-			// TODO
+			this.mf.changePanel(this.panelClient);
 		} else if (arg0.getSource() == btnOptimiser) {
-			String positionClient = this.client.getClient().getGps();
+			String positionClient = this.getClient().getGps();
 			// TODO trouve les trois rendez-vous déjà prit les plus proche de ce
 			// client, les affiche en pop-up avec la distance en km et temps
 			String troisClient = Methode.composeTroisClient(positionClient);
 			JOptionPane.showMessageDialog(this, troisClient);
 		}
 
-	}
-
-	/**
-	 * Repaint la partit RDV pour reafficher l'editor pane de commentaire
-	 */
-	public void rinitPanelCommentaire() {
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setPreferredSize(new Dimension(10, 30));
-		this.panelCommentaire.add(panel_2, BorderLayout.SOUTH);
-
-		btnValider = new JButton("Valider");
-		panel_2.add(btnValider);
-
-		editorPane = new JEditorPane();
-		this.panelCommentaire.add(editorPane, BorderLayout.CENTER);
-
-		this.panelCommentaire.repaint();
 	}
 
 }

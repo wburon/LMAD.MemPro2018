@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -210,9 +211,6 @@ public class Methode {
 		return dateOfWeek;
 	}
 
-	public static String toString(Date date) {
-		return date.getDate() + "/" + date.getMonth() + "/" + (date.getYear() + 1900);
-	}
 
 	/**
 	 * Met en forme les 3 premières lignes de la liste (le trois dernière
@@ -372,16 +370,17 @@ public class Methode {
 	}
 
 	public static String toStringDate(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		GregorianCalendar cal = new GregorianCalendar(Locale.FRANCE);
 		cal.setTime(date);
-		return cal.get(Calendar.DATE)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR);
+		return format.format(cal.getTime());
 	}
 
 	public static String toStringHourOfDate(Date date) {
-		// TODO Auto-generated method stub
-		Calendar cal = new GregorianCalendar();
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+		Calendar cal = new GregorianCalendar(Locale.FRANCE);
 		cal.setTime(date);
-		return cal.get(Calendar.HOUR_OF_DAY)+"h"+cal.get(Calendar.MINUTE);
+		return format.format(cal.getTime());
 	}
 
 		

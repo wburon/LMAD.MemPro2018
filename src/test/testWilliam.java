@@ -14,6 +14,7 @@ import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -64,6 +65,12 @@ public class testWilliam {
 		mftest.setActivePanel(new PanelClient(mftest));
 		mftest.init();
 		mftest.setVisible(true);
+		
+//		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+//		Calendar cal = new GregorianCalendar();
+//		cal.set(Calendar.MINUTE, 4);
+//		System.out.println(format.format(cal.getTime()));
+//		System.out.println(cal.get(Calendar.HOUR_OF_DAY)+"h"+cal.get(Calendar.MINUTE));
 		
 //		Calendar calParis = Calendar.getInstance();
 //

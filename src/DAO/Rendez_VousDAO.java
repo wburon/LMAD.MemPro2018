@@ -34,7 +34,7 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 			prepare.setInt(1, maxId());
 			prepare.setInt(2, obj.getIntervention().getId_intervention());
 			prepare.setTimestamp(3, new java.sql.Timestamp(obj.getDateDeb().getTime()), Calendar.getInstance(TimeZone.getTimeZone("UTC+2")));
-			prepare.setTimestamp(4, new java.sql.Timestamp(obj.getDateFin().getTime()), Calendar.getInstance(TimeZone.getTimeZone("GMT")));
+			prepare.setTimestamp(4, new java.sql.Timestamp(obj.getDateFin().getTime()), Calendar.getInstance(TimeZone.getTimeZone("UTC+2")));
 
 			prepare.executeUpdate();
 
@@ -92,8 +92,8 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 			if (result.first()) {
 				rdv.setId_rdv(id);
 				rdv.setIntervention(interDAO.find(result.getInt("intervention")));
-				rdv.setDateDeb(result.getDate("dateDebut"));
-				rdv.setDateFin(result.getDate("dateFin"));
+				rdv.setDateDeb(result.getTimestamp("dateDebut"));
+				rdv.setDateFin(result.getTimestamp("dateFin"));
 			}
 
 		} catch (SQLException e) {
@@ -129,8 +129,8 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 			while (result.next()) {
 				rdv.setId_rdv(result.getInt("id_rdv"));
 				rdv.setIntervention(interDAO.find(result.getInt("intervention")));
-				rdv.setDateDeb(result.getDate("dateDebut"));
-				rdv.setDateFin(result.getDate("dateFin"));
+				rdv.setDateDeb(result.getTimestamp("dateDebut"));
+				rdv.setDateFin(result.getTimestamp("dateFin"));
 				listRdv.add(rdv);
 			}
 		} catch (SQLException e) {
@@ -197,9 +197,9 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 
 		public int compare(Integer a, Integer b) {
 			if (base.get(a).getDateDeb().after(base.get(b).getDateDeb())) {
-				return -1;
-			} else {
 				return 1;
+			} else {
+				return -1;
 			}
 		}
 

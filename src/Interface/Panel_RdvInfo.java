@@ -134,7 +134,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource()==btnTerminer){
 			rdvDAO.create(createRdV());
-			this.rdv.rinitPanelCommentaire();
+			this.rdv.getMf().changePanel(this.rdv.getPanelClient());
 		}else if(arg0.getSource() == btnAnnuler){
 			this.mf.changePanel(rdv);
 		}
