@@ -240,7 +240,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		gbc_lblTelephone.gridy = 4;
 		panelInfoClient.add(lblTelephone, gbc_lblTelephone);
 
-		lblTelephoneI = new JLabel("" + client.getTel());
+		lblTelephoneI = new JLabel("0" + client.getTel());
 		lblTelephoneI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		gbc_lblTelephoneI = new GridBagConstraints();
 		gbc_lblTelephoneI.fill = GridBagConstraints.BOTH;
