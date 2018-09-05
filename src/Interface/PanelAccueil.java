@@ -16,6 +16,9 @@ import java.util.Comparator;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import DAO.ClientDAO;
 import DAO.MaterielDAO;
@@ -145,7 +148,6 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			panelPlan = new PanelPlanning();
 			mf.changePanel(panelPlan);
 		}
-		
 	}
 
 
@@ -336,11 +338,6 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			listMot.add(motDouble);
 		}
 		return listMot;
-	}
-	
-	public void ActualiserListClient (){
-		tClient.setListClient(cDAO.getListAccueil());
-		table.setModel(tClient);
 	}
 	
 
