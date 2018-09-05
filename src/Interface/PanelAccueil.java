@@ -17,8 +17,6 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import DAO.ClientDAO;
 import DAO.MaterielDAO;
@@ -338,6 +336,11 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			listMot.add(motDouble);
 		}
 		return listMot;
+	}
+	
+	public void refreshList(){
+		tClient.setListClient(cDAO.getListAccueil());
+		((AbstractTableModel) table.getModel()).fireTableDataChanged();
 	}
 	
 

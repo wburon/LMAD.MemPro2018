@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class FrameAjoutClient extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
@@ -36,7 +37,7 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 	private Client client;
 	private ClientDAO cDAO;
 	
-	private static PanelAccueil pa;
+	private PanelAccueil pa;
 
 	/**
 	 * Launch the application.
@@ -45,7 +46,7 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameAjoutClient frame = new FrameAjoutClient(pa);
+					FrameAjoutClient frame = new FrameAjoutClient(new PanelAccueil(new MainFrame()));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +59,7 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public FrameAjoutClient(PanelAccueil pa) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -157,7 +158,7 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 			
 			if(a){
 				JOptionPane.showMessageDialog(btnAjouter, "Le client a bien été ajouté !", "Validation", JOptionPane.INFORMATION_MESSAGE);
-				pa.ActualiserListClient();
+				pa.refreshList();
 		}
 			else
 				JOptionPane.showMessageDialog(btnAjouter, "Le client n'a pas pu être ajouté !", "Erreur", JOptionPane.ERROR_MESSAGE);
