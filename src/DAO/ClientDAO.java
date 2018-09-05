@@ -23,7 +23,7 @@ public class ClientDAO extends DAO<Client>{
 		try {
 
 			PreparedStatement prepare = SC
-					.prepareStatement("Insert into \"Client\"(id_client,nom,prenom,adresse,ville,tel,gps,courriel) values (?,?,?,?,?,?,?);");
+					.prepareStatement("Insert into \"Client\"(id_client,nom,prenom,adresse,ville,tel,gps,courriel) values (?,?,?,?,?,?,?,?);");
 			prepare.setInt(1, maxId());
 			prepare.setString(2, obj.getNom());
 			prepare.setString(3, obj.getPrenom());
@@ -32,9 +32,9 @@ public class ClientDAO extends DAO<Client>{
 			String ville = obj.getVille();
 			prepare.setString(5, ville);
 			prepare.setInt(6, obj.getTel());
-			String adresse_complete = adresse+" "+ville;
-			String gps = Methode.getGPSCoord(adresse_complete);
-			prepare.setString(7, gps);
+//			String adresse_complete = adresse+" "+ville;
+//			String gps = Methode.getGPSCoord(adresse_complete);
+			prepare.setString(7, null);
 			prepare.setString(8, obj.getMail());
 			
 			prepare.executeUpdate();
