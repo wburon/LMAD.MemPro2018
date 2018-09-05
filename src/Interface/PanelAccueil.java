@@ -307,7 +307,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @param chaine la chaine de caractère dont on veut séparer les mots
 	 * @return une ArrayList<String> des mots séparés
 	 */
-	private ArrayList<String> createListMot(String chaine){
+	public ArrayList<String> createListMot(String chaine){
 		int len=chaine.length();
 		char c=' ';
 		String mot="";
@@ -326,6 +326,14 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			//on ajoute le caractère au mot en cours
 			else
 				mot+=chaine.charAt(i);
+		}
+		
+		//on créer des mots double avec un mot de la liste et celui qui suit
+		String motDouble;
+		int n = listMot.size()-1;
+		for (int i = 0; i<n; i++){
+			motDouble = listMot.get(i) + " " + listMot.get(i+1);
+			listMot.add(motDouble);
 		}
 		return listMot;
 	}
