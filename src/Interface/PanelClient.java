@@ -68,12 +68,15 @@ public class PanelClient extends JPanel implements ActionListener {
 	public MainFrame getMf() {
 		return mf;
 	}
+
 	public Client getClient() {
 		return createClient();
 	}
+
 	public int getNbMatofThisClient() {
 		return nbMatofThisClient;
 	}
+
 	public ArrayList<Materiel> getListMateriel() {
 		return listMateriel;
 	}
@@ -339,7 +342,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		JLabel lblMateriel = new JLabel("MATERIELS");
 		lblMateriel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelDescriptionMat.add(lblMateriel);
-		
+
 		this.btnPrendreRdV.addActionListener(this);
 		this.btnAddMateriel.addActionListener(this);
 		for (JButton e : this.btnModifMateriel) {
@@ -359,9 +362,11 @@ public class PanelClient extends JPanel implements ActionListener {
 		// Action du bouton de modification des informations clients
 		if (arg0.getSource() == btnModification) {
 			if (jtfnom.isVisible()) {
-				clientDAO.update(createClient());
-				updatelblClient();
-				changeVisibilityOfClient(true);
+				if (verifyTelAndMail()) {
+					clientDAO.update(createClient());
+					updatelblClient();
+					changeVisibilityOfClient(true);
+				}
 			} else
 				changeVisibilityOfClient(false);
 			// Action du bouton d'ajout d'un matériels
@@ -401,16 +406,35 @@ public class PanelClient extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * Teste si les valeurs saisie dans les champs courriel et tel sont conforme
+	 * 
+	 * @return
+	 */
+	private boolean verifyTelAndMail() {
+		boolean verification = true;
+		String tel = this.jtfTelephone.getText();
+		String mail = this.jtfCourriel.getText();
+		if (!mail.contains("@"))
+			verification = false;
+		if (!tel.matches("[0-9]+"))
+			verification = false;
+		if (verification = false) {
+			JOptionPane.showMessageDialog(this, "Erreur de saisie dans le champ 'courriel' ou 'téléphone' !");
+		}
+		return verification;
+	}
+
 	private void updatePanelMateriel() {
 		this.panelMateriel.removeAll();
-		
+
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
 
 			lblNomMatI = new JLabel(listMateriel.get(i).getNom());
 			lblNomMatI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblNomMatI = new GridBagConstraints();
 			gbc_lblNomMatI.fill = GridBagConstraints.BOTH;
-			gbc_lblNomMatI.gridx = 0; 
+			gbc_lblNomMatI.gridx = 0;
 			gbc_lblNomMatI.gridy = i;
 			gbc_lblNomMatI.weightx = 15;
 			gbc_lblNomMatI.insets = new Insets(5, 5, 5, 5);
@@ -420,7 +444,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			lblTypeMatI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblTypeMatI = new GridBagConstraints();
 			gbc_lblTypeMatI.fill = GridBagConstraints.BOTH;
-			gbc_lblTypeMatI.gridx = 1; 
+			gbc_lblTypeMatI.gridx = 1;
 			gbc_lblTypeMatI.gridy = i;
 			gbc_lblTypeMatI.weightx = 15;
 			gbc_lblTypeMatI.insets = new Insets(5, 5, 5, 5);
@@ -430,7 +454,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			lblNumSerieI.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			gbc_lblNumSerieI = new GridBagConstraints();
 			gbc_lblNumSerieI.fill = GridBagConstraints.BOTH;
-			gbc_lblNumSerieI.gridx = 2; 
+			gbc_lblNumSerieI.gridx = 2;
 			gbc_lblNumSerieI.gridy = i;
 			gbc_lblNumSerieI.weightx = 15;
 			gbc_lblNumSerieI.insets = new Insets(5, 5, 5, 5);
@@ -605,7 +629,5 @@ public class PanelClient extends JPanel implements ActionListener {
 		jtfMarqueMat.setVisible(b);
 		panelMateriel.add(jtfMarqueMat, gbc_jtfMarqueMat);
 	}
-	
-	
 
 }

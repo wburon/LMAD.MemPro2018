@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,19 +31,19 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 
 public class PanelRDV extends JPanel implements ActionListener {
-	
+
 	// JTextField définissant les dates de rendez-vous
-	private JTextField jtfJour, jtfMois,jtfAn, jtfH1, jtfH2;
+	private JTextField jtfJour, jtfMois, jtfAn, jtfH1, jtfH2;
 	// Stockage des dates de début et de fin
 	private Date deb, fin;
 
 	// Les différents boutons
 	private JButton btnValider, btnAnnuler, btnOptimiser;
 	private PanelClient panelClient;
-	
+
 	// MainFrame
 	private MainFrame mf;
-	
+
 	// Autres champs plus spécifiques
 	private JEditorPane dtrpnAjouteUnCommentaire;
 	private JPanel panelCommentaire;
@@ -51,23 +53,27 @@ public class PanelRDV extends JPanel implements ActionListener {
 	private GridBagConstraints gbc_panelSud;
 	private PanelPlanning panelNord;
 
-
 	// Quelques getteurs utiles
 	public MainFrame getMf() {
 		return mf;
 	}
+
 	public Client getClient() {
 		return panelClient.getClient();
 	}
+
 	public PanelClient getPanelClient() {
 		return panelClient;
 	}
+
 	public Date getDeb() {
 		return deb;
 	}
+
 	public Date getFin() {
 		return fin;
 	}
+
 	public String getCommentaire() {
 		return dtrpnAjouteUnCommentaire.getText();
 	}
@@ -153,7 +159,7 @@ public class PanelRDV extends JPanel implements ActionListener {
 		gbc_panelInfoRdV.gridy = 0;
 		panel_3.add(panelInfoRdV, gbc_panelInfoRdV);
 		GridBagLayout gbl_panelInfoRdV = new GridBagLayout();
-		gbl_panelInfoRdV.columnWidths = new int[] {89, 89, 89, 89, 89, 89, 0};
+		gbl_panelInfoRdV.columnWidths = new int[] { 89, 89, 89, 89, 89, 89, 0 };
 		gbl_panelInfoRdV.rowHeights = new int[] { 60, 60, 0 };
 		gbl_panelInfoRdV.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_panelInfoRdV.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
@@ -264,19 +270,27 @@ public class PanelRDV extends JPanel implements ActionListener {
 		if (arg0.getSource() == btnValider) {
 			String[] h1 = jtfH1.getText().split("h");
 			String[] h2 = jtfH2.getText().split("h");
-			Calendar cal = new GregorianCalendar(Locale.FRANCE);
-			cal.set(Integer.parseInt(jtfAn.getText()), Integer.parseInt(jtfMois.getText())-1, Integer.parseInt(jtfJour.getText()), Integer.parseInt(h1[0]),Integer.parseInt(h1[1]));
-			this.deb = cal.getTime();
-			cal.set(Integer.parseInt(jtfAn.getText()), Integer.parseInt(jtfMois.getText())-1, Integer.parseInt(jtfJour.getText()), Integer.parseInt(h2[0]), Integer.parseInt(h2[1]));
-			this.fin = cal.getTime();
-			remove(this.panelSud);
-			this.panelSud = new Panel_RdvInfo(this);
-			add(panelSud, gbc_panelSud);
-			validate();
-		// Annulation de la prise de rendez-vous et retour a l'écran client
+			String an = jtfAn.getText();
+			String mois = jtfMois.getText();
+			String jour = jtfJour.getText();
+			if (verificationDate(an+mois+jour+h1[0]+h1[1]) && verificationDate(an+mois+jour+h2[0]+h2[1])) {
+				Calendar cal = new GregorianCalendar(Locale.FRANCE);
+				cal.set(Integer.parseInt(an), Integer.parseInt(mois) - 1, Integer.parseInt(jour),
+						Integer.parseInt(h1[0]), Integer.parseInt(h1[1]));
+				this.deb = cal.getTime();
+				cal.set(Integer.parseInt(an), Integer.parseInt(mois) - 1, Integer.parseInt(jour),
+						Integer.parseInt(h2[0]), Integer.parseInt(h2[1]));
+				this.fin = cal.getTime();
+				remove(this.panelSud);
+				this.panelSud = new Panel_RdvInfo(this);
+				add(panelSud, gbc_panelSud);
+				validate();
+			}
+			// Annulation de la prise de rendez-vous et retour a l'écran client
 		} else if (arg0.getSource() == btnAnnuler) {
 			this.mf.changePanel(this.panelClient);
-		// Montre les rendez-déjà pris ce situant dans la même ville/rue que le client actuel
+			// Montre les rendez-déjà pris ce situant dans la même ville/rue que
+			// le client actuel
 		} else if (arg0.getSource() == btnOptimiser) {
 			String positionClient = this.getClient().getGps();
 			// TODO trouve les trois rendez-vous déjà prit les plus proche de ce
@@ -285,6 +299,26 @@ public class PanelRDV extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(this, troisClient);
 		}
 
+	}
+
+	/**
+	 * Verifie qu'une date existe
+	 * @param s
+	 * @return
+	 */
+	public boolean verificationDate(String s) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+		dateFormat.setLenient(false);
+		java.util.Date date = null;
+		try {
+			date = dateFormat.parse(s);
+		} catch (ParseException ex) {
+			// la chaîne ne correspond pas à une date valide
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Erreur de saisie, cette date ou cette horaire n'existe pas !");
+			return false;
+		}
+		return true;
 	}
 
 }

@@ -41,6 +41,7 @@ import DAO.MaterielDAO;
 import DAO.Rendez_VousDAO;
 import Interface.MainFrame;
 import Interface.PanelClient;
+import Interface.PanelRDV;
 import Model.Client;
 import Model.Materiel;
 import Model.Methode;
@@ -65,6 +66,9 @@ public class testWilliam {
 		mftest.setActivePanel(new PanelClient(mftest));
 		mftest.init();
 		mftest.setVisible(true);
+		
+//		System.out.println(PanelRDV.verificationDate("201802311000"));
+//		System.out.println(PanelRDV.verificationDate("201809052678"));
 		
 //		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 //		Calendar cal = new GregorianCalendar();
