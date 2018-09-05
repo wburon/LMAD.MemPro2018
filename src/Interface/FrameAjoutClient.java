@@ -35,6 +35,8 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 	
 	private Client client;
 	private ClientDAO cDAO;
+	
+	private static PanelAccueil pa;
 
 	/**
 	 * Launch the application.
@@ -43,7 +45,7 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameAjoutClient frame = new FrameAjoutClient();
+					FrameAjoutClient frame = new FrameAjoutClient(pa);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,7 +57,7 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public FrameAjoutClient() {
+	public FrameAjoutClient(PanelAccueil pa) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -135,6 +137,7 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 		
 		client = new Client();
 		cDAO = new ClientDAO();
+		this.pa = pa;
 	}
 
 	@Override
@@ -152,8 +155,10 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 			
 			boolean a = creationClient(nom, prenom, adresse, ville, tel, courriel, gps);
 			
-			if(a)
+			if(a){
 				JOptionPane.showMessageDialog(btnAjouter, "Le client a bien été ajouté !", "Validation", JOptionPane.INFORMATION_MESSAGE);
+				pa.ActualiserListClient();
+		}
 			else
 				JOptionPane.showMessageDialog(btnAjouter, "Le client n'a pas pu être ajouté !", "Erreur", JOptionPane.ERROR_MESSAGE);
 			

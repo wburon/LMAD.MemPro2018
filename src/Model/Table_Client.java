@@ -60,5 +60,9 @@ public class Table_Client extends AbstractTableModel{
 	public Client getClient(int i){
 		return listClient.get(i);
 	}
+	
+	public void setListClient(ArrayList<Client> listClient){
+		this.listClient = listClient;
+	}
 
 }

@@ -138,7 +138,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			mf.changePanel(panelRes);
 		}
 		if(e.getSource()==btnAjoutClient){
-			fAC = new FrameAjoutClient();
+			fAC = new FrameAjoutClient(this);
 			fAC.setVisible(true);
 		}
 		if(e.getSource()==btnPlanning){
@@ -307,7 +307,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @param chaine la chaine de caractère dont on veut séparer les mots
 	 * @return une ArrayList<String> des mots séparés
 	 */
-	public ArrayList<String> createListMot(String chaine){
+	private ArrayList<String> createListMot(String chaine){
 		int len=chaine.length();
 		char c=' ';
 		String mot="";
@@ -336,6 +336,11 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			listMot.add(motDouble);
 		}
 		return listMot;
+	}
+	
+	public void ActualiserListClient (){
+		tClient.setListClient(cDAO.getListAccueil());
+		table.setModel(tClient);
 	}
 	
 
