@@ -156,6 +156,10 @@ public class Methode {
 		return mat;
 	}
 
+	/**
+	 * Lance la sauvegarde des informations dans le fichier excel
+	 * @throws IOException
+	 */
 	public static void sauvegarde() throws IOException {
 		CSVFileWriter csvFileWriter = new CSVFileWriter(new File("sauvegardeDataClient.csv"));
 		csvFileWriter.launch();
@@ -188,6 +192,11 @@ public class Methode {
 		return titlesTab;
 	}
 
+	/**
+	 * Trouve les neuf semaines à partir du param calendar
+	 * @param calendar
+	 * @return renvoie les neuf semaines sous la forme d'un HashMap<Monday, ResteDeLaSemaine>
+	 */
 	public static HashMap<Date, Date[]> findCurrentWeekInit(Calendar calendar) {
 		HashMap<Date, Date[]> list = new HashMap<>();
 
@@ -203,6 +212,11 @@ public class Methode {
 		return list;
 	}
 
+	/**
+	 * Recupère les 6 jours suivant le jour en param
+	 * @param calendar 
+	 * @return un tableau de 6 jour
+	 */
 	private static Date[] getDateOfWeek(Calendar calendar) {
 		Date[] dateOfWeek = new Date[6];
 		for (int i = 0; i < dateOfWeek.length; i++) {
