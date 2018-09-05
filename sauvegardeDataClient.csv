@@ -1,4 +1,4 @@
-Nom;Prénom;Adresse;Ville;Telephone;Courriel;Nom Materiel 1;Type Materiel 1;Numéro de série Materiel 1;Marque Materiel1;Nom Materiel 2;Type Materiel 2;Numéro de série Materiel 2;Marque Materiel2;Nom Materiel 3;Type Materiel 3;Numéro de série Materiel 3;Marque Materiel3
-a;b;c;;6254;;;;;;;;;;;;;
-nom;prenom;3 rue rabelais;angers;161;courriel;;;;;;;;;;;;
-buron;william;la pature aux boeufs;saint saturnin sur loire;6;buronwilliam;tondeuse;moteur;1504;samsung;pioche;bois;36;marque U;;;;
+Nom;Prénom;Adresse;Ville;Telephone;Courriel;Nom Materiel 1;Type Materiel 1;Numéro de série Materiel 1;Marque Materiel1
+a;b;c;;6254;;;;;
+nom;prenom;3 rue rabelais;angers;161;courriel;;;;
+buron;william;la pature aux boeufs;saint saturnin sur loire;654;buronwilliam;tondeuse;moteur;1504;samsung
