@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
+import DAO.InterventionDAO;
 import DAO.Rendez_VousDAO;
 import Model.Methode;
 import Model.Rendez_Vous;
@@ -42,6 +43,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 
 	// DAO
 	private Rendez_VousDAO rdvDAO;
+	private InterventionDAO interDAO;
 	
 	// Les boutons à nombre variable
 	private ArrayList<JButton> btnLunEvent = new ArrayList<>();
@@ -70,6 +72,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 		this.selectedWeekMonday = neinCurrentMonday[0];
 
 		rdvDAO = new Rendez_VousDAO();
+		interDAO = new InterventionDAO();
 		listPanelEvent = new ArrayList<>();
 		btn9Week = new JButton[9];
 
@@ -200,6 +203,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 
 		remplissageEvent(this.neinCurrentWeek.get(this.selectedWeekMonday));
 		
+		
 		for(int i=0; i<this.btn9Week.length; i++){
 			this.btn9Week[i].addActionListener(this);
 		}
@@ -209,6 +213,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 	}
 
 	private void remplissageEvent(Date[] currentWeek) {
+		
 		clearEvent();
 		for (int i = 0; i < 6; i++) {
 			switch (i) {
@@ -356,9 +361,15 @@ public class PanelPlanning extends JPanel implements ActionListener {
 	 */
 	private void lauchViewMore(String string) {
 		int id_rdv = Integer.parseInt(string);
-		JOptionPane.showMessageDialog(this, rdvDAO.find(id_rdv).fullToSting(), "Information du le rendez-vous !", 0,
-				new ImageIcon("images/icon-832005_960_720.png"));
-
+		Rendez_Vous rdv = rdvDAO.find(id_rdv);
+		
+		int choice = JOptionPane.showConfirmDialog(this, rdv.fullToSting(), "Information du le rendez-vous !", JOptionPane.OK_CANCEL_OPTION);
+		System.out.println(choice);
+		if(choice == 2){
+			this.rdvDAO.delete(rdv);
+			this.interDAO.delete(rdv.getIntervention());
+			this.remplissageEvent(this.currentWeek);
+		}
 	}
 	
 	/**
