@@ -429,7 +429,7 @@ public class Methode {
 		int len0 = s0.length()+1;
 		int len1 = s1.length()+1;
 	 
-		// les tableaux de distances
+		// les tableaux de coûts
 		int[] cost = new int[len0];
 		int[] newcost = new int[len0];
 	 
