@@ -50,7 +50,7 @@ public class Table_Client extends AbstractTableModel{
 		case 3: 
 			return listClient.get(rowIndex).getVille();
 		case 4:
-			return listClient.get(rowIndex).getTel();
+			return "0"+listClient.get(rowIndex).getTel();
 		case 5: 
 			return listClient.get(rowIndex).getMail();
 		default:

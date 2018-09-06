@@ -423,50 +423,59 @@ public class Methode {
 	
 
 	public int levenshtein(String s0, String s1) {
+		
+		//on enlève les accents et on met en minuscule s0 et s1
 		s0=simple(s0);
 		s1=simple(s1);
 		
 		int len0 = s0.length()+1;
 		int len1 = s1.length()+1;
 	 
-		// les tableaux de coûts
+		// les tableaux de coûts/distance
 		int[] cost = new int[len0];
 		int[] newcost = new int[len0];
-	 
-		// initial cost of skipping prefix in String s0
+		
+		// initialisations des coûts pour s0
 		for(int i=0;i<len0;i++) cost[i]=i;
 	 
-		// dynamicaly computing the array of distances
+		// Le tableaux des distances est mis à jour grâce aux boucle for.
 	 
-		// transformation cost for each letter in s1
+		// Transformation du coût pour chaque lettre de s1
 		for(int j=1;j<len1;j++) {
 	 
-			// initial cost of skipping prefix in String s1
+			// initialisations des coûts pour s1
 			newcost[0]=j-1;
 	 
-			// transformation cost for each letter in s0
+			// Transformation du coût pour chaque lettre de s1
 			for(int i=1;i<len0;i++) {
 	 
-				// matching current letters in both strings
+				// On vérifie si les lettres sont les mêmes dans ce cas là match vaut 0 sinon 1
 				int match = (s0.charAt(i-1)==s1.charAt(j-1))?0:1;
 	 
-				// computing cost for each transformation
+				// On calcul le coût de chaque transformation
 				int cost_replace = cost[i-1]+match;
 				int cost_insert  = cost[i]+1;
 				int cost_delete  = newcost[i-1]+1;
 	 
-				// keep minimum cost
+				// On garde le minimum
 				newcost[i] = min(cost_insert, cost_delete, cost_replace);
 			}
 	 
-			// swap cost/newcost arrays
+			// on permute le tableaux cost avec newcost
 			int[] swap=cost; cost=newcost; newcost=swap;
 		}
 	 
-		// the distance is the cost for transforming all letters in both strings
+		// La distance pour transformer un String dans un sens comme dans l'autre
 		return cost[len0-1];
 	}
 	
+	/**
+	 * Méthode qui permet de mesurer le minimum entre 3 valeurs entières
+	 * @param ci 
+	 * @param cd
+	 * @param cr
+	 * @return le minimum
+	 */
 	private int min(int ci, int cd, int cr){
 		int min=Integer.MAX_VALUE;
 		int[] tab = {ci,cd,cr};
@@ -477,6 +486,11 @@ public class Methode {
 		return min;
 	}
 	
+	/**
+	 * La méthode simplifie une chaine de caractère en mettant tous en minuscule et en enlevant les accents
+	 * @param s le String que l'on veut modifier
+	 * @return le String simplifer
+	 */
 	private String simple(String s){
 		s=s.toLowerCase();
 		s=Normalizer.normalize(s, Normalizer.Form.NFD);
