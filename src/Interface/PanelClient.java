@@ -306,6 +306,19 @@ public class PanelClient extends JPanel implements ActionListener {
 		gbl_panelMateriel.columnWeights = new double[] {};
 		gbl_panelMateriel.rowWeights = rowW;
 		panelMateriel.setLayout(gbl_panelMateriel);
+		
+		jtfNomMat = new JTextField();
+		jtfNomMat.setColumns(10);
+		jtfNomMat.setVisible(false);
+
+		jtfTypeMat = new JTextField();
+		jtfTypeMat.setColumns(10);
+
+		jtfNumSerieMat = new JTextField();
+		jtfNumSerieMat.setColumns(10);
+
+		jtfMarqueMat = new JTextField();
+		jtfMarqueMat.setColumns(10);
 
 		updatePanelMateriel();
 
@@ -321,19 +334,6 @@ public class PanelClient extends JPanel implements ActionListener {
 		btnPrendreRdV = new JButton("Prendre rendez-vous");
 		btnPrendreRdV.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panelSudMateriel.add(btnPrendreRdV);
-
-		jtfNomMat = new JTextField();
-		jtfNomMat.setColumns(10);
-		jtfNomMat.setVisible(false);
-
-		jtfTypeMat = new JTextField();
-		jtfTypeMat.setColumns(10);
-
-		jtfNumSerieMat = new JTextField();
-		jtfNumSerieMat.setColumns(10);
-
-		jtfMarqueMat = new JTextField();
-		jtfMarqueMat.setColumns(10);
 
 		JPanel panelDescriptionMat = new JPanel();
 		panelDescriptionMat.setPreferredSize(new Dimension(10, 40));
@@ -389,7 +389,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			if (jtfNomMat.isVisible()) {
 				materielDAO.update(createMaterielbyJtf(
 						this.listMateriel.get(this.btnModifMateriel.indexOf(arg0.getSource())).getId_materiel()));
-				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
+//				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
 				updatePanelMateriel();
 			} else
 				changeVisibilityOfMateriel(false, this.btnModifMateriel.indexOf(arg0.getSource()));
@@ -426,6 +426,7 @@ public class PanelClient extends JPanel implements ActionListener {
 	}
 
 	private void updatePanelMateriel() {
+		this.listMateriel = clientDAO.getListMateriel(client);
 		this.panelMateriel.removeAll();
 
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
@@ -497,6 +498,10 @@ public class PanelClient extends JPanel implements ActionListener {
 			panelMateriel.add(panelBtn, gbc_btn);
 		}
 		this.panelMateriel.validate();
+		this.jtfNomMat.setVisible(false);
+		this.jtfTypeMat.setVisible(false);
+		this.jtfNumSerieMat.setVisible(false);
+		this.jtfMarqueMat.setVisible(false);
 	}
 
 	/**
@@ -595,7 +600,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		}
 		GridBagConstraints gbc_jtfNomMat = new GridBagConstraints();
 		gbc_jtfNomMat.fill = GridBagConstraints.BOTH;
-		gbc_jtfNomMat.gridx = 1;
+		gbc_jtfNomMat.gridx = 0;
 		gbc_jtfNomMat.gridy = matIndex;
 		gbc_jtfNomMat.insets = new Insets(5, 5, 5, 5);
 		jtfNomMat.setText(matSelect.getNom());
@@ -604,7 +609,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		//
 		GridBagConstraints gbc_jtfTypeMat = new GridBagConstraints();
 		gbc_jtfTypeMat.fill = GridBagConstraints.BOTH;
-		gbc_jtfTypeMat.gridx = 3;
+		gbc_jtfTypeMat.gridx = 1;
 		gbc_jtfTypeMat.gridy = matIndex;
 		gbc_jtfTypeMat.insets = new Insets(5, 5, 5, 5);
 		jtfTypeMat.setText(matSelect.getType());
@@ -613,7 +618,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		//
 		GridBagConstraints gbc_jtfNumSerie = new GridBagConstraints();
 		gbc_jtfNumSerie.fill = GridBagConstraints.BOTH;
-		gbc_jtfNumSerie.gridx = 5;
+		gbc_jtfNumSerie.gridx = 2;
 		gbc_jtfNumSerie.gridy = matIndex;
 		gbc_jtfNumSerie.insets = new Insets(5, 5, 5, 5);
 		jtfNumSerieMat.setText(matSelect.getNumSerie());
@@ -622,7 +627,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		//
 		GridBagConstraints gbc_jtfMarqueMat = new GridBagConstraints();
 		gbc_jtfMarqueMat.fill = GridBagConstraints.BOTH;
-		gbc_jtfMarqueMat.gridx = 7;
+		gbc_jtfMarqueMat.gridx = 3;
 		gbc_jtfMarqueMat.gridy = matIndex;
 		gbc_jtfMarqueMat.insets = new Insets(5, 5, 5, 5);
 		jtfMarqueMat.setText(matSelect.getMarque());
