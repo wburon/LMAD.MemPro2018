@@ -389,7 +389,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			if (jtfNomMat.isVisible()) {
 				materielDAO.update(createMaterielbyJtf(
 						this.listMateriel.get(this.btnModifMateriel.indexOf(arg0.getSource())).getId_materiel()));
-//				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
+				changeVisibilityOfMateriel(true, this.btnModifMateriel.indexOf(arg0.getSource()));
 				updatePanelMateriel();
 			} else
 				changeVisibilityOfMateriel(false, this.btnModifMateriel.indexOf(arg0.getSource()));
@@ -415,11 +415,12 @@ public class PanelClient extends JPanel implements ActionListener {
 		boolean verification = true;
 		String tel = this.jtfTelephone.getText();
 		String mail = this.jtfCourriel.getText();
-		if (!mail.contains("@"))
+		
+		if (mail.contains("@") || mail=="")
 			verification = false;
 		if (!tel.matches("[0-9]+"))
 			verification = false;
-		if (verification = false) {
+		if (verification == false) {
 			JOptionPane.showMessageDialog(this, "Erreur de saisie dans le champ 'courriel' ou 'téléphone' !");
 		}
 		return verification;
