@@ -295,6 +295,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		
 		// change les btnWeek pour pouvoir cliqué sur d'autre semaines que ces neufs là
 		if (arg0.getSource() == this.btnPreviousWeek) {
 			GregorianCalendar gC = new GregorianCalendar();
