@@ -142,7 +142,7 @@ public class MainFrame extends JFrame implements ActionListener{
 			BufferedImage bI = new BufferedImage(p.getWidth(),p.getHeight(),BufferedImage.TYPE_BYTE_INDEXED); 
 			p.paint(bI.getGraphics()); 
 			try { 
-			File f = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory(); 
+			File f = new File("images/capture");
 			FileOutputStream fichier = new FileOutputStream(f); 
 			ImageIO.write(bI, "jpg", fichier); 
 			fichier.close(); 
