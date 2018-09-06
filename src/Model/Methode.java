@@ -496,5 +496,4 @@ public class Methode {
 		s=Normalizer.normalize(s, Normalizer.Form.NFD);
 		return s.replaceAll("\\p{M}", "");
 	}
-
 }

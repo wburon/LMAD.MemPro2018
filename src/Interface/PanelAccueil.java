@@ -171,7 +171,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 			for(int i=0; i<champs.length; i++){
 				listRes2 = cDAO.getResultat(mot, champs[i]);
 				if (listRes2!=null){
-					listRes1=append(listRes1, listRes2);
+					listRes1=appendListResult(listRes1, listRes2);
 				}
 			}
 		}
@@ -201,7 +201,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 				
 				listRes2 = mDAO.getResultat(mot, champs[i]);
 				if (listRes2!=null){
-					listRes1=append(listRes1, listRes2);
+					listRes1=appendListResult(listRes1, listRes2);
 				}
 			}
 		}
@@ -215,7 +215,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 	 * @param listRes2
 	 * @return listRes1
 	 */
-	private ArrayList<Resultat> append(ArrayList<Resultat> listRes1, ArrayList<Resultat> listRes2){
+	private ArrayList<Resultat> appendListResult(ArrayList<Resultat> listRes1, ArrayList<Resultat> listRes2){
 		for(Resultat res2 : listRes2)
 			if(!listRes1.contains(res2))
 				listRes1.add(res2);	
@@ -312,6 +312,7 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		char c=' ';
 		String mot="";
 		ArrayList<String> listMot=new ArrayList<>();
+		ArrayList<String> listMotD=new ArrayList<>();
 		for(int i=0; i<len; i++){
 			//si le caractère est un espace le mot se termine et on commence un nouveau mot
 			if(chaine.charAt(i)==c){
@@ -333,9 +334,16 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		int n = listMot.size()-1;
 		for (int i = 0; i<n; i++){
 			motDouble = listMot.get(i) + " " + listMot.get(i+1);
-			listMot.add(motDouble);
+			listMotD.add(motDouble);
 		}
-		return listMot;
+		return appendListString(listMotD, listMot);
+	}
+	
+	
+	private ArrayList<String> appendListString(ArrayList<String> listS1, ArrayList<String> listS2){
+		for(String s2 : listS2)
+			listS1.add(s2);
+		return listS1;
 	}
 	
 	public void refreshList(){

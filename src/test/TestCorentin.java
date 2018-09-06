@@ -2,6 +2,7 @@ package test;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import DAO.ClientDAO;
 import DAO.MaterielDAO;
