@@ -382,7 +382,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 		if(choice == 2){
 			this.rdvDAO.delete(rdv);
 			this.interDAO.delete(rdv.getIntervention());
-			this.remplissageEvent(this.currentWeek);
+			this.remplissageEvent(this.neinCurrentWeek.get(this.selectedWeekMonday));
 		}
 	}
 	
