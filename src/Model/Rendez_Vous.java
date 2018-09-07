@@ -51,5 +51,12 @@ public class Rendez_Vous {
 		return "<html>" + horaire + "<br>" + clientName + "<br>" + adresse + "<br>" + tel + "<br>" + materiel +"<br><br>" + commentaire + "</html>";
 	}
 	
+	public String toStringOpti(){
+		String horaire = Methode.toStringHourOfDate(this.dateDeb) + " à " + Methode.toStringHourOfDate(this.dateFin) + " le " + Methode.toStringDate(this.getIntervention().getDate());
+		String clientName = this.intervention.getMateriel().getClient().getNom() + " " + this.intervention.getMateriel().getClient().getPrenom();
+		String adresse = this.intervention.getMateriel().getClient().getAdresse() + " " + this.intervention.getMateriel().getClient().getVille();
+		return horaire + " " + clientName + " " + adresse;
+	}
+	
 
 }

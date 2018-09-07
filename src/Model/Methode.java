@@ -283,14 +283,25 @@ public class Methode {
 		for (Rendez_Vous rdv : rdvDAO.getListRdv()) {
 			String fromRdv = formatStringNormalizer(rdv.getIntervention().getMateriel().getClient().getVille());
 			if(fromClient.equals(fromRdv)){
-				map.put(rdv.getIntervention().getMateriel().getClient().getId_client(), rdv.getIntervention().getDate());
+				map.put(rdv.getId_rdv(), rdv.getIntervention().getDate());
 			}
 		}
 		mapTriee.putAll(map);
-		// TODO recupérer les trois premiers
-		return null;
+		
+		return toStringMap(mapTriee);
 	}
 	
+	private static String toStringMap(TreeMap<Integer, Date> mapTriee) {
+		Rendez_VousDAO rdvDAO = new Rendez_VousDAO();
+		Integer[] m = mapTriee.keySet().toArray(new Integer[mapTriee.size()]);
+		String aReturn = "<html>";
+		for(int i=0; i<m.length; i++){
+			
+			aReturn += rdvDAO.find(m[i]).toStringOpti() + "<br>";
+		}
+		return aReturn + "</html>";
+	}
+
 	public static String formatStringNormalizer(String s) {
 		String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
 		return temp.replaceAll("[^\\p{ASCII}]", "").toLowerCase();
