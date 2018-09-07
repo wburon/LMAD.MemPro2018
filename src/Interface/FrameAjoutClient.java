@@ -149,7 +149,11 @@ public class FrameAjoutClient extends JFrame implements ActionListener {
 			String prenom = tfPrenom.getText();
 			String adresse = tfAdresse.getText();
 			String ville = tfVille.getText();
-			int tel = Integer.parseInt(tfTlphone.getText());
+			int tel;
+			if(tfTlphone.getText().equals(""))
+				tel = 0;
+			else
+				tel = Integer.parseInt(tfTlphone.getText());
 			String courriel = tfCourriel.getText();
 			
 			String gps = calculGPS(adresse, ville);

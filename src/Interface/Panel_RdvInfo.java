@@ -169,9 +169,18 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	public Intervention createIntervention(){
 		Intervention inter = new Intervention();
 		inter.setMateriel(listMateriel.get(comboBoxMateriel.getSelectedIndex()));
-		inter.setNumBL(Integer.parseInt(jtfNumBL.getText()));
-		inter.setNumFacture(Integer.parseInt(jtfNumFact.getText()));
-		inter.setRefPiece(Integer.parseInt(jtfRefPiece.getText()));
+		if(jtfNumBL.getText().equals(""))
+			inter.setNumBL(0);
+		else
+			inter.setNumBL(Integer.parseInt(jtfNumBL.getText()));
+		if(jtfNumFact.getText().equals(""))
+			inter.setNumFacture(0);
+		else
+			inter.setNumFacture(Integer.parseInt(jtfNumFact.getText()));
+		if(jtfRefPiece.getText().equals(""))
+			inter.setRefPiece(0);
+		else
+			inter.setRefPiece(Integer.parseInt(jtfRefPiece.getText()));
 		inter.setCommentaire(rdv.getCommentaire());
 		inter.setDate(rdv.getDeb());
 		inter.setType_intervention((String) comboBoxTI.getSelectedItem());
