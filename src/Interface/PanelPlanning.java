@@ -203,7 +203,6 @@ public class PanelPlanning extends JPanel implements ActionListener {
 
 		remplissageEvent(this.neinCurrentWeek.get(this.selectedWeekMonday));
 		
-		
 		for(int i=0; i<this.btn9Week.length; i++){
 			this.btn9Week[i].addActionListener(this);
 		}
@@ -228,6 +227,8 @@ public class PanelPlanning extends JPanel implements ActionListener {
 					j++;
 				}
 				listPanelEvent.add(this.btnLunEvent);
+				this.panel_Lundi_event.repaint();
+				this.panel_Lundi_event.revalidate();
 				break;
 			case 1:
 				// mardi
@@ -240,6 +241,8 @@ public class PanelPlanning extends JPanel implements ActionListener {
 					j++;
 				}
 				listPanelEvent.add(this.btnMarEvent);
+				this.panel_Mardi_event.repaint();
+				this.panel_Mardi_event.revalidate();
 				break;
 			case 2:
 				// mercredi
@@ -252,6 +255,8 @@ public class PanelPlanning extends JPanel implements ActionListener {
 					j++;
 				}
 				listPanelEvent.add(this.btnMerEvent);
+				this.panel_Mercredi_event.repaint();
+				this.panel_Mercredi_event.revalidate();
 				break;
 			case 3:
 				// jeudi
@@ -264,18 +269,23 @@ public class PanelPlanning extends JPanel implements ActionListener {
 					j++;
 				}
 				listPanelEvent.add(this.btnJeuEvent);
+				this.panel_Jeudi_event.repaint();
+				this.panel_Jeudi_event.revalidate();
 				break;
 			case 4:
 				// vendredi
 				this.lblVendredi.setText("Vendredi " + Methode.toStringDate(currentWeek[3]));
 				btnVenEvent = Methode.createButton(rdvDAO.getRdvInDate(currentWeek[i-1]).length, "");
 				j = 0;
+				
 				for (Rendez_Vous r : rdvDAO.getRdvInDate(currentWeek[i-1])) {
 					btnVenEvent.get(j).setText(r.toString());
 					this.panel_Vendredi_event.add(btnVenEvent.get(j));
 					j++;
 				}
 				listPanelEvent.add(this.btnVenEvent);
+				this.panel_Vendredi_event.repaint();
+				this.panel_Vendredi_event.revalidate();
 				break;
 			default:
 				// samedi
@@ -288,6 +298,8 @@ public class PanelPlanning extends JPanel implements ActionListener {
 					j++;
 				}
 				listPanelEvent.add(this.btnSamEvent);
+				this.panel_Samedi_event.repaint();
+				this.panel_Samedi_event.revalidate();
 			}
 		}
 		for (ArrayList<JButton> a : this.listPanelEvent) {
@@ -295,6 +307,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 				e.addActionListener(this);
 			}
 		}
+		
 
 	}
 
@@ -329,6 +342,7 @@ public class PanelPlanning extends JPanel implements ActionListener {
 					}
 					this.btn9Week[i].setBackground(Color.GREEN);
 					remplissageEvent(this.neinCurrentWeek.get(this.selectedWeekMonday));
+					
 				}
 			}
 			// viewMore sur un rendez-vous
@@ -376,11 +390,14 @@ public class PanelPlanning extends JPanel implements ActionListener {
 	 * Vide les panel_Event
 	 */
 	private void clearEvent(){
+		this.listPanelEvent.clear();
 		this.panel_Lundi_event.removeAll();
 		this.panel_Mardi_event.removeAll();
 		this.panel_Mercredi_event.removeAll();
 		this.panel_Jeudi_event.removeAll();
 		this.panel_Vendredi_event.removeAll();
+		this.btnVenEvent.clear();
+		this.panel_Vendredi_event.validate();
 		this.panel_Samedi_event.removeAll();
 	}
 
