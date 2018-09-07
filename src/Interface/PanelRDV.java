@@ -292,10 +292,10 @@ public class PanelRDV extends JPanel implements ActionListener {
 			// Montre les rendez-déjà pris ce situant dans la même ville/rue que
 			// le client actuel
 		} else if (arg0.getSource() == btnOptimiser) {
-			String positionClient = this.getClient().getGps();
+			String adresseVille = this.getClient().getVille();
 			// TODO trouve les trois rendez-vous déjà prit les plus proche de ce
 			// client, les affiche en pop-up avec la distance en km et temps
-			String troisClient = Methode.composeTroisClient(positionClient);
+			String troisClient = Methode.composeTroisClient(adresseVille);
 			JOptionPane.showMessageDialog(this, troisClient);
 		}
 

@@ -270,22 +270,30 @@ public class Methode {
 		return toString;
 	}
 
-	public static String composeTroisClient(String positionClient) {
-		// TODO a partir de l'agenda et de la positionClient trouve les trois
+	public static String composeTroisClient(String adresseVille) {
+		// TODO a partir de l'agenda et de la ville trouve les trois
 		// rendez-vous les plus proche et génère un string
 		Rendez_VousDAO rdvDAO = new Rendez_VousDAO();
 		ArrayList<Rendez_Vous> list3Client = new ArrayList<>();
-		HashMap<Integer, Double> map = new HashMap<>();
+		HashMap<Integer, Date> map = new HashMap<>();
 		Methode methode = new Methode();
 		ValueComparator comparateur = methode.new ValueComparator(map);
-		TreeMap<Integer, Double> mapTriee = new TreeMap<>(comparateur);
+		TreeMap<Integer, Date> mapTriee = new TreeMap<>(comparateur);
+		String fromClient = formatStringNormalizer(adresseVille);
 		for (Rendez_Vous rdv : rdvDAO.getListRdv()) {
-			Double d = getDistance(rdv.getIntervention().getMateriel().getClient().getGps(), positionClient);
-			map.put(rdv.getIntervention().getMateriel().getClient().getId_client(), d);
+			String fromRdv = formatStringNormalizer(rdv.getIntervention().getMateriel().getClient().getVille());
+			if(fromClient.equals(fromRdv)){
+				map.put(rdv.getIntervention().getMateriel().getClient().getId_client(), rdv.getIntervention().getDate());
+			}
 		}
 		mapTriee.putAll(map);
 		// TODO recupérer les trois premiers
 		return null;
+	}
+	
+	public static String formatStringNormalizer(String s) {
+		String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+		return temp.replaceAll("[^\\p{ASCII}]", "").toLowerCase();
 	}
 
 	private static Double getDistance(String gps, String positionClient) {
@@ -365,14 +373,14 @@ public class Methode {
 	}
 
 	class ValueComparator implements Comparator<Integer> {
-		Map<Integer, Double> base;
+		Map<Integer, Date> base;
 
-		public ValueComparator(Map<Integer, Double> base) {
+		public ValueComparator(Map<Integer, Date> base) {
 			this.base = base;
 		}
 
 		public int compare(Integer a, Integer b) {
-			if (base.get(a) >= base.get(b)) {
+			if (base.get(a).after(base.get(b))) {
 				return -1;
 			} else {
 				return 1;
