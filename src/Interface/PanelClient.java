@@ -30,6 +30,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.JScrollBar;
 
 public class PanelClient extends JPanel implements ActionListener {
 
@@ -54,6 +55,7 @@ public class PanelClient extends JPanel implements ActionListener {
 	// Autres champs
 	private ArrayList<Materiel> listMateriel;
 	private int nbMatofThisClient;
+	private double WEIGHTY;
 
 	// DAO et model
 	private ClientDAO clientDAO;
@@ -63,6 +65,7 @@ public class PanelClient extends JPanel implements ActionListener {
 
 	// main frame
 	private MainFrame mf;
+	
 
 	// Quelques getteurs utiles
 	public MainFrame getMf() {
@@ -428,6 +431,7 @@ public class PanelClient extends JPanel implements ActionListener {
 
 	private void updatePanelMateriel() {
 		this.listMateriel = clientDAO.getListMateriel(client);
+		this.WEIGHTY = 100/this.listMateriel.size();
 		this.panelMateriel.removeAll();
 
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
@@ -439,6 +443,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblNomMatI.gridx = 0;
 			gbc_lblNomMatI.gridy = i;
 			gbc_lblNomMatI.weightx = 15;
+			gbc_lblNomMatI.weighty = this.WEIGHTY;
 			gbc_lblNomMatI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblNomMatI, gbc_lblNomMatI);
 
@@ -449,6 +454,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblTypeMatI.gridx = 1;
 			gbc_lblTypeMatI.gridy = i;
 			gbc_lblTypeMatI.weightx = 15;
+			gbc_lblTypeMatI.weighty = this.WEIGHTY;
 			gbc_lblTypeMatI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblTypeMatI, gbc_lblTypeMatI);
 
@@ -459,6 +465,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblNumSerieI.gridx = 2;
 			gbc_lblNumSerieI.gridy = i;
 			gbc_lblNumSerieI.weightx = 15;
+			gbc_lblNumSerieI.weighty = this.WEIGHTY;
 			gbc_lblNumSerieI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblNumSerieI, gbc_lblNumSerieI);
 
@@ -469,6 +476,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblMarqueMatI.gridx = 3;
 			gbc_lblMarqueMatI.gridy = i;
 			gbc_lblMarqueMatI.weightx = 15;
+			gbc_lblMarqueMatI.weighty = this.WEIGHTY;
 			gbc_lblMarqueMatI.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblMarqueMatI, gbc_lblMarqueMatI);
 
@@ -481,6 +489,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_lblHistorique.gridx = 4;
 			gbc_lblHistorique.gridy = i;
 			gbc_lblHistorique.weightx = 30;
+			gbc_lblHistorique.weighty = this.WEIGHTY;
 			gbc_lblHistorique.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(lblHistoriqueIntervention, gbc_lblHistorique);
 
@@ -495,6 +504,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			gbc_btn.gridx = 5;
 			gbc_btn.gridy = i;
 			gbc_btn.weightx = 10;
+			gbc_btn.weighty = this.WEIGHTY;
 			gbc_btn.insets = new Insets(5, 5, 5, 5);
 			panelMateriel.add(panelBtn, gbc_btn);
 		}
