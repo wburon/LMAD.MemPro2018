@@ -26,9 +26,9 @@ import DAO.Rendez_VousDAO;
 import Model.Methode;
 import Model.Rendez_Vous;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class PanelPlanning extends JPanel implements ActionListener {
 
 	// Element de gestion des dates du planning

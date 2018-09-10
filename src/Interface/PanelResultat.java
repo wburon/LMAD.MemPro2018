@@ -10,21 +10,17 @@ import Model.Table_Client;
 import Model.Table_Materiel;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
-public class PanelResultat extends JPanel implements ActionListener, MouseListener{
+public class PanelResultat extends JPanel implements MouseListener{
 	
 	private Table_Client tClient;
 	private Table_Materiel tMat;
 	private JTable table;
-	private JButton btnRetour;
 	private MainFrame mf;
 	
 	@SuppressWarnings("unchecked")
@@ -46,15 +42,8 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 		JPanel panel_south = new JPanel();
 		add(panel_south, BorderLayout.SOUTH);
 		
-		btnRetour = new JButton("Retour");
-		panel_south.add(btnRetour);
-		btnRetour.addActionListener(this);
-		
 		JPanel panel_east = new JPanel();
 		add(panel_east, BorderLayout.EAST);
-		
-//		JPanel panel_center = new JPanel();
-//		add(panel_center, BorderLayout.CENTER);
 		
 		if (list.get(0).getClass().getName()=="Model.Client"){
 			tClient = new Table_Client((ArrayList<Client>) list);
@@ -69,16 +58,6 @@ public class PanelResultat extends JPanel implements ActionListener, MouseListen
 		
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==btnRetour){
-//			mf.setContentPane(mf.getPanelAccueil());
-//			mf.repaint();
-//			mf.revalidate();
-			mf.changePanel(mf.getPanelAccueil());
-		}
-		
-	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

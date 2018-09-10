@@ -30,8 +30,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
-import javax.swing.JScrollBar;
 
+@SuppressWarnings("serial")
 public class PanelClient extends JPanel implements ActionListener {
 
 	// Champ de construction client

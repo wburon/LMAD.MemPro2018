@@ -23,10 +23,12 @@ import Model.Rendez_Vous;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+@SuppressWarnings("serial")
 public class Panel_RdvInfo extends JPanel implements ActionListener {
 	
 	// JTextField et ComboBox de construction
 	private JTextField jtfNumFact, jtfNumBL, jtfRefPiece;
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboBoxTI, comboBoxMateriel;
 	
 	// Les boutons
@@ -49,6 +51,7 @@ public class Panel_RdvInfo extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Panel_RdvInfo(PanelRDV rdv) {
 		this.rdv = rdv;
 		this.mf = rdv.getMf();

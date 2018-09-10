@@ -1,13 +1,11 @@
 package Interface;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import DAO.ClientDAO;
 import DAO.MaterielDAO;
 import Model.Client;
 import Model.Materiel;
@@ -22,6 +20,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class FrameAjoutMateriel extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
@@ -32,14 +31,12 @@ public class FrameAjoutMateriel extends JFrame implements ActionListener{
 	private JButton btnValider;
 	private Client client;
 	private JTextField jtfMarque;
-	private PanelClient panelClient;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public FrameAjoutMateriel(PanelClient panelClient) {
-		this.panelClient = panelClient;
 		this.client = panelClient.getClient();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -346,6 +346,9 @@ public class PanelAccueil extends JPanel implements ActionListener, MouseListene
 		return listS1;
 	}
 	
+	/**
+	 * Méthode qu'il faut appeler pour mettre à jour la table client
+	 */
 	public void refreshList(){
 		tClient.setListClient(cDAO.getListAccueil());
 		((AbstractTableModel) table.getModel()).fireTableDataChanged();

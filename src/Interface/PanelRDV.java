@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,10 +25,10 @@ import Model.Methode;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 
+@SuppressWarnings("serial")
 public class PanelRDV extends JPanel implements ActionListener {
 
 	// JTextField définissant les dates de rendez-vous
