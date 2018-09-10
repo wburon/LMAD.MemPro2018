@@ -32,8 +32,6 @@ public class ClientDAO extends DAO<Client>{
 			String ville = obj.getVille();
 			prepare.setString(5, ville);
 			prepare.setInt(6, obj.getTel());
-//			String adresse_complete = adresse+" "+ville;
-//			String gps = Methode.getGPSCoord(adresse_complete);
 			prepare.setString(7, null);
 			prepare.setString(8, obj.getMail());
 			
@@ -130,6 +128,10 @@ public class ClientDAO extends DAO<Client>{
 		return listMat;
 	}
 	
+	/**
+	 * Renvoie la liste de tous les clients présents dans la base de données
+	 * @return ArrayList<Client> listClient
+	 */
 	public ArrayList<Client> getListAccueil(){
 		ArrayList<Client> listClient = new ArrayList<>();
 		Statement state;

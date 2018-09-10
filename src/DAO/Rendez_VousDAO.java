@@ -1,23 +1,18 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
-import Model.Client;
-import Model.Methode;
 import Model.Rendez_Vous;
 import Singleton.SingletonConnection;
 
@@ -140,8 +135,6 @@ public class Rendez_VousDAO extends DAO<Rendez_Vous> {
 	}
 
 	public Rendez_Vous[] getRdvInDate(java.util.Date date) {
-		InterventionDAO interDAO = new InterventionDAO();
-		Rendez_Vous rdv = new Rendez_Vous();
 		ArrayList<Rendez_Vous> listRdvInDate = new ArrayList<>();
 		try {
 			PreparedStatement prepare = SC.prepareStatement(
