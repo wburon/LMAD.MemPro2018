@@ -432,7 +432,10 @@ public class PanelClient extends JPanel implements ActionListener {
 
 	private void updatePanelMateriel() {
 		this.listMateriel = clientDAO.getListMateriel(client);
+		if(this.listMateriel.size() > 0)
 		this.WEIGHTY = 100/this.listMateriel.size();
+		else
+			this.WEIGHTY = 100;
 		this.panelMateriel.removeAll();
 
 		for (int i = 0; i < this.nbMatofThisClient; i++) {
