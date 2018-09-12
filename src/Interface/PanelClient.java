@@ -419,7 +419,9 @@ public class PanelClient extends JPanel implements ActionListener {
 		String tel = this.jtfTelephone.getText();
 		String mail = this.jtfCourriel.getText();
 		
-		if (!mail.contains("@") || mail.equals("")){
+		if( mail.equals(""))
+			return true;
+		if (!mail.contains("@")){
 			verification = false;
 		}
 		if (!tel.matches("[0-9]+"))
