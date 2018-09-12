@@ -63,14 +63,16 @@ public class ClientDAO extends DAO<Client>{
 	@Override
 	public boolean update(Client obj) {
 		try{
-			PreparedStatement prepare=SC.prepareStatement("Update \"Client\" set adresse=?, ville=?, tel=?, gps=?, courriel=? where id_client=?");
+			PreparedStatement prepare=SC.prepareStatement("Update \"Client\" set nom=?, prenom=?, adresse=?, ville=?, tel=?, gps=?, courriel=? where id_client=?");
 			
-			prepare.setString(1, obj.getAdresse());
-			prepare.setString(2, obj.getVille());
-			prepare.setInt(3, obj.getTel());
-			prepare.setString(4, obj.getGps());
-			prepare.setString(5, obj.getMail());
-			prepare.setInt(6, obj.getId_client());
+			prepare.setString(1, obj.getNom());
+			prepare.setString(2, obj.getPrenom());
+			prepare.setString(3, obj.getAdresse());
+			prepare.setString(4, obj.getVille());
+			prepare.setInt(5, obj.getTel());
+			prepare.setString(6, obj.getGps());
+			prepare.setString(7, obj.getMail());
+			prepare.setInt(8, obj.getId_client());
 
 			prepare.executeUpdate();
 			return true;	
