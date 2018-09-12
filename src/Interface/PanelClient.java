@@ -376,7 +376,7 @@ public class PanelClient extends JPanel implements ActionListener {
 		} else if (arg0.getSource() == btnAddMateriel) {
 			FrameAjoutMateriel frame = new FrameAjoutMateriel(this);
 			frame.setVisible(true);
-			this.mf.dispose();
+
 		} else if (arg0.getSource() == btnPrendreRdV) {
 			this.mf.changePanel(new PanelRDV(this));
 			// Action des boutons "Voir Plus", affichage en pop-up de
