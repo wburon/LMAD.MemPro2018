@@ -25,7 +25,7 @@ public class SingletonConnection {
 				Properties prop = new Properties();
 				InputStream input = null;
 				
-				input = new FileInputStream("config.properties");
+				input = new FileInputStream("ressources/config.properties");
 
 				// load a properties file
 				prop.load(input);
@@ -35,6 +35,11 @@ public class SingletonConnection {
 				user = prop.getProperty("user");
 				passwd = prop.getProperty("password");
 				
+//				String antislash = System.getProperty("file.separator");
+//				url = "jdbc"+antislash+":postgresql"+antislash+"://postgresql-lmad.alwaysdata.net:5432/lmad_database";
+//				user = "lmad";
+//				passwd = "JosephGrellier";
+//				
 				Class.forName("org.postgresql.Driver");
 				connection = DriverManager.getConnection(url, user, passwd);
 			} catch (SQLException | ClassNotFoundException | IOException e) {

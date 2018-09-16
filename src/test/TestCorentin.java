@@ -36,9 +36,8 @@ public class TestCorentin {
 //		for(String s : listMot)
 //			System.out.println(s);
 		
-		int match = ("true"=="true")?0:1;
-		
-		System.out.println(match);
+		String antislash = System.getProperty("file.separator");
+		System.out.println(antislash);
 		
 		
 		

@@ -386,7 +386,7 @@ public class PanelClient extends JPanel implements ActionListener {
 			String listInterDeCeMat = Methode
 					.toStringInterventionList(interventionDAO.getListIntervention(matSelect.getId_materiel()), false);
 			JOptionPane.showMessageDialog(this, "<html>" + listInterDeCeMat + "</html>", "Historique des interventions",
-					0, new ImageIcon("images/icon-832005_960_720.png"));
+					0, new ImageIcon("ressources/images/icon-832005_960_720.png"));
 			// Action des boutons de modification du matériels d'un clients
 		} else if (this.btnModifMateriel.contains(arg0.getSource())) {
 			if (jtfNomMat.isVisible()) {
