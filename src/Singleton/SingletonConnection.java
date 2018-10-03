@@ -41,8 +41,9 @@ public class SingletonConnection {
 //				url = "jdbc"+antislash+":postgresql"+antislash+"://postgresql-lmad.alwaysdata.net:5432/lmad_database";
 //				user = "lmad";
 //				passwd = "JosephGrellier";
-//				
+			
 				Class.forName("org.postgresql.Driver");
+				
 				connection = DriverManager.getConnection(url, user, passwd);
 			} catch (SQLException | ClassNotFoundException | IOException e) {
 				e.printStackTrace();

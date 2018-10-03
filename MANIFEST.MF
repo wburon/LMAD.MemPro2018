@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
 Main-Class: Interface.MainFrame
-Class-Path: \lib\gdata-calendar-2.0.jar \lib\gdata-client-2.0.jar \lib\gdata-core-2.0.jar \guava-r07.jar \json-simple-1.1.1.jar \jsoup-1.11.3-javadoc.jar \jsoup-1.11.3-sources.jar \jsoup-1.11.3.jar \postgresql-42.1.4.jar \ressources\config.properties
+Class-Path: \ReferencedLibraries\gdata-calendar-2.0.jar \ReferencedLibraries\gdata-client-2.0.jar \ReferencedLibraries\gdata-core-2.0.jar \ReferencedLibraries\guava-r07.jar \ReferencedLibraries\json-simple-1.1.1.jar \ReferencedLibraries\jsoup-1.11.3-javadoc.jar \ReferencedLibraries\jsoup-1.11.3-sources.jar \ReferencedLibraries\jsoup-1.11.3.jar \ReferencedLibraries\postgresql-42.1.4.jar 
