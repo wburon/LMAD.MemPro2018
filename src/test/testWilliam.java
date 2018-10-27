@@ -26,14 +26,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.ParseException;
+//import org.jsoup.Jsoup;
+//import org.jsoup.nodes.Document;
+//import org.jsoup.nodes.Element;
+//import org.jsoup.select.Elements;
 
 import DAO.ClientDAO;
 import DAO.InterventionDAO;
@@ -199,9 +199,9 @@ public class testWilliam {
 			client.setVille(ville);
 			client.setTel(0241);
 			String adresse_complete = adresse + " " + ville;
-			String gps = Methode.getGPSCoord(adresse_complete);
-			System.out.println(gps);
-			client.setGps(gps);
+//			String gps = Methode.getGPSCoord(adresse_complete);
+//			System.out.println(gps);
+//			client.setGps(gps);
 			client.setMail("courriel");
 			int id = cl.maxId();
 			System.out.println(id);
